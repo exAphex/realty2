@@ -6,20 +6,17 @@ import org.exaphex.realty.model.Valuation;
 import javax.swing.*;
 import javax.swing.text.DateFormatter;
 import javax.swing.text.DefaultFormatterFactory;
-import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ValuationModal {
-    private UnitWindow uw;
-    private Unit unit;
+    private final UnitWindow uw;
+    private final Unit unit;
     private JDialog dialog;
     private JFormattedTextField txtDate;
     private JPanel mainPanel;
     private JButton btnSave;
     private JTextField txtValue;
-    private JLabel lblDate;
-    private JLabel lblValue;
 
     public ValuationModal(UnitWindow uw, Unit u) {
         this.unit = u;
@@ -56,7 +53,7 @@ public class ValuationModal {
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    float val = 0;
+                    float val;
                     try {
                         val = Float.parseFloat(value);
                     } catch(NumberFormatException n) {

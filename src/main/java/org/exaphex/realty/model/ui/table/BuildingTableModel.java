@@ -12,11 +12,11 @@ public class BuildingTableModel extends AbstractTableModel {
     private List<Building> buildings;
 
     public BuildingTableModel(List<Building> buildings) {
-        this.buildings = new ArrayList<Building>(buildings);
+        this.buildings = new ArrayList<>(buildings);
     }
 
     public void setBuildings(List<Building> buildings) {
-        this.buildings = new ArrayList<Building>(buildings);
+        this.buildings = new ArrayList<>(buildings);
         fireTableDataChanged();
     }
 
@@ -32,47 +32,35 @@ public class BuildingTableModel extends AbstractTableModel {
 
     @Override
     public String getColumnName(int column) {
-        switch (column) {
+        return switch (column) {
             case 0:
-                return "Name";
+                yield "Name";
             case 1:
-                return "Street";
+                yield "Street";
             case 2:
-                return "City";
-        }
-        return "";
+                yield "City";
+            default:
+                yield "";
+        };
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-
         Object value = "??";
         Building building = buildings.get(rowIndex);
-        switch (columnIndex) {
+        return switch (columnIndex) {
             case 0:
-                value = building.getName();
-                break;
+                yield building.getName();
             case 1:
-                value = building.getAddress() + " " + building.getNumber();
-                break;
+                yield building.getAddress() + " " + building.getNumber();
             case 2:
-                value = building.getPostalCode() + " " + building.getCity();
-                break;
-        }
-        return value;
+                yield building.getPostalCode() + " " + building.getCity();
+            default:
+                yield "??";
+        };
     }
 
     public Building getBuldingAt(int row) {
         return buildings.get(row);
     }
-
-    public void addBuilding(Building b) {
-        this.buildings.add(b);
-        fireTableDataChanged();
-    }
-
-    public void deleteBuilding(Building b) {
-        this.buildings.remove(b);
-    }
-
 }

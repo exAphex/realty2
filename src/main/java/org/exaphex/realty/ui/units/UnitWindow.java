@@ -19,7 +19,7 @@ public class UnitWindow extends JFrame {
     UnitComboBoxModel utm = new UnitComboBoxModel(new ArrayList<>());
     ValuationTableModel vtm = new ValuationTableModel(new ArrayList<>());
     Unit selectedUnit;
-    private Building building;
+    private final Building building;
     private JComboBox cmbUnits;
     private JButton btnAddUnit;
     private JButton btnDeleteUnit;

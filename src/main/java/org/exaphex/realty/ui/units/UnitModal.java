@@ -7,8 +7,8 @@ import javax.swing.*;
 
 public class UnitModal {
 
-    private UnitWindow uw;
-    private Building building;
+    private final UnitWindow uw;
+    private final Building building;
     private JDialog dialog;
     private JTextField txtName;
     private JButton btnSave;

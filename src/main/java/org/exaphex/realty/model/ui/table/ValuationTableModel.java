@@ -13,11 +13,11 @@ public class ValuationTableModel extends AbstractTableModel {
     private List<Valuation> valuations;
 
     public ValuationTableModel(List<Valuation> valuations) {
-        this.valuations = new ArrayList<Valuation>(valuations);
+        this.valuations = new ArrayList<>(valuations);
     }
 
     public void setValuations(List<Valuation> valuations) {
-        this.valuations = new ArrayList<Valuation>(valuations);
+        this.valuations = new ArrayList<>(valuations);
         fireTableDataChanged();
     }
 
@@ -33,42 +33,31 @@ public class ValuationTableModel extends AbstractTableModel {
 
     @Override
     public String getColumnName(int column) {
-        switch (column) {
+        return switch (column) {
             case 0:
-                return "Date";
+                yield "Date";
             case 1:
-                return "Value";
-        }
-        return "";
+                yield "Value";
+            default:
+                yield "";
+        };
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-
-        Object value = "??";
         Valuation val = valuations.get(rowIndex);
-        switch (columnIndex) {
+        return switch (columnIndex) {
             case 0:
-                value = val.getDate();
-                break;
+                yield val.getDate();
             case 1:
                 NumberFormat formatter = NumberFormat.getCurrencyInstance();
-                value = formatter.format(val.getValue());
-                break;
-        }
-        return value;
+                yield formatter.format(val.getValue());
+            default:
+                yield "??";
+        };
     }
 
     public Valuation getValuationAt(int row) {
         return valuations.get(row);
-    }
-
-    public void addValuation(Valuation v) {
-        this.valuations.add(v);
-        fireTableDataChanged();
-    }
-
-    public void deleteBuilding(Building b) {
-        this.valuations.remove(b);
     }
 }

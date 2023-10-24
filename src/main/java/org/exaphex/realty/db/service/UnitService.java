@@ -24,7 +24,7 @@ public class UnitService {
                 retUnits.add(tmpUnit);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: proper logging
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -32,7 +32,7 @@ public class UnitService {
         return retUnits;
     }
 
-    public static Unit addUnit(Unit unit) {
+    public static void addUnit(Unit unit) {
         Connection conn = null;
         PreparedStatement statement = null;
         try {
@@ -43,11 +43,10 @@ public class UnitService {
             statement.setString(3, unit.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: proper logging
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
         }
-        return unit;
     }
 }

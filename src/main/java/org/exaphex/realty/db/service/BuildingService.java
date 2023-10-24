@@ -26,7 +26,7 @@ public class BuildingService {
                 retBuildings.add(tmpBuilding);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: proper logging
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -34,7 +34,7 @@ public class BuildingService {
         return retBuildings;
     }
 
-    public static Building addBuilding(Building building) {
+    public static void addBuilding(Building building) {
         Connection conn = null;
         PreparedStatement statement = null;
         try {
@@ -48,12 +48,11 @@ public class BuildingService {
             statement.setString(6, building.getCity());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: proper logging
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
         }
-        return building;
     }
 
     public static void deleteBuilding(Building building) {
@@ -65,7 +64,7 @@ public class BuildingService {
             statement.setString(1, building.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: proper logging
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);

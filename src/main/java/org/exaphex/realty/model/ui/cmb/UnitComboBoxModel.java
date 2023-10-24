@@ -1,6 +1,5 @@
 package org.exaphex.realty.model.ui.cmb;
 
-import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.Unit;
 
 import javax.swing.*;
@@ -15,11 +14,11 @@ public class UnitComboBoxModel implements ComboBoxModel {
     int index = -1;
 
     public UnitComboBoxModel(List<Unit> units) {
-        this.units = new ArrayList<Unit>(units);
+        this.units = new ArrayList<>(units);
     }
 
     public void setUnits(List<Unit> units) {
-        this.units = new ArrayList<Unit>(units);
+        this.units = new ArrayList<>(units);
     }
 
     @Override

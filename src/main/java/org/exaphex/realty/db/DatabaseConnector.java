@@ -10,7 +10,6 @@ import org.h2.jdbcx.JdbcConnectionPool;
 public class DatabaseConnector {
     public static JdbcConnectionPool cp = JdbcConnectionPool.create(
             "jdbc:h2:./test", "sa", "sa");
-    public static int VERSION = 3;
 
     public static Connection getConnection() throws SQLException {
         return cp.getConnection();
@@ -81,7 +80,7 @@ public class DatabaseConnector {
             if (conn != null)
                 conn.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: better logging
         }
     }
 
@@ -90,7 +89,7 @@ public class DatabaseConnector {
             if (statement != null)
                 statement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: better logging
         }
     }
 }

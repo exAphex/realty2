@@ -1,7 +1,6 @@
 package org.exaphex.realty.db.service;
 
 import org.exaphex.realty.db.DatabaseConnector;
-import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.Unit;
 import org.exaphex.realty.model.Valuation;
 
@@ -56,12 +55,12 @@ public class ValuationService {
         return retValuations;
     }
 
-    public static Valuation addValuation(Valuation v) {
+    public static void addValuation(Valuation v) {
         Connection conn = null;
         PreparedStatement statement = null;
 
-        if (getValuationByDate(v).size() > 0) {
-            return v;
+        if (getValuationByDate(v).isEmpty()) {
+            return;
         }
 
         try {
@@ -77,7 +76,6 @@ public class ValuationService {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
         }
-        return v;
     }
 
     public static void deleteValuation(Valuation valuation) {

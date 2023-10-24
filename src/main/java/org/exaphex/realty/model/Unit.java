@@ -31,10 +31,6 @@ public class Unit {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String toString() {
         return this.name;
@@ -42,9 +38,5 @@ public class Unit {
 
     public String getBuildingId() {
         return buildingId;
-    }
-
-    public void setBuildingId(String buildingId) {
-        this.buildingId = buildingId;
     }
 }

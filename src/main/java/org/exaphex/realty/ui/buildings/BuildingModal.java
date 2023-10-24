@@ -14,7 +14,7 @@ public class BuildingModal {
     private JTextField textCity;
     private JButton saveButton;
 
-    private MainWindow mw;
+    private final MainWindow mw;
 
     private JDialog dialog;
 
