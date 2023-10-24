@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/DatabaseConnector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/BuildingService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/UnitService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/Building.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/Unit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/Valuation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/ui/cmb/UnitComboBoxModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/ui/table/BuildingTableModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/MainWindow.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/MainWindow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingModal.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingModal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitModal.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitModal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/accounts.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/add.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/buildings.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/buildings1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/delete.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/home.png" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2XCsM1AVceXtVeBXw7Jg3cjYZGS" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.org.exaphex.realty.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.exaphex.Main" />
+      <module name="realty" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.exaphex.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="org.exaphex.realty.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.exaphex.realty.Main" />
+      <module name="realty" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.exaphex.realty.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.org.exaphex.realty.Main" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="" />
+      <created>1698144344837</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1698144344837</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java</url>
+          <line>90</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
