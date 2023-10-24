@@ -4,11 +4,11 @@ import java.util.UUID;
 
 public class Building {
     private final String id;
-    private String name;
-    private String address;
-    private String number;
-    private String postalCode;
-    private String city;
+    private final String name;
+    private final String address;
+    private final String number;
+    private final String postalCode;
+    private final String city;
 
     public Building(String name, String address, String number, String postalCode, String city) {
         this.id = UUID.randomUUID().toString();

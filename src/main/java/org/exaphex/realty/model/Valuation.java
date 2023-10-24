@@ -1,12 +1,9 @@
 package org.exaphex.realty.model;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class Valuation {
     private String id;
-    private String date;
-    private float value;
+    private final String date;
+    private final float value;
 
     public Valuation(String id, String date, float value) {
         this.id = id;

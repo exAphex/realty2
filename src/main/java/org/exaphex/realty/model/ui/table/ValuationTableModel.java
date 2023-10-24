@@ -1,6 +1,5 @@
 package org.exaphex.realty.model.ui.table;
 
-import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.Valuation;
 
 import javax.swing.table.AbstractTableModel;

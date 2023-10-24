@@ -4,8 +4,8 @@ import java.util.UUID;
 
 public class Unit {
     private String id;
-    private String name;
-    private String buildingId;
+    private final String name;
+    private final String buildingId;
 
     public Unit(String id, String buildingId, String name) {
         this.id = id;

@@ -46,7 +46,6 @@ public class BuildingTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Object value = "??";
         Building building = buildings.get(rowIndex);
         return switch (columnIndex) {
             case 0:
