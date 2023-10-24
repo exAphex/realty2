@@ -5,14 +5,17 @@ import java.util.UUID;
 public class Unit {
     private String id;
     private String name;
+    private String buildingId;
 
-    public Unit(String id, String name) {
+    public Unit(String id, String buildingId, String name) {
         this.id = id;
+        this.buildingId = buildingId;
         this.name = name;
     }
 
-    public Unit(String name) {
+    public Unit(String buildingId, String name) {
         this.id = UUID.randomUUID().toString();
+        this.buildingId = buildingId;
         this.name = name;
     }
 
@@ -35,5 +38,13 @@ public class Unit {
     @Override
     public String toString() {
         return this.name;
+    }
+
+    public String getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(String buildingId) {
+        this.buildingId = buildingId;
     }
 }

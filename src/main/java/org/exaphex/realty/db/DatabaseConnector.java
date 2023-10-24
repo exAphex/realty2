@@ -63,7 +63,7 @@ public class DatabaseConnector {
                 break;
             case 1:
                 executeSQL(conn,
-                        "CREATE TABLE IF NOT EXISTS units(id VARCHAR(255) PRIMARY KEY, name VARCHAR(255))");
+                        "CREATE TABLE IF NOT EXISTS units(id VARCHAR(255) PRIMARY KEY, buildingid VARCHAR(255), name VARCHAR(255))");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (2)");
                 updateDatabase(conn);
                 break;

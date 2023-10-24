@@ -10,16 +10,17 @@ import java.util.List;
 
 public class UnitService {
 
-    public static List<Unit> getAllUnits() {
+    public static List<Unit> getUnits(Building b) {
         Connection conn = null;
-        Statement statement = null;
+        PreparedStatement statement = null;
         List<Unit> retUnits = new ArrayList<>();
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery("select * from units");
+            statement = conn.prepareStatement("select * from units where buildingid = ?");
+            statement.setString(1, b.getId());
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Unit tmpUnit = new Unit(rs.getString("id"), rs.getString("name"));
+                Unit tmpUnit = new Unit(rs.getString("id"), rs.getString("buildingid"), rs.getString("name"));
                 retUnits.add(tmpUnit);
             }
         } catch (SQLException e) {
@@ -36,9 +37,10 @@ public class UnitService {
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("INSERT INTO units VALUES (?,?)");
+            statement = conn.prepareStatement("INSERT INTO units VALUES (?,?,?)");
             statement.setString(1, unit.getId());
-            statement.setString(2, unit.getName());
+            statement.setString(2, unit.getBuildingId());
+            statement.setString(3, unit.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,5 +1,6 @@
 package org.exaphex.realty.ui.units;
 
+import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.Unit;
 
 import javax.swing.*;
@@ -7,13 +8,15 @@ import javax.swing.*;
 public class UnitModal {
 
     private UnitWindow uw;
+    private Building building;
     private JDialog dialog;
     private JTextField txtName;
     private JButton btnSave;
     private JPanel mainPanel;
 
-    public UnitModal(UnitWindow uw) {
+    public UnitModal(UnitWindow uw, Building b) {
         this.uw = uw;
+        this.building = b;
         setupUI();
         setupListeners();
     }
@@ -31,7 +34,7 @@ public class UnitModal {
     private void setupListeners() {
         btnSave.addActionListener(
                 e -> {
-                    uw.eventAddNewUnit(new Unit(txtName.getText()));
+                    uw.eventAddNewUnit(new Unit(this.building.getId(), txtName.getText()));
                     dialog.dispose();
                 });
     }

@@ -1,20 +1,23 @@
 package org.exaphex.realty.ui.units;
 
 import org.exaphex.realty.db.service.UnitService;
+import org.exaphex.realty.db.service.ValuationService;
 import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.Unit;
+import org.exaphex.realty.model.Valuation;
 import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
+import org.exaphex.realty.model.ui.table.ValuationTableModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UnitWindow extends JFrame {
 
     UnitComboBoxModel utm = new UnitComboBoxModel(new ArrayList<>());
+    ValuationTableModel vtm = new ValuationTableModel(new ArrayList<>());
     Unit selectedUnit;
     private Building building;
     private JComboBox cmbUnits;
@@ -28,21 +31,23 @@ public class UnitWindow extends JFrame {
     private JPanel paneGeneral;
     private JPanel paneRent;
     private JPanel paneValuation;
-    private JButton button1;
-    private JButton button2;
-    private JTable table1;
+    private JButton btnAddValuation;
+    private JButton btnDeleteValuation;
+    private JTable tblValuations;
+    private JButton btnImportValuation;
 
     public UnitWindow(Building b) {
         super();
         this.building = b;
         buildUI();
         setListeners();
-        loadUnits();
+        loadUnits(this.building);
     }
 
     private void buildUI() {
         setTitle(this.building.getName());
         cmbUnits.setModel(utm);
+        tblValuations.setModel(vtm);
         setContentPane(mainPanel);
         setTabPanelStatus(false);
     }
@@ -68,12 +73,17 @@ public class UnitWindow extends JFrame {
     private void setListeners() {
         btnAddUnit.addActionListener(e -> this.onAddNewUnit());
         btnDeleteUnit.addActionListener(e -> this.onDeleteUnit());
+        btnAddValuation.addActionListener(e -> this.onAddNewValuation());
+        btnDeleteValuation.addActionListener(e -> this.onDeleteValuation());
+        btnImportValuation.addActionListener(e -> this.onImportValuation());
+
         cmbUnits.addItemListener(event -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
                 Unit item = (Unit) event.getItem();
                 this.selectedUnit = item;
                 setFields(item);
                 setTabPanelStatus(true);
+                loadValuations(this.selectedUnit);
             }
         });
     }
@@ -82,9 +92,14 @@ public class UnitWindow extends JFrame {
         this.txtName.setText(u.getName());
     }
 
-    private void loadUnits() {
-        List<Unit> units = UnitService.getAllUnits();
+    private void loadUnits(Building b) {
+        List<Unit> units = UnitService.getUnits(b);
         utm.setUnits(units);
+    }
+
+    private void loadValuations(Unit u) {
+        List<Valuation> valuations = ValuationService.getValuations(u);
+        vtm.setValuations(valuations);
     }
 
     public Building getBuilding() {
@@ -92,7 +107,26 @@ public class UnitWindow extends JFrame {
     }
 
     private void onAddNewUnit() {
-        new UnitModal(this);
+        new UnitModal(this, this.building);
+    }
+
+    private void onAddNewValuation() {
+        new ValuationModal(this, this.selectedUnit);
+    }
+
+    private void onImportValuation() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        // TODO: Import data
+    }
+
+    private void onDeleteValuation() {
+        if (tblValuations.getSelectedRow() == -1)
+            return;
+
+        Valuation valuation = vtm.getValuationAt(tblValuations.getSelectedRow());
+        ValuationService.deleteValuation(valuation);
+        loadValuations(this.selectedUnit);
     }
 
     private void onDeleteUnit() {
@@ -101,7 +135,12 @@ public class UnitWindow extends JFrame {
 
     public void eventAddNewUnit(Unit u) {
         UnitService.addUnit(u);
-        loadUnits();
+        loadUnits(this.building);
+    }
+
+    public void eventAddNewValuation(Valuation v) {
+        ValuationService.addValuation(v);
+        loadValuations(this.selectedUnit);
     }
 
 }

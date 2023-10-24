@@ -128,17 +128,24 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="bbeac" class="javax.swing.JButton" binding="button1" default-binding="true">
+                  <component id="bbeac" class="javax.swing.JButton" binding="btnAddValuation">
                     <constraints/>
                     <properties>
                       <icon value="add.png"/>
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="b47f9" class="javax.swing.JButton" binding="button2" default-binding="true">
+                  <component id="b47f9" class="javax.swing.JButton" binding="btnDeleteValuation">
                     <constraints/>
                     <properties>
                       <icon value="delete.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="acdc2" class="javax.swing.JButton" binding="btnImportValuation">
+                    <constraints/>
+                    <properties>
+                      <icon value="import.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -151,7 +158,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="edddc" class="javax.swing.JTable" binding="table1" default-binding="true">
+                  <component id="edddc" class="javax.swing.JTable" binding="tblValuations">
                     <constraints/>
                     <properties/>
                   </component>

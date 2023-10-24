@@ -27,7 +27,7 @@ public class Valuation {
     }
 
     public void setDate(Date date) {
-        SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd-MM-yyyy");
         this.date = DateFor.format(date);
     }
 
