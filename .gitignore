@@ -37,3 +37,4 @@ build/
 ### Mac OS ###
 .DS_Store
 /test.mv.db
+/test.trace.db
