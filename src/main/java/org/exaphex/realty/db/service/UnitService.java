@@ -64,7 +64,7 @@ public class UnitService {
             statement.setString(1, unit.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: better logger
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);

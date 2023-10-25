@@ -24,7 +24,7 @@ public class ValuationService {
                 retValuations.add(tmpValuation);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: better logging
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -47,7 +47,7 @@ public class ValuationService {
                 retValuations.add(tmpValuation);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: better logging
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -71,7 +71,7 @@ public class ValuationService {
             statement.setString(3,v.getDate());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: better logging
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -88,7 +88,7 @@ public class ValuationService {
             statement.setString(2, valuation.getDate());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: better logging
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -104,7 +104,7 @@ public class ValuationService {
             statement.setString(1, unit.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: better logging
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);

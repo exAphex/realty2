@@ -2,7 +2,6 @@ package org.exaphex.realty.ui.units;
 
 import org.exaphex.realty.model.Rent;
 import org.exaphex.realty.model.Unit;
-import org.exaphex.realty.model.Valuation;
 
 import javax.swing.*;
 import javax.swing.text.DateFormatter;
@@ -11,8 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RentModal {
-    private Unit unit;
-    private UnitWindow uw;
+    private final Unit unit;
+    private final UnitWindow uw;
     private JDialog dialog;
     private JTextField txtFirstName;
     private JTextField txtLastName;

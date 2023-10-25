@@ -3,7 +3,6 @@ package org.exaphex.realty.db.service;
 import org.exaphex.realty.db.DatabaseConnector;
 import org.exaphex.realty.model.Rent;
 import org.exaphex.realty.model.Unit;
-import org.exaphex.realty.model.Valuation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,7 +68,7 @@ public class RentService {
             statement.setString(1, r.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: better logging
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -85,7 +84,7 @@ public class RentService {
             statement.setString(1, unit.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO: better logging
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
