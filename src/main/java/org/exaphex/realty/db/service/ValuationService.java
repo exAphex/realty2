@@ -59,7 +59,7 @@ public class ValuationService {
         Connection conn = null;
         PreparedStatement statement = null;
 
-        if (getValuationByDate(v).isEmpty()) {
+        if (!getValuationByDate(v).isEmpty()) {
             return;
         }
 
@@ -86,6 +86,22 @@ public class ValuationService {
             statement = conn.prepareStatement("DELETE FROM valuations WHERE id = ? and date = ?");
             statement.setString(1, valuation.getId());
             statement.setString(2, valuation.getDate());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnector.closeStatement(statement);
+            DatabaseConnector.closeDatabase(conn);
+        }
+    }
+
+    public static void deleteValuation(Unit unit) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        try {
+            conn = DatabaseConnector.getConnection();
+            statement = conn.prepareStatement("DELETE FROM valuations WHERE id = ?");
+            statement.setString(1, unit.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

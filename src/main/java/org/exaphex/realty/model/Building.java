@@ -52,9 +52,8 @@ public class Building {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (!(o instanceof Building))
+        if (!(o instanceof Building that))
             return false;
-        Building that = (Building) o;
         // check for null keys if you need to
         return this.name.equals(that.name);
     }

@@ -71,6 +71,11 @@ public class DatabaseConnector {
                         "CREATE TABLE IF NOT EXISTS valuations(id VARCHAR(255), val DOUBLE, date VARCHAR(10))");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (3)");
                 break;
+            case 3:
+                executeSQL(conn,
+                        "CREATE TABLE IF NOT EXISTS rents(id VARCHAR(255), firstname VARCHAR(255), lastname VARCHAR(255), unitid VARCHAR(255), startdate VARCHAR(10), enddate VARCHAR(10), rentalprice DOUBLE, extracosts DOUBLE, deposit DOUBLE)");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (4)");
+                break;
             default:
         }
     }

@@ -49,4 +49,25 @@ public class UnitService {
             DatabaseConnector.closeDatabase(conn);
         }
     }
+
+    public static void deleteUnit(Unit unit) {
+        RentService.deleteRent(unit);
+        ValuationService.deleteValuation(unit);
+        deleteUnitByUnit(unit);
+    }
+    private static void deleteUnitByUnit(Unit unit) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        try {
+            conn = DatabaseConnector.getConnection();
+            statement = conn.prepareStatement("DELETE FROM units WHERE id = ?");
+            statement.setString(1, unit.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnector.closeStatement(statement);
+            DatabaseConnector.closeDatabase(conn);
+        }
+    }
 }

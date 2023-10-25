@@ -1,5 +1,6 @@
 package org.exaphex.realty.model;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Unit {
@@ -38,5 +39,18 @@ public class Unit {
 
     public String getBuildingId() {
         return buildingId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Unit unit = (Unit) o;
+        return Objects.equals(id, unit.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

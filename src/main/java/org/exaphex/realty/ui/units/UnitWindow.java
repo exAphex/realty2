@@ -1,16 +1,24 @@
 package org.exaphex.realty.ui.units;
 
+import com.opencsv.bean.CsvToBeanBuilder;
+import org.exaphex.realty.db.service.RentService;
 import org.exaphex.realty.db.service.UnitService;
 import org.exaphex.realty.db.service.ValuationService;
 import org.exaphex.realty.model.Building;
+import org.exaphex.realty.model.Rent;
 import org.exaphex.realty.model.Unit;
 import org.exaphex.realty.model.Valuation;
+import org.exaphex.realty.model.transport.ValuationTransportModel;
 import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
+import org.exaphex.realty.model.ui.table.RentTableModel;
 import org.exaphex.realty.model.ui.table.ValuationTableModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +26,7 @@ public class UnitWindow extends JFrame {
 
     UnitComboBoxModel utm = new UnitComboBoxModel(new ArrayList<>());
     ValuationTableModel vtm = new ValuationTableModel(new ArrayList<>());
+    RentTableModel rtm = new RentTableModel(new ArrayList<>());
     Unit selectedUnit;
     private final Building building;
     private JComboBox cmbUnits;
@@ -35,6 +44,9 @@ public class UnitWindow extends JFrame {
     private JButton btnDeleteValuation;
     private JTable tblValuations;
     private JButton btnImportValuation;
+    private JButton btnAddRent;
+    private JButton btnDeleteRent;
+    private JTable tblRents;
 
     public UnitWindow(Building b) {
         super();
@@ -48,15 +60,16 @@ public class UnitWindow extends JFrame {
         setTitle(this.building.getName());
         cmbUnits.setModel(utm);
         tblValuations.setModel(vtm);
+        tblRents.setModel(rtm);
         setContentPane(mainPanel);
         setTabPanelStatus(false);
     }
 
     void setTabPanelStatus(Boolean isEnabled) {
         tabPane.setEnabled(isEnabled);
-        setPanelEnabled(paneGeneral,isEnabled);
-        setPanelEnabled(paneRent,isEnabled);
-        setPanelEnabled(paneValuation,isEnabled);
+        setPanelEnabled(paneGeneral, isEnabled);
+        setPanelEnabled(paneRent, isEnabled);
+        setPanelEnabled(paneValuation, isEnabled);
     }
 
     void setPanelEnabled(JPanel panel, Boolean isEnabled) {
@@ -76,20 +89,27 @@ public class UnitWindow extends JFrame {
         btnAddValuation.addActionListener(e -> this.onAddNewValuation());
         btnDeleteValuation.addActionListener(e -> this.onDeleteValuation());
         btnImportValuation.addActionListener(e -> this.onImportValuation());
+        btnAddRent.addActionListener(e -> this.onAddNewRent());
+        btnDeleteRent.addActionListener(e -> this.onDeleteRent());
 
         cmbUnits.addItemListener(event -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
                 Unit item = (Unit) event.getItem();
-                this.selectedUnit = item;
-                setFields(item);
-                setTabPanelStatus(true);
-                loadValuations(this.selectedUnit);
+                selectUnit(item);
             }
         });
     }
 
+    private void selectUnit(Unit u) {
+        this.selectedUnit = u;
+        setFields(u);
+        setTabPanelStatus(true);
+        loadValuations(this.selectedUnit);
+        loadRents(this.selectedUnit);
+    }
+
     private void setFields(Unit u) {
-        this.txtName.setText(u.getName());
+        this.txtName.setText(u != null ? u.getName() : "");
     }
 
     private void loadUnits(Building b) {
@@ -102,6 +122,11 @@ public class UnitWindow extends JFrame {
         vtm.setValuations(valuations);
     }
 
+    private void loadRents(Unit u) {
+        List<Rent> rents = RentService.getRents(u);
+        rtm.setRents(rents);
+    }
+
     public Building getBuilding() {
         return this.building;
     }
@@ -110,14 +135,37 @@ public class UnitWindow extends JFrame {
         new UnitModal(this, this.building);
     }
 
+    private void onAddNewRent() {
+        new RentModal(this, this.selectedUnit);
+    }
+
     private void onAddNewValuation() {
         new ValuationModal(this, this.selectedUnit);
     }
 
     private void onImportValuation() {
         JFileChooser chooser = new JFileChooser();
-        chooser.showOpenDialog(null);
-        // TODO: Import data
+        int retOption = chooser.showOpenDialog(null);
+        if (retOption == JFileChooser.APPROVE_OPTION) {
+            File f = chooser.getSelectedFile();
+            try {
+                List<ValuationTransportModel> valuations = new CsvToBeanBuilder(new FileReader(f))
+                        .withSeparator(';')
+                        .withType(ValuationTransportModel.class)
+                        .build()
+                        .parse();
+                for (ValuationTransportModel v : valuations) {
+                    try {
+                        ValuationService.addValuation(v.getValuation(this.selectedUnit.getId()));
+                    } catch (Exception e) {
+                        // TODO: proper exception
+                    }
+                }
+                loadValuations(this.selectedUnit);
+            } catch (FileNotFoundException e) {
+                // TODO: error handling
+            }
+        }
     }
 
     private void onDeleteValuation() {
@@ -129,18 +177,46 @@ public class UnitWindow extends JFrame {
         loadValuations(this.selectedUnit);
     }
 
-    private void onDeleteUnit() {
+    private void onDeleteRent() {
+        if (tblRents.getSelectedRow() == -1)
+            return;
 
+        Rent rent = rtm.getRentAt(tblRents.getSelectedRow());
+        RentService.deleteRent(rent);
+        loadRents(this.selectedUnit);
+    }
+
+    private void onDeleteUnit() {
+        if (this.selectedUnit == null) { return;}
+        UnitService.deleteUnit(this.selectedUnit);
+
+        this.selectedUnit = null;
+        utm = new UnitComboBoxModel(new ArrayList<>());
+        cmbUnits.setModel(utm);
+        setTabPanelStatus(false);
+        setFields(null);
+        tabPane.setSelectedIndex(0);
+
+        loadUnits(this.building);
     }
 
     public void eventAddNewUnit(Unit u) {
         UnitService.addUnit(u);
         loadUnits(this.building);
+
+        utm.setSelectedItem(u);
+        selectUnit(u);
     }
 
     public void eventAddNewValuation(Valuation v) {
         ValuationService.addValuation(v);
         loadValuations(this.selectedUnit);
     }
+
+    public void eventAddNewRent(Rent r) {
+        RentService.addRent(r);
+        loadRents(this.selectedUnit);
+    }
+
 
 }
