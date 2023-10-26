@@ -1,15 +1,14 @@
 package org.exaphex.realty.ui.units;
 
 import com.opencsv.bean.CsvToBeanBuilder;
+import org.exaphex.realty.db.service.ReceivableService;
 import org.exaphex.realty.db.service.RentService;
 import org.exaphex.realty.db.service.UnitService;
 import org.exaphex.realty.db.service.ValuationService;
-import org.exaphex.realty.model.Building;
-import org.exaphex.realty.model.Rent;
-import org.exaphex.realty.model.Unit;
-import org.exaphex.realty.model.Valuation;
+import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.transport.ValuationTransportModel;
 import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
+import org.exaphex.realty.model.ui.table.ReceiveableTableModel;
 import org.exaphex.realty.model.ui.table.RentTableModel;
 import org.exaphex.realty.model.ui.table.ValuationTableModel;
 
@@ -27,6 +26,7 @@ public class UnitWindow extends JFrame {
     UnitComboBoxModel utm = new UnitComboBoxModel(new ArrayList<>());
     ValuationTableModel vtm = new ValuationTableModel(new ArrayList<>());
     RentTableModel rtm = new RentTableModel(new ArrayList<>());
+    ReceiveableTableModel rvtm = new ReceiveableTableModel(new ArrayList<>());
     Unit selectedUnit;
     private final Building building;
     private JComboBox cmbUnits;
@@ -47,6 +47,8 @@ public class UnitWindow extends JFrame {
     private JButton btnAddRent;
     private JButton btnDeleteRent;
     private JTable tblRents;
+    private JTable tblAccount;
+    private JPanel paneAccount;
 
     public UnitWindow(Building b) {
         super();
@@ -61,6 +63,7 @@ public class UnitWindow extends JFrame {
         cmbUnits.setModel(utm);
         tblValuations.setModel(vtm);
         tblRents.setModel(rtm);
+        tblAccount.setModel(rvtm);
         setContentPane(mainPanel);
         setTabPanelStatus(false);
     }
@@ -70,6 +73,7 @@ public class UnitWindow extends JFrame {
         setPanelEnabled(paneGeneral, isEnabled);
         setPanelEnabled(paneRent, isEnabled);
         setPanelEnabled(paneValuation, isEnabled);
+        setPanelEnabled(paneAccount, isEnabled);
     }
 
     void setPanelEnabled(JPanel panel, Boolean isEnabled) {
@@ -106,6 +110,7 @@ public class UnitWindow extends JFrame {
         setTabPanelStatus(true);
         loadValuations(this.selectedUnit);
         loadRents(this.selectedUnit);
+        loadReceivables(this.selectedUnit);
     }
 
     private void setFields(Unit u) {
@@ -125,6 +130,11 @@ public class UnitWindow extends JFrame {
     private void loadRents(Unit u) {
         List<Rent> rents = RentService.getRents(u);
         rtm.setRents(rents);
+    }
+
+    private void loadReceivables(Unit u) {
+        List<Receivable> receivables = ReceivableService.getReceivables(u);
+        rvtm.setReceivables(receivables);
     }
 
     public Building getBuilding() {
@@ -184,6 +194,7 @@ public class UnitWindow extends JFrame {
         Rent rent = rtm.getRentAt(tblRents.getSelectedRow());
         RentService.deleteRent(rent);
         loadRents(this.selectedUnit);
+        loadReceivables(this.selectedUnit);
     }
 
     private void onDeleteUnit() {
@@ -216,6 +227,7 @@ public class UnitWindow extends JFrame {
     public void eventAddNewRent(Rent r) {
         RentService.addRent(r);
         loadRents(this.selectedUnit);
+        loadReceivables(this.selectedUnit);
     }
 
 
