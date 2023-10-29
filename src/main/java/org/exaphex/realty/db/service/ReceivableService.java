@@ -19,12 +19,64 @@ public class ReceivableService {
         List<Rent> rents = RentService.getRents(u);
         List<Receivable> receivables = new ArrayList<>();
         for (Rent r : rents) {
-            receivables.addAll(calculateReceivables(r));
+            receivables.addAll(calculateReceivables(r, u));
         }
+        enrichReceivablesWithTransactions(u, receivables);
         return receivables;
     }
 
-    private static List<Receivable> calculateReceivables(Rent r) {
+    public static void setFullPayment(Receivable receivable) {
+        setPartialPayment(receivable, receivable.getAmount());
+    }
+
+    public static void setPartialPayment(Receivable receivable, float amount) {
+        Transaction transaction = receivable.getTransaction();
+        if (transaction == null) {
+            transaction = new Transaction(receivable.getDue(), receivable.getType(), receivable.getUnit().getId(), amount);
+            TransactionService.addTransaction(transaction);
+        } else {
+            transaction.setAmount(amount);
+            TransactionService.updateTransaction(transaction);
+        }
+    }
+
+    public static void deletePayment(Receivable receivable) {
+        Transaction transaction = receivable.getTransaction();
+        if (transaction == null) {
+            return;
+        }
+
+        TransactionService.deleteTransaction(transaction);
+    }
+
+    private static void enrichReceivablesWithTransactions(Unit u, List<Receivable> receivables) {
+        Calendar tmpReceivableCalendar = Calendar.getInstance();
+        Calendar tmpTransactionCalendar = Calendar.getInstance();
+        List<Transaction> transactions = TransactionService.getTransactions(u);
+        for (Receivable r : receivables) {
+
+            Date formattedDate = safeFormatDate(r.getDue());
+            if (formattedDate == null) {
+                break;
+            }
+
+            tmpReceivableCalendar.setTime(formattedDate);
+            for (Transaction t : transactions) {
+                Date formattedTransactionDate = safeFormatDate(t.getDate());
+                if (formattedTransactionDate == null) {
+                    break;
+                }
+
+                tmpTransactionCalendar.setTime(formattedTransactionDate);
+                if (t.getType() == r.getType() && tmpTransactionCalendar.get(Calendar.YEAR) == tmpReceivableCalendar.get(Calendar.YEAR) && tmpTransactionCalendar.get(Calendar.MONTH) == tmpReceivableCalendar.get(Calendar.MONTH)) {
+                    r.setTransaction(t);
+                    break;
+                }
+            }
+        }
+    }
+
+    private static List<Receivable> calculateReceivables(Rent r, Unit u) {
         DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         DateFormat monthFormatter = new SimpleDateFormat("MM-yyyy");
         Calendar beginCalendar = Calendar.getInstance();
@@ -42,7 +94,7 @@ public class ReceivableService {
             }
 
             // Deposit
-            retReceivables.add(new Receivable("Deposit", r.getDeposit(), formatter.format(beginCalendar.getTime()), Transaction.DEPOSIT));
+            retReceivables.add(new Receivable("Deposit", r.getDeposit(), formatter.format(beginCalendar.getTime()), Transaction.DEPOSIT, u));
 
             // Only list receivables till today
             if (finishCalendar.after(todayCalendar)) {
@@ -51,7 +103,7 @@ public class ReceivableService {
             }
 
             while (beginCalendar.before(finishCalendar)) {
-                Receivable tempReceivable = new Receivable("Rent " + monthFormatter.format(beginCalendar.getTime()), r.getRentalPrice() + r.getExtraCosts(), formatter.format(beginCalendar.getTime()), Transaction.RENT_PAYMENT);
+                Receivable tempReceivable = new Receivable("Rent " + monthFormatter.format(beginCalendar.getTime()), r.getRentalPrice() + r.getExtraCosts(), formatter.format(beginCalendar.getTime()), Transaction.RENT_PAYMENT, u);
                 retReceivables.add(tempReceivable);
                 beginCalendar.add(Calendar.MONTH, 1);
             }
@@ -59,5 +111,16 @@ public class ReceivableService {
             e.printStackTrace();
         }
         return retReceivables;
+    }
+
+    private static Date safeFormatDate(String date) {
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date retDate = null;
+        try {
+            retDate = formatter.parse(date);
+        } catch (ParseException e) {
+            // TODO: better error handling
+        }
+        return retDate;
     }
 }

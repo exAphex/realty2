@@ -6,12 +6,14 @@ public class Receivable {
     private String due;
     private int type;
     private Transaction transaction;
+    private Unit unit;
 
-    public Receivable(String name, float amount, String due, int type) {
+    public Receivable(String name, float amount, String due, int type, Unit unit) {
         this.name = name;
         this.amount = amount;
         this.due = due;
         this.type = type;
+        this.unit = unit;
     }
 
     public Transaction getTransaction() {
@@ -24,6 +26,10 @@ public class Receivable {
 
     public String getName() {
         return name;
+    }
+
+    public Unit getUnit() {
+        return unit;
     }
 
     public float getAmount() {

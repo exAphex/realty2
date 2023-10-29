@@ -10,9 +10,9 @@ public class Transaction {
     private String date;
     private int type;
     private String unitId;
-    private long amount;
+    private float amount;
 
-    public Transaction(String id, String date, int type, String unitId, long amount) {
+    public Transaction(String id, String date, int type, String unitId, float amount) {
         this.id = id;
         this.date = date;
         this.type = type;
@@ -20,7 +20,7 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public Transaction(String date, int type, String unitId, long amount) {
+    public Transaction(String date, int type, String unitId, float amount) {
         this.id = UUID.randomUUID().toString();
         this.date = date;
         this.type = type;
@@ -28,12 +28,28 @@ public class Transaction {
         this.amount = amount;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public String getUnitId() {
+        return unitId;
+    }
+
     public String getDate() {
         return date;
     }
 
-    public long getAmount() {
+    public float getAmount() {
         return amount;
+    }
+
+    public void setAmount(float amount) {
+        this.amount = amount;
     }
 
     public static String formatTransactionType(int type) {

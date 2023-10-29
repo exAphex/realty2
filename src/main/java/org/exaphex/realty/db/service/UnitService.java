@@ -53,8 +53,10 @@ public class UnitService {
     public static void deleteUnit(Unit unit) {
         RentService.deleteRent(unit);
         ValuationService.deleteValuation(unit);
+        TransactionService.deleteTransactions(unit);
         deleteUnitByUnit(unit);
     }
+
     private static void deleteUnitByUnit(Unit unit) {
         Connection conn = null;
         PreparedStatement statement = null;

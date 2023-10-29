@@ -72,4 +72,8 @@ public class ReceiveableTableModel extends AbstractTableModel {
                 yield "??";
         };
     }
+
+    public Receivable getReceivableAt(int row) {
+        return receivables.get(row);
+    }
 }

@@ -13,6 +13,7 @@ import org.exaphex.realty.model.ui.table.RentTableModel;
 import org.exaphex.realty.model.ui.table.ValuationTableModel;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.io.File;
@@ -49,6 +50,11 @@ public class UnitWindow extends JFrame {
     private JTable tblRents;
     private JTable tblAccount;
     private JPanel paneAccount;
+    private JButton btnFullPayment;
+    private JButton btnPartialPayment;
+    private JButton btnDeletePayment;
+    private JCheckBox advancedViewCheckBox;
+    private JButton button4;
 
     public UnitWindow(Building b) {
         super();
@@ -64,6 +70,22 @@ public class UnitWindow extends JFrame {
         tblValuations.setModel(vtm);
         tblRents.setModel(rtm);
         tblAccount.setModel(rvtm);
+        tblAccount.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+            @Override
+            public Component getTableCellRendererComponent(JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column) {
+                Component c = super.getTableCellRendererComponent(table,value,isSelected,hasFocus,row,column);
+                Receivable r = rvtm.getReceivableAt(row);
+                c.setForeground(Color.RED);
+                if (r.getTransaction() != null) {
+                    if (r.getAmount() <= r.getTransaction().getAmount()) {
+                        c.setForeground(Color.GREEN);
+                    } else if (r.getTransaction().getAmount() > 0){
+                        c.setForeground(Color.ORANGE);
+                    }
+                }
+                return c;
+            }
+        });
         setContentPane(mainPanel);
         setTabPanelStatus(false);
     }
@@ -95,6 +117,9 @@ public class UnitWindow extends JFrame {
         btnImportValuation.addActionListener(e -> this.onImportValuation());
         btnAddRent.addActionListener(e -> this.onAddNewRent());
         btnDeleteRent.addActionListener(e -> this.onDeleteRent());
+        btnFullPayment.addActionListener(e -> this.onMarkFullPayment());
+        btnPartialPayment.addActionListener(e -> this.onMarkPartialPayment());
+        btnDeletePayment.addActionListener(e -> this.onDeletePayment());
 
         cmbUnits.addItemListener(event -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -187,6 +212,40 @@ public class UnitWindow extends JFrame {
         loadValuations(this.selectedUnit);
     }
 
+    private void onMarkFullPayment() {
+        int[] selectedRows = tblAccount.getSelectedRows();
+        for (int i : selectedRows) {
+            Receivable receivable = rvtm.getReceivableAt(i);
+            ReceivableService.setFullPayment(receivable);
+        }
+        loadReceivables(this.selectedUnit);
+    }
+
+    private void onMarkPartialPayment() {
+        String s = JOptionPane.showInputDialog("Amount:");
+        try {
+            float f = Float.parseFloat(s);
+            int[] selectedRows = tblAccount.getSelectedRows();
+            for (int i : selectedRows) {
+                Receivable receivable = rvtm.getReceivableAt(i);
+                ReceivableService.setPartialPayment(receivable, f);
+            }
+            loadReceivables(this.selectedUnit);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(new JFrame(), "Value is not valid!", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void onDeletePayment() {
+        int[] selectedRows = tblAccount.getSelectedRows();
+        for (int i : selectedRows) {
+            Receivable receivable = rvtm.getReceivableAt(i);
+            ReceivableService.deletePayment(receivable);
+        }
+        loadReceivables(this.selectedUnit);
+    }
+
     private void onDeleteRent() {
         if (tblRents.getSelectedRow() == -1)
             return;
@@ -229,6 +288,4 @@ public class UnitWindow extends JFrame {
         loadRents(this.selectedUnit);
         loadReceivables(this.selectedUnit);
     }
-
-
 }
