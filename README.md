@@ -2,7 +2,9 @@
 Realty is a real estate property management system.
 
 ## Functionalities
-* Manage Buildings
-* Manage Units
+* Manage Buildings & Units
+* Tracker
   * Valuation
-  * Rent
+  * Rental
+  * Performance
+  * Rent payments
