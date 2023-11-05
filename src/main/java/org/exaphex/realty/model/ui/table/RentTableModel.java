@@ -19,6 +19,10 @@ public class RentTableModel extends AbstractTableModel  {
         fireTableDataChanged();
     }
 
+    public List<Rent> getRents() {
+        return rents;
+    }
+
     @Override
     public int getRowCount() {
         return rents.size();

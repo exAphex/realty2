@@ -20,6 +20,10 @@ public class ValuationTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
+    public List<Valuation> getValuations() {
+        return valuations;
+    }
+
     @Override
     public int getRowCount() {
         return valuations.size();

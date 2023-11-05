@@ -19,8 +19,12 @@ import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.*;
 import java.util.List;
+
+import static org.exaphex.realty.util.DateUtils.safeFormatDate;
 
 public class UnitWindow extends JFrame {
 
@@ -55,6 +59,11 @@ public class UnitWindow extends JFrame {
     private JButton btnDeletePayment;
     private JCheckBox advancedViewCheckBox;
     private JButton button4;
+    private JPanel paneOverview;
+    private JLabel lblCurrentValue;
+    private JLabel lblEquity;
+    private JLabel lblReturnOnEquity;
+    private JLabel lblReturnOnInvestment;
 
     public UnitWindow(Building b) {
         super();
@@ -92,6 +101,7 @@ public class UnitWindow extends JFrame {
 
     void setTabPanelStatus(Boolean isEnabled) {
         tabPane.setEnabled(isEnabled);
+        setPanelEnabled(paneOverview, isEnabled);
         setPanelEnabled(paneGeneral, isEnabled);
         setPanelEnabled(paneRent, isEnabled);
         setPanelEnabled(paneValuation, isEnabled);
@@ -131,15 +141,60 @@ public class UnitWindow extends JFrame {
 
     private void selectUnit(Unit u) {
         this.selectedUnit = u;
-        setFields(u);
         setTabPanelStatus(true);
         loadValuations(this.selectedUnit);
         loadRents(this.selectedUnit);
         loadReceivables(this.selectedUnit);
+        setFields(u);
     }
 
     private void setFields(Unit u) {
+        setOverviewData(u);
         this.txtName.setText(u != null ? u.getName() : "");
+    }
+
+    private void setOverviewData(Unit u) {
+        List<Valuation> valuations = vtm.getValuations();
+        List<Rent> rents = rtm.getRents();
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        DecimalFormat decimalFormatter = new DecimalFormat("##.##%");
+        float currValue = 0;
+        if (!valuations.isEmpty()) {
+            valuations.sort(new Comparator<Valuation>() {
+                @Override
+                public int compare(Valuation lhs, Valuation rhs) {
+                    Date sfLhs = safeFormatDate(lhs.getDate());
+                    Date sfRhs = safeFormatDate(rhs.getDate());
+                    return sfLhs.after(sfRhs) ? -1 : sfLhs.before(sfRhs) ? 1 : 0;
+                }
+            });
+            currValue = valuations.get(0).getValue();
+
+            lblCurrentValue.setText(formatter.format(currValue));
+            lblEquity.setText(formatter.format(currValue));
+        } else {
+            lblCurrentValue.setText("-");
+            lblEquity.setText("-");
+        }
+
+        if (!rents.isEmpty()) {
+            rents.sort(new Comparator<Rent>() {
+                @Override
+                public int compare(Rent lhs, Rent rhs) {
+                    Date sfLhs = safeFormatDate(lhs.getStartDate());
+                    Date sfRhs = safeFormatDate(rhs.getStartDate());
+                    return sfLhs.after(sfRhs) ? -1 : sfLhs.before(sfRhs) ? 1 : 0;
+                }
+            });
+
+            float currentNetRent = rents.get(0).getRentalPrice();
+            float returnOnInvestment = currValue > 0 ? (currentNetRent * 12) / currValue : 0;
+            lblReturnOnEquity.setText(decimalFormatter.format(returnOnInvestment));
+            lblReturnOnInvestment.setText(decimalFormatter.format(returnOnInvestment));
+        } else {
+            lblReturnOnEquity.setText("0%");
+            lblReturnOnInvestment.setText("0%");
+        }
     }
 
     private void loadUnits(Building b) {

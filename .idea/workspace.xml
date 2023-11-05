@@ -7,8 +7,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added receivable implementation">
+    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added icons">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/util/DateUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/ReceivableService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/ReceivableService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/ui/table/RentTableModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/ui/table/RentTableModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/ui/table/ValuationTableModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/ui/table/ValuationTableModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +180,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698362484455</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="added icons">
+      <option name="closed" value="true" />
+      <created>1698545793681</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1698545793681</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -198,6 +212,7 @@
     <MESSAGE value="added gitignore" />
     <MESSAGE value="added readme" />
     <MESSAGE value="added receivable implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="added receivable implementation" />
+    <MESSAGE value="added icons" />
+    <option name="LAST_COMMIT_MESSAGE" value="added icons" />
   </component>
 </project>

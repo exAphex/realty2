@@ -13,6 +13,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static org.exaphex.realty.util.DateUtils.safeFormatDate;
+
 public class ReceivableService {
 
     public static List<Receivable> getReceivables(Unit u) {
@@ -113,14 +115,5 @@ public class ReceivableService {
         return retReceivables;
     }
 
-    private static Date safeFormatDate(String date) {
-        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        Date retDate = null;
-        try {
-            retDate = formatter.parse(date);
-        } catch (ParseException e) {
-            // TODO: better error handling
-        }
-        return retDate;
-    }
+
 }
