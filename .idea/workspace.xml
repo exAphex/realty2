@@ -7,10 +7,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="updated readme">
+    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added more transaction types">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/Transaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -201,7 +199,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699146900787</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="added more transaction types">
+      <option name="closed" value="true" />
+      <created>1699237655204</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1699237655204</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -228,6 +234,7 @@
     <MESSAGE value="added icons" />
     <MESSAGE value="added performance overview" />
     <MESSAGE value="updated readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated readme" />
+    <MESSAGE value="added more transaction types" />
+    <option name="LAST_COMMIT_MESSAGE" value="added more transaction types" />
   </component>
 </project>

@@ -160,13 +160,10 @@ public class UnitWindow extends JFrame {
         DecimalFormat decimalFormatter = new DecimalFormat("##.##%");
         float currValue = 0;
         if (!valuations.isEmpty()) {
-            valuations.sort(new Comparator<Valuation>() {
-                @Override
-                public int compare(Valuation lhs, Valuation rhs) {
-                    Date sfLhs = safeFormatDate(lhs.getDate());
-                    Date sfRhs = safeFormatDate(rhs.getDate());
-                    return sfLhs.after(sfRhs) ? -1 : sfLhs.before(sfRhs) ? 1 : 0;
-                }
+            valuations.sort((lhs, rhs) -> {
+                Date sfLhs = safeFormatDate(lhs.getDate());
+                Date sfRhs = safeFormatDate(rhs.getDate());
+                return sfLhs.after(sfRhs) ? -1 : sfLhs.before(sfRhs) ? 1 : 0;
             });
             currValue = valuations.get(0).getValue();
 
@@ -178,13 +175,10 @@ public class UnitWindow extends JFrame {
         }
 
         if (!rents.isEmpty()) {
-            rents.sort(new Comparator<Rent>() {
-                @Override
-                public int compare(Rent lhs, Rent rhs) {
-                    Date sfLhs = safeFormatDate(lhs.getStartDate());
-                    Date sfRhs = safeFormatDate(rhs.getStartDate());
-                    return sfLhs.after(sfRhs) ? -1 : sfLhs.before(sfRhs) ? 1 : 0;
-                }
+            rents.sort((lhs, rhs) -> {
+                Date sfLhs = safeFormatDate(lhs.getStartDate());
+                Date sfRhs = safeFormatDate(rhs.getStartDate());
+                return sfLhs.after(sfRhs) ? -1 : sfLhs.before(sfRhs) ? 1 : 0;
             });
 
             float currentNetRent = rents.get(0).getRentalPrice();
