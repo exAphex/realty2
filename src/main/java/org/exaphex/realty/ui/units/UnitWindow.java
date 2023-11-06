@@ -1,10 +1,7 @@
 package org.exaphex.realty.ui.units;
 
 import com.opencsv.bean.CsvToBeanBuilder;
-import org.exaphex.realty.db.service.ReceivableService;
-import org.exaphex.realty.db.service.RentService;
-import org.exaphex.realty.db.service.UnitService;
-import org.exaphex.realty.db.service.ValuationService;
+import org.exaphex.realty.db.service.*;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.transport.ValuationTransportModel;
 import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
@@ -64,6 +61,7 @@ public class UnitWindow extends JFrame {
     private JLabel lblEquity;
     private JLabel lblReturnOnEquity;
     private JLabel lblReturnOnInvestment;
+    private JLabel lblReceivedRents;
 
     public UnitWindow(Building b) {
         super();
@@ -156,6 +154,8 @@ public class UnitWindow extends JFrame {
     private void setOverviewData(Unit u) {
         List<Valuation> valuations = vtm.getValuations();
         List<Rent> rents = rtm.getRents();
+        List<Transaction> transactions = TransactionService.getTransactions(u);
+
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         DecimalFormat decimalFormatter = new DecimalFormat("##.##%");
         float currValue = 0;
@@ -194,6 +194,13 @@ public class UnitWindow extends JFrame {
         } else {
             lblReturnOnEquity.setText("0%");
             lblReturnOnInvestment.setText("0%");
+        }
+
+        if (!transactions.isEmpty()) {
+            float tempTotalRents = transactions.stream().filter(t -> t.getType() == Transaction.RENT_PAYMENT).map(Transaction::getAmount).reduce(0f, Float::sum);
+            lblReceivedRents.setText(formatter.format(tempTotalRents));
+        } else {
+            lblReceivedRents.setText("-");
         }
     }
 
