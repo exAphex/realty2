@@ -81,6 +81,12 @@ public class DatabaseConnector {
                         "CREATE TABLE IF NOT EXISTS transactions(id VARCHAR(255), date VARCHAR(10), type INT, unitid VARCHAR(255), amount DOUBLE)");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (5)");
                 break;
+            case 5:
+                executeSQL(conn,
+                        "ALTER TABLE transactions ADD secondaryamount DOUBLE;");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (6)");
+                break;
+
             default:
         }
     }

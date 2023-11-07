@@ -24,7 +24,7 @@ public class TransactionService {
             statement.setString(1, u.getId());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Transaction tmpTransaction = new Transaction(rs.getString("id"), rs.getString("date"), rs.getInt("type"), rs.getString("unitid"), rs.getFloat("amount"));
+                Transaction tmpTransaction = new Transaction(rs.getString("id"), rs.getString("date"), rs.getInt("type"), rs.getString("unitid"), rs.getFloat("amount"), rs.getFloat("secondaryamount"));
                 retTransactions.add(tmpTransaction);
             }
         } catch (SQLException e) {
@@ -41,12 +41,13 @@ public class TransactionService {
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("INSERT INTO transactions VALUES (?,?,?,?,?)");
+            statement = conn.prepareStatement("INSERT INTO transactions VALUES (?,?,?,?,?,?)");
             statement.setString(1, transaction.getId());
             statement.setString(2, transaction.getDate());
             statement.setInt(3, transaction.getType());
             statement.setString(4, transaction.getUnitId());
             statement.setFloat(5, transaction.getAmount());
+            statement.setFloat(6, transaction.getSecondaryAmount());
             statement.executeUpdate();
         } catch (SQLException e) {
             // TODO: proper logging
@@ -61,12 +62,13 @@ public class TransactionService {
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("UPDATE transactions SET date = ?, type = ?, unitid = ?, amount = ? where id = ?");
+            statement = conn.prepareStatement("UPDATE transactions SET date = ?, type = ?, unitid = ?, amount = ?, secondaryamount = ? where id = ?");
             statement.setString(1, transaction.getDate());
             statement.setInt(2, transaction.getType());
             statement.setString(3, transaction.getUnitId());
             statement.setFloat(4, transaction.getAmount());
-            statement.setString(5, transaction.getId());
+            statement.setFloat(5, transaction.getSecondaryAmount());
+            statement.setString(6, transaction.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             // TODO: proper logging

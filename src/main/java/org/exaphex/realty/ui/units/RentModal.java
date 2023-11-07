@@ -9,6 +9,8 @@ import javax.swing.text.DefaultFormatterFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static org.exaphex.realty.util.PriceUtils.validatePrice;
+
 public class RentModal {
     private final Unit unit;
     private final UnitWindow uw;
@@ -91,16 +93,6 @@ public class RentModal {
                     uw.eventAddNewRent(new Rent(txtFirstName.getText(), txtLastName.getText(), this.unit.getId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit));
                     dialog.dispose();
                 });
-    }
-
-    private Float validatePrice(String val, String fieldName) {
-        try {
-            return Float.parseFloat(val);
-        } catch (NumberFormatException n) {
-            JOptionPane.showMessageDialog(new JFrame(), fieldName + " is not valid!", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
     }
 
 }

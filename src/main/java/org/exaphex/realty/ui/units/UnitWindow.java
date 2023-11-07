@@ -7,6 +7,7 @@ import org.exaphex.realty.model.transport.ValuationTransportModel;
 import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
 import org.exaphex.realty.model.ui.table.ReceiveableTableModel;
 import org.exaphex.realty.model.ui.table.RentTableModel;
+import org.exaphex.realty.model.ui.table.TransactionTableModel;
 import org.exaphex.realty.model.ui.table.ValuationTableModel;
 
 import javax.swing.*;
@@ -29,6 +30,7 @@ public class UnitWindow extends JFrame {
     ValuationTableModel vtm = new ValuationTableModel(new ArrayList<>());
     RentTableModel rtm = new RentTableModel(new ArrayList<>());
     ReceiveableTableModel rvtm = new ReceiveableTableModel(new ArrayList<>());
+    TransactionTableModel ttm = new TransactionTableModel(new ArrayList<>());
     Unit selectedUnit;
     private final Building building;
     private JComboBox cmbUnits;
@@ -55,13 +57,14 @@ public class UnitWindow extends JFrame {
     private JButton btnPartialPayment;
     private JButton btnDeletePayment;
     private JCheckBox advancedViewCheckBox;
-    private JButton button4;
+    private JButton btnAddTransaction;
     private JPanel paneOverview;
     private JLabel lblCurrentValue;
     private JLabel lblEquity;
     private JLabel lblReturnOnEquity;
     private JLabel lblReturnOnInvestment;
     private JLabel lblReceivedRents;
+    private JButton btnDeleteTransaction;
 
     public UnitWindow(Building b) {
         super();
@@ -76,8 +79,8 @@ public class UnitWindow extends JFrame {
         cmbUnits.setModel(utm);
         tblValuations.setModel(vtm);
         tblRents.setModel(rtm);
-        tblAccount.setModel(rvtm);
-        tblAccount.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+        tblAccount.setModel(ttm);
+        /*tblAccount.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
             @Override
             public Component getTableCellRendererComponent(JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column) {
                 Component c = super.getTableCellRendererComponent(table,value,isSelected,hasFocus,row,column);
@@ -92,7 +95,7 @@ public class UnitWindow extends JFrame {
                 }
                 return c;
             }
-        });
+        });*/
         setContentPane(mainPanel);
         setTabPanelStatus(false);
     }
@@ -128,6 +131,8 @@ public class UnitWindow extends JFrame {
         btnFullPayment.addActionListener(e -> this.onMarkFullPayment());
         btnPartialPayment.addActionListener(e -> this.onMarkPartialPayment());
         btnDeletePayment.addActionListener(e -> this.onDeletePayment());
+        btnAddTransaction.addActionListener(e -> this.onAddTransaction());
+        btnDeleteTransaction.addActionListener(e -> this.onDeleteTransaction());
 
         cmbUnits.addItemListener(event -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -143,6 +148,7 @@ public class UnitWindow extends JFrame {
         loadValuations(this.selectedUnit);
         loadRents(this.selectedUnit);
         loadReceivables(this.selectedUnit);
+        loadTransactions(this.selectedUnit);
         setFields(u);
     }
 
@@ -218,6 +224,11 @@ public class UnitWindow extends JFrame {
         rvtm.setReceivables(receivables);
     }
 
+    private void loadTransactions(Unit u) {
+        List<Transaction> transactions = TransactionService.getTransactions(u);
+        ttm.setTransactions(transactions);
+    }
+
     public Building getBuilding() {
         return this.building;
     }
@@ -232,6 +243,10 @@ public class UnitWindow extends JFrame {
 
     private void onAddNewValuation() {
         new ValuationModal(this, this.selectedUnit);
+    }
+
+    private void onAddTransaction() {
+        new TransactionModal(this, this.selectedUnit);
     }
 
     private void onImportValuation() {
@@ -266,6 +281,15 @@ public class UnitWindow extends JFrame {
         Valuation valuation = vtm.getValuationAt(tblValuations.getSelectedRow());
         ValuationService.deleteValuation(valuation);
         loadValuations(this.selectedUnit);
+    }
+
+    private void onDeleteTransaction() {
+        int[] selectedRows = tblAccount.getSelectedRows();
+        for (int i : selectedRows) {
+            Transaction transaction = ttm.getTransactionAt(i);
+            TransactionService.deleteTransaction(transaction);
+        }
+        loadTransactions(this.selectedUnit);
     }
 
     private void onMarkFullPayment() {
@@ -343,5 +367,10 @@ public class UnitWindow extends JFrame {
         RentService.addRent(r);
         loadRents(this.selectedUnit);
         loadReceivables(this.selectedUnit);
+    }
+
+    public void eventAddNewTransaction(Transaction t) {
+        TransactionService.addTransaction(t);
+        loadTransactions(this.selectedUnit);
     }
 }
