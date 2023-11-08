@@ -86,7 +86,11 @@ public class DatabaseConnector {
                         "ALTER TABLE transactions ADD secondaryamount DOUBLE;");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (6)");
                 break;
-
+            case 6:
+                executeSQL(conn,
+                        "CREATE TABLE IF NOT EXISTS credits(id VARCHAR(255), unitid VARCHAR(255),name VARCHAR(255), description VARCHAR(255), interestrate DOUBLE, redemptionrate DOUBLE, startdate VARCHAR(10))");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (7)");
+                break;
             default:
         }
     }

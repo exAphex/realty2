@@ -65,6 +65,10 @@ public class UnitWindow extends JFrame {
     private JLabel lblReturnOnInvestment;
     private JLabel lblReceivedRents;
     private JButton btnDeleteTransaction;
+    private JPanel paneCredit;
+    private JButton button1;
+    private JButton button2;
+    private JTable table1;
 
     public UnitWindow(Building b) {
         super();
@@ -107,6 +111,7 @@ public class UnitWindow extends JFrame {
         setPanelEnabled(paneRent, isEnabled);
         setPanelEnabled(paneValuation, isEnabled);
         setPanelEnabled(paneAccount, isEnabled);
+        setPanelEnabled(paneCredit, isEnabled);
     }
 
     void setPanelEnabled(JPanel panel, Boolean isEnabled) {
