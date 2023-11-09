@@ -27,4 +27,24 @@ public class Credit {
         this.redemptionRate = redemptionRate;
         this.startDate = startDate;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public float getInterestRate() {
+        return interestRate;
+    }
+
+    public float getRedemptionRate() {
+        return redemptionRate;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
 }

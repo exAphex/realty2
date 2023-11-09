@@ -5,13 +5,9 @@ import org.exaphex.realty.db.service.*;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.transport.ValuationTransportModel;
 import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
-import org.exaphex.realty.model.ui.table.ReceiveableTableModel;
-import org.exaphex.realty.model.ui.table.RentTableModel;
-import org.exaphex.realty.model.ui.table.TransactionTableModel;
-import org.exaphex.realty.model.ui.table.ValuationTableModel;
+import org.exaphex.realty.model.ui.table.*;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.io.File;
@@ -31,6 +27,7 @@ public class UnitWindow extends JFrame {
     RentTableModel rtm = new RentTableModel(new ArrayList<>());
     ReceiveableTableModel rvtm = new ReceiveableTableModel(new ArrayList<>());
     TransactionTableModel ttm = new TransactionTableModel(new ArrayList<>());
+    CreditTableModel ctm = new CreditTableModel(new ArrayList<>());
     Unit selectedUnit;
     private final Building building;
     private JComboBox cmbUnits;
@@ -68,7 +65,7 @@ public class UnitWindow extends JFrame {
     private JPanel paneCredit;
     private JButton button1;
     private JButton button2;
-    private JTable table1;
+    private JTable tblCredit;
 
     public UnitWindow(Building b) {
         super();
@@ -84,6 +81,7 @@ public class UnitWindow extends JFrame {
         tblValuations.setModel(vtm);
         tblRents.setModel(rtm);
         tblAccount.setModel(ttm);
+        tblCredit.setModel(ctm);
         /*tblAccount.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
             @Override
             public Component getTableCellRendererComponent(JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column) {
@@ -154,6 +152,7 @@ public class UnitWindow extends JFrame {
         loadRents(this.selectedUnit);
         loadReceivables(this.selectedUnit);
         loadTransactions(this.selectedUnit);
+        loadCredits(this.selectedUnit);
         setFields(u);
     }
 
@@ -232,6 +231,11 @@ public class UnitWindow extends JFrame {
     private void loadTransactions(Unit u) {
         List<Transaction> transactions = TransactionService.getTransactions(u);
         ttm.setTransactions(transactions);
+    }
+
+    private void loadCredits(Unit u) {
+        List<Credit> credits = CreditService.getCredit(u);
+        ctm.setCredits(credits);
     }
 
     public Building getBuilding() {
