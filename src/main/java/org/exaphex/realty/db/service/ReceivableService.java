@@ -1,5 +1,7 @@
 package org.exaphex.realty.db.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.model.Receivable;
 import org.exaphex.realty.model.Rent;
 import org.exaphex.realty.model.Transaction;
@@ -16,6 +18,7 @@ import java.util.List;
 import static org.exaphex.realty.util.DateUtils.safeFormatDate;
 
 public class ReceivableService {
+    protected static final Logger logger = LogManager.getLogger();
 
     public static List<Receivable> getReceivables(Unit u) {
         List<Rent> rents = RentService.getRents(u);
@@ -110,7 +113,7 @@ public class ReceivableService {
                 beginCalendar.add(Calendar.MONTH, 1);
             }
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         return retReceivables;
     }

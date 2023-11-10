@@ -1,5 +1,7 @@
 package org.exaphex.realty.db.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.db.DatabaseConnector;
 import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.Transaction;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionService {
+    protected static final Logger logger = LogManager.getLogger();
 
     public static List<Transaction> getTransactions(Unit u) {
         Connection conn = null;
@@ -28,7 +31,7 @@ public class TransactionService {
                 retTransactions.add(tmpTransaction);
             }
         } catch (SQLException e) {
-            // TODO: proper logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -50,7 +53,7 @@ public class TransactionService {
             statement.setFloat(6, transaction.getSecondaryAmount());
             statement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: proper logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -71,7 +74,7 @@ public class TransactionService {
             statement.setString(6, transaction.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: proper logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -87,7 +90,7 @@ public class TransactionService {
             statement.setString(1, transaction.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: proper logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -103,7 +106,7 @@ public class TransactionService {
             statement.setString(1, u.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: proper logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);

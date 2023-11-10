@@ -1,5 +1,7 @@
 package org.exaphex.realty.db.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.db.DatabaseConnector;
 import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.Unit;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UnitService {
+    protected static final Logger logger = LogManager.getLogger();
 
     public static List<Unit> getUnits(Building b) {
         Connection conn = null;
@@ -24,7 +27,7 @@ public class UnitService {
                 retUnits.add(tmpUnit);
             }
         } catch (SQLException e) {
-            // TODO: proper logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -43,7 +46,7 @@ public class UnitService {
             statement.setString(3, unit.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: proper logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -66,7 +69,7 @@ public class UnitService {
             statement.setString(1, unit.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: better logger
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);

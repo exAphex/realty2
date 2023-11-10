@@ -4,6 +4,7 @@ import org.exaphex.realty.model.Credit;
 
 import javax.swing.table.AbstractTableModel;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class CreditTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 7;
     }
 
     @Override
@@ -37,10 +38,14 @@ public class CreditTableModel extends AbstractTableModel {
             case 1:
                 yield "Description";
             case 2:
-                yield "Start date";
+                yield "Amount";
             case 3:
-                yield "Interest rate";
+                yield "Start date";
             case 4:
+                yield "End date";
+            case 5:
+                yield "Interest rate";
+            case 6:
                 yield "Redemption rate";
             default:
                 yield "";
@@ -50,6 +55,7 @@ public class CreditTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         DecimalFormat decimalFormatter = new DecimalFormat("##.##%");
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
         Credit credit = credits.get(rowIndex);
         return switch (columnIndex) {
             case 0:
@@ -57,10 +63,14 @@ public class CreditTableModel extends AbstractTableModel {
             case 1:
                 yield credit.getDescription();
             case 2:
-                yield credit.getStartDate();
+                yield formatter.format(credit.getAmount());
             case 3:
-                yield decimalFormatter.format(credit.getInterestRate());
+                yield credit.getStartDate();
             case 4:
+                yield credit.getEndDate();
+            case 5:
+                yield decimalFormatter.format(credit.getInterestRate());
+            case 6:
                 yield decimalFormatter.format(credit.getRedemptionRate());
             default:
                 yield "??";

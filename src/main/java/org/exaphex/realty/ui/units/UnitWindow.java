@@ -1,6 +1,8 @@
 package org.exaphex.realty.ui.units;
 
 import com.opencsv.bean.CsvToBeanBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.db.service.*;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.transport.ValuationTransportModel;
@@ -21,7 +23,7 @@ import java.util.List;
 import static org.exaphex.realty.util.DateUtils.safeFormatDate;
 
 public class UnitWindow extends JFrame {
-
+    protected static final Logger logger = LogManager.getLogger();
     UnitComboBoxModel utm = new UnitComboBoxModel(new ArrayList<>());
     ValuationTableModel vtm = new ValuationTableModel(new ArrayList<>());
     RentTableModel rtm = new RentTableModel(new ArrayList<>());
@@ -63,8 +65,8 @@ public class UnitWindow extends JFrame {
     private JLabel lblReceivedRents;
     private JButton btnDeleteTransaction;
     private JPanel paneCredit;
-    private JButton button1;
-    private JButton button2;
+    private JButton btnAddCredit;
+    private JButton btnDeleteCredit;
     private JTable tblCredit;
 
     public UnitWindow(Building b) {
@@ -136,6 +138,8 @@ public class UnitWindow extends JFrame {
         btnDeletePayment.addActionListener(e -> this.onDeletePayment());
         btnAddTransaction.addActionListener(e -> this.onAddTransaction());
         btnDeleteTransaction.addActionListener(e -> this.onDeleteTransaction());
+        btnAddCredit.addActionListener(e -> this.onAddCredit());
+        btnDeleteCredit.addActionListener(e -> this.onDeleteCredit());
 
         cmbUnits.addItemListener(event -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -258,6 +262,8 @@ public class UnitWindow extends JFrame {
         new TransactionModal(this, this.selectedUnit);
     }
 
+    private void onAddCredit() { new CreditModal(this, this.selectedUnit);}
+
     private void onImportValuation() {
         JFileChooser chooser = new JFileChooser();
         int retOption = chooser.showOpenDialog(null);
@@ -273,12 +279,12 @@ public class UnitWindow extends JFrame {
                     try {
                         ValuationService.addValuation(v.getValuation(this.selectedUnit.getId()));
                     } catch (Exception e) {
-                        // TODO: proper exception
+                        logger.error(e);
                     }
                 }
                 loadValuations(this.selectedUnit);
             } catch (FileNotFoundException e) {
-                // TODO: error handling
+                logger.error(e);
             }
         }
     }
@@ -299,6 +305,15 @@ public class UnitWindow extends JFrame {
             TransactionService.deleteTransaction(transaction);
         }
         loadTransactions(this.selectedUnit);
+    }
+
+    private void onDeleteCredit() {
+        int[] selectedRows = tblCredit.getSelectedRows();
+        for (int i : selectedRows) {
+            Credit credit = ctm.getCreditAt(i);
+            CreditService.deleteCredit(credit);
+        }
+        loadCredits(this.selectedUnit);
     }
 
     private void onMarkFullPayment() {
@@ -381,5 +396,10 @@ public class UnitWindow extends JFrame {
     public void eventAddNewTransaction(Transaction t) {
         TransactionService.addTransaction(t);
         loadTransactions(this.selectedUnit);
+    }
+
+    public void eventAddNewCredit(Credit c) {
+        CreditService.addCredit(c);
+        loadCredits(this.selectedUnit);
     }
 }

@@ -66,12 +66,12 @@ public class TransactionModal {
                         return;
                     }
 
-                    Float fAmount = validatePrice(txtAmount.getText(), "Deposit");
+                    Float fAmount = validatePrice(txtAmount.getText(), "Amount");
                     if (fAmount == null) {
                         return;
                     }
 
-                    Float fSecondaryAmount = validatePrice(txtSecondary.getText(), "Deposit");
+                    Float fSecondaryAmount = validatePrice(txtSecondary.getText(), "Secondary amount");
                     if (fSecondaryAmount == null) {
                         return;
                     }

@@ -419,14 +419,14 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="cda63" class="javax.swing.JButton" binding="button1" default-binding="true">
+                  <component id="cda63" class="javax.swing.JButton" binding="btnAddCredit">
                     <constraints/>
                     <properties>
                       <icon value="add.png"/>
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="ba916" class="javax.swing.JButton" binding="button2" default-binding="true">
+                  <component id="ba916" class="javax.swing.JButton" binding="btnDeleteCredit">
                     <constraints/>
                     <properties>
                       <icon value="delete.png"/>
@@ -444,7 +444,10 @@
                 <children>
                   <component id="6ee86" class="javax.swing.JTable" binding="tblCredit">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <autoCreateRowSorter value="false"/>
+                      <autoResizeMode value="2"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>

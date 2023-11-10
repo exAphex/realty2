@@ -1,5 +1,7 @@
 package org.exaphex.realty.db.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.db.DatabaseConnector;
 import org.exaphex.realty.model.Unit;
 import org.exaphex.realty.model.Valuation;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ValuationService {
-
+    protected static final Logger logger = LogManager.getLogger();
     public static List<Valuation> getValuations(Unit u) {
         Connection conn = null;
         PreparedStatement statement = null;
@@ -24,7 +26,7 @@ public class ValuationService {
                 retValuations.add(tmpValuation);
             }
         } catch (SQLException e) {
-            // TODO: better logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -47,7 +49,7 @@ public class ValuationService {
                 retValuations.add(tmpValuation);
             }
         } catch (SQLException e) {
-            // TODO: better logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -71,7 +73,7 @@ public class ValuationService {
             statement.setString(3,v.getDate());
             statement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: better logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -88,7 +90,7 @@ public class ValuationService {
             statement.setString(2, valuation.getDate());
             statement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: better logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -104,7 +106,7 @@ public class ValuationService {
             statement.setString(1, unit.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: better logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);

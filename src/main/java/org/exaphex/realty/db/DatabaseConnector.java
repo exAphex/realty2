@@ -5,9 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.h2.jdbcx.JdbcConnectionPool;
 
 public class DatabaseConnector {
+    protected static final Logger logger = LogManager.getLogger();
     public static JdbcConnectionPool cp = JdbcConnectionPool.create(
             "jdbc:h2:./test", "sa", "sa");
 
@@ -91,6 +94,16 @@ public class DatabaseConnector {
                         "CREATE TABLE IF NOT EXISTS credits(id VARCHAR(255), unitid VARCHAR(255),name VARCHAR(255), description VARCHAR(255), interestrate DOUBLE, redemptionrate DOUBLE, startdate VARCHAR(10))");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (7)");
                 break;
+            case 7:
+                executeSQL(conn,
+                        "ALTER TABLE credits ADD enddate VARCHAR(10);");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (8)");
+                break;
+            case 8:
+                executeSQL(conn,
+                        "ALTER TABLE credits ADD amount DOUBLE;");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (9)");
+                break;
             default:
         }
     }
@@ -100,7 +113,7 @@ public class DatabaseConnector {
             if (conn != null)
                 conn.close();
         } catch (SQLException e) {
-            // TODO: better logging
+            logger.error(e);
         }
     }
 
@@ -109,7 +122,7 @@ public class DatabaseConnector {
             if (statement != null)
                 statement.close();
         } catch (SQLException e) {
-            // TODO: better logging
+            logger.error(e);
         }
     }
 }

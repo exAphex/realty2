@@ -7,10 +7,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.db.DatabaseConnector;
 import org.exaphex.realty.model.Building;
 
 public class BuildingService {
+    protected static final Logger logger = LogManager.getLogger();
 
     public static List<Building> getAllBuildings() {
         Connection conn = null;
@@ -26,7 +29,7 @@ public class BuildingService {
                 retBuildings.add(tmpBuilding);
             }
         } catch (SQLException e) {
-            // TODO: proper logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -48,7 +51,7 @@ public class BuildingService {
             statement.setString(6, building.getCity());
             statement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: proper logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -64,7 +67,7 @@ public class BuildingService {
             statement.setString(1, building.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: proper logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
