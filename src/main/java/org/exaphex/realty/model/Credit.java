@@ -72,4 +72,8 @@ public class Credit {
     public float getAmount() {
         return amount;
     }
+
+    public float getInstallmentAmount() {
+        return ((this.interestRate + this.redemptionRate) * this.amount) / 12;
+    }
 }

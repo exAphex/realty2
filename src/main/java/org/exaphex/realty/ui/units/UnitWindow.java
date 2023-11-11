@@ -68,6 +68,7 @@ public class UnitWindow extends JFrame {
     private JButton btnAddCredit;
     private JButton btnDeleteCredit;
     private JTable tblCredit;
+    private JButton btnCheckCredit;
 
     public UnitWindow(Building b) {
         super();
@@ -140,6 +141,7 @@ public class UnitWindow extends JFrame {
         btnDeleteTransaction.addActionListener(e -> this.onDeleteTransaction());
         btnAddCredit.addActionListener(e -> this.onAddCredit());
         btnDeleteCredit.addActionListener(e -> this.onDeleteCredit());
+        btnCheckCredit.addActionListener(e -> this.onCheckCredit());
 
         cmbUnits.addItemListener(event -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -358,6 +360,10 @@ public class UnitWindow extends JFrame {
         RentService.deleteRent(rent);
         loadRents(this.selectedUnit);
         loadReceivables(this.selectedUnit);
+    }
+
+    private void onCheckCredit() {
+        new CreditCheckWindow(this, this.selectedUnit);
     }
 
     private void onDeleteUnit() {

@@ -433,6 +433,12 @@
                       <text value=""/>
                     </properties>
                   </component>
+                  <component id="ad09a" class="javax.swing.JButton" binding="btnCheckCredit">
+                    <constraints/>
+                    <properties>
+                      <text value="Credit Check"/>
+                    </properties>
+                  </component>
                 </children>
               </toolbar>
               <scrollpane id="34e50">
