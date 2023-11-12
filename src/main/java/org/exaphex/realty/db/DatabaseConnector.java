@@ -104,6 +104,13 @@ public class DatabaseConnector {
                         "ALTER TABLE credits ADD amount DOUBLE;");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (9)");
                 break;
+            case 9:
+                executeSQL(conn,
+                        "ALTER TABLE transactions ADD description VARCHAR(255);");
+                executeSQL(conn,
+                        "ALTER TABLE transactions ADD reference VARCHAR(255);");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (10)");
+                break;
             default:
         }
     }

@@ -32,7 +32,7 @@ public class TransactionTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -41,8 +41,10 @@ public class TransactionTableModel extends AbstractTableModel {
             case 0:
                 yield "Date";
             case 1:
-                yield "Type";
+                yield "Description";
             case 2:
+                yield "Type";
+            case 3:
                 yield "Amount";
             default:
                 yield "";
@@ -57,8 +59,10 @@ public class TransactionTableModel extends AbstractTableModel {
             case 0:
                 yield transaction.getDate();
             case 1:
-                yield formatTransactionType(transaction.getType());
+                yield transaction.getDescription();
             case 2:
+                yield formatTransactionType(transaction.getType());
+            case 3:
                 yield transaction.getType() == Transaction.RENT_PAYMENT || transaction.getType() == Transaction.CREDIT_PAYMENT ? formatter.format(transaction.getAmount() + transaction.getSecondaryAmount()) : formatter.format(transaction.getAmount());
             default:
                 yield "??";

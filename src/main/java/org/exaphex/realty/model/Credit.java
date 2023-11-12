@@ -12,6 +12,7 @@ public class Credit {
     private String startDate;
     private String endDate;
     private float amount;
+    private float repaidAmount;
 
     public Credit(String id, String unitId, String name, String description, float interestRate, float redemptionRate, String startDate, String endDate, float amount) {
         this.id = id;
@@ -23,6 +24,7 @@ public class Credit {
         this.startDate = startDate;
         this.endDate = endDate;
         this.amount = amount;
+        this.repaidAmount = 0;
     }
 
     public Credit(String name, String unitId, String description, float interestRate, float redemptionRate, String startDate, String endDate, float amount) {
@@ -35,6 +37,7 @@ public class Credit {
         this.startDate = startDate;
         this.endDate = endDate;
         this.amount = amount;
+        this.repaidAmount = 0;
     }
 
     public String getName() {
@@ -75,5 +78,13 @@ public class Credit {
 
     public float getInstallmentAmount() {
         return ((this.interestRate + this.redemptionRate) * this.amount) / 12;
+    }
+
+    public float getRepaidAmount() {
+        return repaidAmount;
+    }
+
+    public void setRepaidAmount(float repaidAmount) {
+        this.repaidAmount = repaidAmount;
     }
 }

@@ -27,7 +27,7 @@ public class CreditTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 7;
+        return 8;
     }
 
     @Override
@@ -40,12 +40,14 @@ public class CreditTableModel extends AbstractTableModel {
             case 2:
                 yield "Amount";
             case 3:
-                yield "Start date";
+                yield "Remained";
             case 4:
-                yield "End date";
+                yield "Start date";
             case 5:
-                yield "Interest rate";
+                yield "End date";
             case 6:
+                yield "Interest rate";
+            case 7:
                 yield "Redemption rate";
             default:
                 yield "";
@@ -65,12 +67,14 @@ public class CreditTableModel extends AbstractTableModel {
             case 2:
                 yield formatter.format(credit.getAmount());
             case 3:
-                yield credit.getStartDate();
+                yield formatter.format(credit.getAmount() - credit.getRepaidAmount());
             case 4:
-                yield credit.getEndDate();
+                yield credit.getStartDate();
             case 5:
-                yield decimalFormatter.format(credit.getInterestRate());
+                yield credit.getEndDate();
             case 6:
+                yield decimalFormatter.format(credit.getInterestRate());
+            case 7:
                 yield decimalFormatter.format(credit.getRedemptionRate());
             default:
                 yield "??";

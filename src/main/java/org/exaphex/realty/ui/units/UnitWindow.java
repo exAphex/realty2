@@ -8,6 +8,7 @@ import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.transport.ValuationTransportModel;
 import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
 import org.exaphex.realty.model.ui.table.*;
+import org.exaphex.realty.processor.CreditProcessor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,8 @@ import java.text.NumberFormat;
 import java.util.*;
 import java.util.List;
 
+import static org.exaphex.realty.processor.CreditProcessor.getPaidAmount;
+import static org.exaphex.realty.processor.CreditProcessor.getTotalAmount;
 import static org.exaphex.realty.util.DateUtils.safeFormatDate;
 
 public class UnitWindow extends JFrame {
@@ -175,6 +178,7 @@ public class UnitWindow extends JFrame {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         DecimalFormat decimalFormatter = new DecimalFormat("##.##%");
         float currValue = 0;
+        float currEquityValue = 0;
         if (!valuations.isEmpty()) {
             valuations.sort((lhs, rhs) -> {
                 Date sfLhs = safeFormatDate(lhs.getDate());
@@ -182,9 +186,11 @@ public class UnitWindow extends JFrame {
                 return sfLhs.after(sfRhs) ? -1 : sfLhs.before(sfRhs) ? 1 : 0;
             });
             currValue = valuations.get(0).getValue();
+            float creditTotal = getTotalAmount(CreditService.getCredit(this.selectedUnit));
+            currEquityValue = currValue - creditTotal + CreditProcessor.getTotalPaidAmount(transactions);
 
             lblCurrentValue.setText(formatter.format(currValue));
-            lblEquity.setText(formatter.format(currValue));
+            lblEquity.setText(formatter.format(currEquityValue));
         } else {
             lblCurrentValue.setText("-");
             lblEquity.setText("-");
@@ -199,7 +205,8 @@ public class UnitWindow extends JFrame {
 
             float currentNetRent = rents.get(0).getRentalPrice();
             float returnOnInvestment = currValue > 0 ? (currentNetRent * 12) / currValue : 0;
-            lblReturnOnEquity.setText(decimalFormatter.format(returnOnInvestment));
+            float returnOnEquity = currEquityValue > 0 ? (currentNetRent * 12) / currEquityValue : 0;
+            lblReturnOnEquity.setText(decimalFormatter.format(returnOnEquity));
             lblReturnOnInvestment.setText(decimalFormatter.format(returnOnInvestment));
         } else {
             lblReturnOnEquity.setText("0%");
@@ -234,13 +241,17 @@ public class UnitWindow extends JFrame {
         rvtm.setReceivables(receivables);
     }
 
-    private void loadTransactions(Unit u) {
+    public void loadTransactions(Unit u) {
         List<Transaction> transactions = TransactionService.getTransactions(u);
         ttm.setTransactions(transactions);
     }
 
     private void loadCredits(Unit u) {
         List<Credit> credits = CreditService.getCredit(u);
+        List<Transaction> transactions = TransactionService.getTransactions(u);
+        for (Credit c : credits) {
+            c.setRepaidAmount(getPaidAmount(c, transactions));
+        }
         ctm.setCredits(credits);
     }
 
@@ -363,7 +374,11 @@ public class UnitWindow extends JFrame {
     }
 
     private void onCheckCredit() {
-        new CreditCheckWindow(this, this.selectedUnit);
+        if (tblCredit.getSelectedRow() == -1)
+            return;
+
+        Credit credit = ctm.getCreditAt(tblCredit.getSelectedRow());
+        new CreditCheckWindow(this, this.selectedUnit, credit);
     }
 
     private void onDeleteUnit() {

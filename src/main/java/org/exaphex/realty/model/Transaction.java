@@ -6,16 +6,19 @@ public class Transaction {
     public static final int RENT_PAYMENT = 0;
     public static final int DEPOSIT = 1;
     public static final int CREDIT_PAYMENT = 2;
-
     private final String id;
     private final String date;
     private final int type;
     private final String unitId;
     private float amount;
     private float secondaryAmount;
+    private String description;
+    private String reference;
 
-    public Transaction(String id, String date, int type, String unitId, float amount) {
+    public Transaction(String id, String description, String reference, String date, int type, String unitId, float amount) {
         this.id = id;
+        this.description = description;
+        this.reference = reference;
         this.date = date;
         this.type = type;
         this.unitId = unitId;
@@ -23,8 +26,10 @@ public class Transaction {
         this.secondaryAmount = 0;
     }
 
-    public Transaction(String id, String date, int type, String unitId, float amount, float secondaryAmount) {
+    public Transaction(String id, String description, String reference, String date, int type, String unitId, float amount, float secondaryAmount) {
         this.id = id;
+        this.description = description;
+        this.reference = reference;
         this.date = date;
         this.type = type;
         this.unitId = unitId;
@@ -32,8 +37,10 @@ public class Transaction {
         this.secondaryAmount = secondaryAmount;
     }
 
-    public Transaction(String date, int type, String unitId, float amount) {
+    public Transaction(String description, String reference, String date, int type, String unitId, float amount) {
         this.id = UUID.randomUUID().toString();
+        this.description = description;
+        this.reference = reference;
         this.date = date;
         this.type = type;
         this.unitId = unitId;
@@ -41,8 +48,10 @@ public class Transaction {
         this.secondaryAmount = 0;
     }
 
-    public Transaction(String date, int type, String unitId, float amount, float secondaryAmount) {
+    public Transaction(String description, String reference, String date, int type, String unitId, float amount, float secondaryAmount) {
         this.id = UUID.randomUUID().toString();
+        this.description = description;
+        this.reference = reference;
         this.date = date;
         this.type = type;
         this.unitId = unitId;
@@ -98,5 +107,13 @@ public class Transaction {
             case "Credit payment" -> CREDIT_PAYMENT;
             default -> -1;
         };
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getReference() {
+        return reference;
     }
 }

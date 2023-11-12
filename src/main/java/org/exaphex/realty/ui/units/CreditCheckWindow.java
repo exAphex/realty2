@@ -1,8 +1,6 @@
 package org.exaphex.realty.ui.units;
 
 import org.exaphex.realty.db.service.CreditService;
-import org.exaphex.realty.db.service.ReceivableService;
-import org.exaphex.realty.db.service.RentService;
 import org.exaphex.realty.db.service.TransactionService;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.ui.table.PaymentCheckTableModel;
@@ -16,15 +14,17 @@ public class CreditCheckWindow {
     private final PaymentCheckTableModel pct = new PaymentCheckTableModel(new ArrayList<>());
     private final UnitWindow uw;
     private final Unit unit;
+    private final Credit credit;
     private JButton btnCreateTransactions;
     private JTable tblCreditCheck;
     private JScrollPane tblTransactions;
     private JPanel mainPanel;
     private JDialog dialog;
 
-    public CreditCheckWindow(UnitWindow uw, Unit u) {
+    public CreditCheckWindow(UnitWindow uw, Unit u, Credit c) {
         this.unit = u;
         this.uw = uw;
+        this.credit = c;
         setupUI();
         setupListeners();
         loadData();
@@ -51,14 +51,14 @@ public class CreditCheckWindow {
                     Transaction transaction = pct.getPaymentCheck(i).getTransaction();
                     uw.eventAddNewTransaction(transaction);
                 }
+                uw.loadTransactions(this.unit);
                 dialog.dispose();
             });
     }
 
     private void loadData() {
-        List<Credit> credits = CreditService.getCredit(this.unit);
         List<Transaction> transactions = TransactionService.getTransactions(this.unit);
-        List<PaymentCheck> paymentChecks = CreditPaymentCheckProcessor.getCreditPaymentCheck(this.unit, credits, transactions);
+        List<PaymentCheck> paymentChecks = CreditPaymentCheckProcessor.getCreditPaymentCheck(this.unit, this.credit, transactions);
         pct.setPaymentChecks(paymentChecks);
     }
 }

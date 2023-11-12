@@ -37,7 +37,7 @@ public class ReceivableService {
     public static void setPartialPayment(Receivable receivable, float amount) {
         Transaction transaction = receivable.getTransaction();
         if (transaction == null) {
-            transaction = new Transaction(receivable.getDue(), receivable.getType(), receivable.getUnit().getId(), amount);
+            transaction = new Transaction("","",receivable.getDue(), receivable.getType(), receivable.getUnit().getId(), amount);
             TransactionService.addTransaction(transaction);
         } else {
             transaction.setAmount(amount);

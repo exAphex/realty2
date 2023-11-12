@@ -25,6 +25,7 @@ public class TransactionModal {
     private JComboBox<String> cmbTypes;
     private JFormattedTextField txtSecondary;
     private JLabel lblSecondary;
+    private JTextField txtDescription;
 
     public TransactionModal(UnitWindow uw, Unit u) {
         this.uw = uw;
@@ -80,7 +81,7 @@ public class TransactionModal {
                     assert selectedType != null;
                     int type = getTypeIdByTransactionType(selectedType);
 
-                    uw.eventAddNewTransaction(new Transaction(txtDate.getText(),type, this.unit.getId(), fAmount, fSecondaryAmount));
+                    uw.eventAddNewTransaction(new Transaction(txtDescription.getText(), "", txtDate.getText(),type, this.unit.getId(), fAmount, fSecondaryAmount));
                     dialog.dispose();
                 });
 
