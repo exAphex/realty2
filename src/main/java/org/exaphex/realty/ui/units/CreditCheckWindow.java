@@ -1,6 +1,5 @@
 package org.exaphex.realty.ui.units;
 
-import org.exaphex.realty.db.service.CreditService;
 import org.exaphex.realty.db.service.TransactionService;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.ui.table.PaymentCheckTableModel;
@@ -9,6 +8,7 @@ import org.exaphex.realty.processor.CreditPaymentCheckProcessor;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CreditCheckWindow {
     private final PaymentCheckTableModel pct = new PaymentCheckTableModel(new ArrayList<>());
@@ -19,6 +19,7 @@ public class CreditCheckWindow {
     private JTable tblCreditCheck;
     private JScrollPane tblTransactions;
     private JPanel mainPanel;
+    private JCheckBox chkShowOnlyUnpaid;
     private JDialog dialog;
 
     public CreditCheckWindow(UnitWindow uw, Unit u, Credit c) {
@@ -52,13 +53,20 @@ public class CreditCheckWindow {
                     uw.eventAddNewTransaction(transaction);
                 }
                 uw.loadTransactions(this.unit);
+                uw.loadCredits(this.unit);
                 dialog.dispose();
             });
+        chkShowOnlyUnpaid.addActionListener(e -> {
+            loadData();
+        });
     }
 
     private void loadData() {
         List<Transaction> transactions = TransactionService.getTransactions(this.unit);
         List<PaymentCheck> paymentChecks = CreditPaymentCheckProcessor.getCreditPaymentCheck(this.unit, this.credit, transactions);
+        if (chkShowOnlyUnpaid.isSelected()) {
+            paymentChecks = paymentChecks.stream().filter(p -> p.getPaidAmount() == 0).collect(Collectors.toList());
+        }
         pct.setPaymentChecks(paymentChecks);
     }
 }

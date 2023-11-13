@@ -57,6 +57,7 @@ public class UnitService {
         RentService.deleteRent(unit);
         ValuationService.deleteValuation(unit);
         TransactionService.deleteTransactions(unit);
+        CreditService.deleteCredit(unit);
         deleteUnitByUnit(unit);
     }
 

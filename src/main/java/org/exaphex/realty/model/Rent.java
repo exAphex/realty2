@@ -1,5 +1,6 @@
 package org.exaphex.realty.model;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Rent {
@@ -72,5 +73,23 @@ public class Rent {
 
     public float getDeposit() {
         return deposit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rent rent = (Rent) o;
+        return Objects.equals(id, rent.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Rent: " + this.firstName + " " + this.lastName;
     }
 }

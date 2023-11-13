@@ -58,7 +58,6 @@ public class UnitWindow extends JFrame {
     private JButton btnFullPayment;
     private JButton btnPartialPayment;
     private JButton btnDeletePayment;
-    private JCheckBox advancedViewCheckBox;
     private JButton btnAddTransaction;
     private JPanel paneOverview;
     private JLabel lblCurrentValue;
@@ -72,6 +71,10 @@ public class UnitWindow extends JFrame {
     private JButton btnDeleteCredit;
     private JTable tblCredit;
     private JButton btnCheckCredit;
+    private JButton rentCheckButton;
+    private JLabel lblTotalCredit;
+    private JLabel lblPaidBackCredit;
+    private JLabel lblRemainedCredit;
 
     public UnitWindow(Building b) {
         super();
@@ -174,6 +177,7 @@ public class UnitWindow extends JFrame {
         List<Valuation> valuations = vtm.getValuations();
         List<Rent> rents = rtm.getRents();
         List<Transaction> transactions = TransactionService.getTransactions(u);
+        List<Credit> credits = ctm.getCredits();
 
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         DecimalFormat decimalFormatter = new DecimalFormat("##.##%");
@@ -219,6 +223,20 @@ public class UnitWindow extends JFrame {
         } else {
             lblReceivedRents.setText("-");
         }
+
+        if (!credits.isEmpty()) {
+            float totalCredit = credits.stream().map(Credit::getAmount).reduce(0f, Float::sum);
+            float paidBackCredit = credits.stream().map(Credit::getRepaidAmount).reduce(0f, Float::sum);
+            float remainedCredit = totalCredit - paidBackCredit;
+            float repaidPercent = paidBackCredit / totalCredit;
+            lblTotalCredit.setText(formatter.format(totalCredit));
+            lblRemainedCredit.setText(formatter.format(remainedCredit));
+            lblPaidBackCredit.setText("(" + decimalFormatter.format(repaidPercent) + ") " + formatter.format(paidBackCredit));
+        } else {
+            lblTotalCredit.setText("-");
+            lblRemainedCredit.setText("-");
+            lblPaidBackCredit.setText("-");
+        }
     }
 
     private void loadUnits(Building b) {
@@ -246,7 +264,7 @@ public class UnitWindow extends JFrame {
         ttm.setTransactions(transactions);
     }
 
-    private void loadCredits(Unit u) {
+    public void loadCredits(Unit u) {
         List<Credit> credits = CreditService.getCredit(u);
         List<Transaction> transactions = TransactionService.getTransactions(u);
         for (Credit c : credits) {
@@ -422,5 +440,9 @@ public class UnitWindow extends JFrame {
     public void eventAddNewCredit(Credit c) {
         CreditService.addCredit(c);
         loadCredits(this.selectedUnit);
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }

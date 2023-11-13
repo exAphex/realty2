@@ -51,7 +51,6 @@ public class CreditPaymentCheckProcessor {
             // Only list credit payments til today
             if (finishCalendar.after(todayCalendar)) {
                 finishCalendar.setTime(new Date());
-                finishCalendar.add(Calendar.MONTH,1);
             }
 
             while (beginCalendar.before(finishCalendar)) {

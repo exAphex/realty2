@@ -1,5 +1,6 @@
 package org.exaphex.realty.model;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Credit {
@@ -86,5 +87,23 @@ public class Credit {
 
     public void setRepaidAmount(float repaidAmount) {
         this.repaidAmount = repaidAmount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Credit credit = (Credit) o;
+        return Objects.equals(id, credit.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

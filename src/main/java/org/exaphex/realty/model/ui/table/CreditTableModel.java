@@ -84,4 +84,8 @@ public class CreditTableModel extends AbstractTableModel {
     public Credit getCreditAt(int row) {
         return credits.get(row);
     }
+
+    public List<Credit> getCredits() {
+        return credits;
+    }
 }
