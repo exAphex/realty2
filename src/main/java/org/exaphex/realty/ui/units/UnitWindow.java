@@ -71,7 +71,7 @@ public class UnitWindow extends JFrame {
     private JButton btnDeleteCredit;
     private JTable tblCredit;
     private JButton btnCheckCredit;
-    private JButton rentCheckButton;
+    private JButton btnCheckRent;
     private JLabel lblTotalCredit;
     private JLabel lblPaidBackCredit;
     private JLabel lblRemainedCredit;
@@ -148,6 +148,7 @@ public class UnitWindow extends JFrame {
         btnAddCredit.addActionListener(e -> this.onAddCredit());
         btnDeleteCredit.addActionListener(e -> this.onDeleteCredit());
         btnCheckCredit.addActionListener(e -> this.onCheckCredit());
+        btnCheckRent.addActionListener(e -> this.onCheckRent());
 
         cmbUnits.addItemListener(event -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -396,7 +397,15 @@ public class UnitWindow extends JFrame {
             return;
 
         Credit credit = ctm.getCreditAt(tblCredit.getSelectedRow());
-        new CreditCheckWindow(this, this.selectedUnit, credit);
+        new PaymentCheckWindow(this, this.selectedUnit, credit);
+    }
+
+    private void onCheckRent() {
+        if (tblRents.getSelectedRow() == -1)
+            return;
+
+        Rent rent = rtm.getRentAt(tblRents.getSelectedRow());
+        new PaymentCheckWindow(this, this.selectedUnit, rent);
     }
 
     private void onDeleteUnit() {
@@ -440,9 +449,5 @@ public class UnitWindow extends JFrame {
     public void eventAddNewCredit(Credit c) {
         CreditService.addCredit(c);
         loadCredits(this.selectedUnit);
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
 }

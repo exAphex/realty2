@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.exaphex.realty.ui.units.CreditCheckWindow">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.exaphex.realty.ui.units.PaymentCheckWindow">
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
@@ -16,14 +16,14 @@
           <text value="Select payments:"/>
         </properties>
       </component>
-      <scrollpane id="f3ff6" binding="tblTransactions">
+      <scrollpane id="f3ff6">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <component id="8cf27" class="javax.swing.JTable" binding="tblCreditCheck">
+          <component id="8cf27" class="javax.swing.JTable" binding="tblPaymentCheck">
             <constraints/>
             <properties/>
           </component>
@@ -44,7 +44,7 @@
         </constraints>
         <properties>
           <selected value="true"/>
-          <text value="only show unpaid credit payments"/>
+          <text value="only show unpaid payments"/>
         </properties>
       </component>
     </children>

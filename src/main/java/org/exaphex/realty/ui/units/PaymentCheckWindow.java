@@ -4,36 +4,49 @@ import org.exaphex.realty.db.service.TransactionService;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.ui.table.PaymentCheckTableModel;
 import org.exaphex.realty.processor.CreditPaymentCheckProcessor;
+import org.exaphex.realty.processor.RentPaymentCheckProcessor;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CreditCheckWindow {
+public class PaymentCheckWindow {
     private final PaymentCheckTableModel pct = new PaymentCheckTableModel(new ArrayList<>());
     private final UnitWindow uw;
     private final Unit unit;
-    private final Credit credit;
+    private Credit credit;
+    private Rent rent;
     private JButton btnCreateTransactions;
-    private JTable tblCreditCheck;
-    private JScrollPane tblTransactions;
+    private JTable tblPaymentCheck;
     private JPanel mainPanel;
     private JCheckBox chkShowOnlyUnpaid;
     private JDialog dialog;
+    private final int type;
 
-    public CreditCheckWindow(UnitWindow uw, Unit u, Credit c) {
+    public PaymentCheckWindow(UnitWindow uw, Unit u, Credit c) {
         this.unit = u;
         this.uw = uw;
         this.credit = c;
+        this.type = Transaction.CREDIT_PAYMENT;
+        setupUI();
+        setupListeners();
+        loadData();
+    }
+
+    public PaymentCheckWindow(UnitWindow uw, Unit u, Rent r) {
+        this.unit = u;
+        this.uw = uw;
+        this.rent = r;
+        this.type = Transaction.RENT_PAYMENT;
         setupUI();
         setupListeners();
         loadData();
     }
 
     private void setupUI() {
-        tblCreditCheck.setModel(pct);
-        tblCreditCheck.getSelectionModel().addListSelectionListener(event -> btnCreateTransactions.setEnabled(tblCreditCheck.getSelectedRowCount() > 0));
+        tblPaymentCheck.setModel(pct);
+        tblPaymentCheck.getSelectionModel().addListSelectionListener(event -> btnCreateTransactions.setEnabled(tblPaymentCheck.getSelectedRowCount() > 0));
 
         this.dialog = new JDialog();
         dialog.setTitle("Credit payment check");
@@ -47,13 +60,15 @@ public class CreditCheckWindow {
     private void setupListeners() {
         btnCreateTransactions.addActionListener(
             e -> {
-                int[] selectedRows = tblCreditCheck.getSelectedRows();
+                int[] selectedRows = tblPaymentCheck.getSelectedRows();
                 for (int i : selectedRows) {
                     Transaction transaction = pct.getPaymentCheck(i).getTransaction();
                     uw.eventAddNewTransaction(transaction);
                 }
                 uw.loadTransactions(this.unit);
-                uw.loadCredits(this.unit);
+                if (type == Transaction.CREDIT_PAYMENT) {
+                    uw.loadCredits(this.unit);
+                }
                 dialog.dispose();
             });
         chkShowOnlyUnpaid.addActionListener(e -> {
@@ -62,11 +77,32 @@ public class CreditCheckWindow {
     }
 
     private void loadData() {
+        List<PaymentCheck> paymentChecks;
+        if (type == Transaction.CREDIT_PAYMENT) {
+            paymentChecks = loadCreditData();
+        } else {
+            paymentChecks = loadRentData();
+        }
+        pct.setPaymentChecks(paymentChecks);
+    }
+
+    private List<PaymentCheck> loadCreditData() {
         List<Transaction> transactions = TransactionService.getTransactions(this.unit);
         List<PaymentCheck> paymentChecks = CreditPaymentCheckProcessor.getCreditPaymentCheck(this.unit, this.credit, transactions);
         if (chkShowOnlyUnpaid.isSelected()) {
             paymentChecks = paymentChecks.stream().filter(p -> p.getPaidAmount() == 0).collect(Collectors.toList());
         }
-        pct.setPaymentChecks(paymentChecks);
+        return paymentChecks;
+
+    }
+
+    private List<PaymentCheck> loadRentData() {
+        List<Transaction> transactions = TransactionService.getTransactions(this.unit);
+        List<PaymentCheck> paymentChecks = RentPaymentCheckProcessor.getRentPaymentCheck(this.unit, this.rent, transactions);
+        if (chkShowOnlyUnpaid.isSelected()) {
+            paymentChecks = paymentChecks.stream().filter(p -> p.getPaidAmount() == 0).collect(Collectors.toList());
+        }
+        return paymentChecks;
+
     }
 }

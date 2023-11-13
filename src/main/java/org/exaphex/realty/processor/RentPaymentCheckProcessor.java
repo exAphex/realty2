@@ -12,29 +12,24 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static org.exaphex.realty.util.DateUtils.safeFormatDate;
-
-public class CreditPaymentCheckProcessor {
+public class RentPaymentCheckProcessor {
     protected static final Logger logger = LogManager.getLogger();
-
-    public static List<PaymentCheck> getCreditPaymentCheck(Unit u, Credit credit, List<Transaction> transactions) {
-        return calculatePaymentChecks(u, credit, transactions);
+    public static List<PaymentCheck> getRentPaymentCheck(Unit u, Rent r, List<Transaction> transactions) {
+        return calculatePaymentChecks(u, r, transactions);
     }
-
-    private static List<PaymentCheck> calculatePaymentChecks(Unit u, Credit credit, List<Transaction> transactions) {
+    private static List<PaymentCheck> calculatePaymentChecks(Unit u, Rent r, List<Transaction> transactions) {
         DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         DateFormat monthFormatter = new SimpleDateFormat("MM-yyyy");
         Calendar beginCalendar = Calendar.getInstance();
         Calendar finishCalendar = Calendar.getInstance();
         Calendar todayCalendar = Calendar.getInstance();
         List<PaymentCheck> retPaymentChecks = new ArrayList<>();
-        float interest = 0;
-        float redemption = 0;
-        float totalInstallment = credit.getInstallmentAmount();
-        float total = credit.getAmount();
+        float rent = r.getRentalPrice();
+        float extraCosts = r.getExtraCosts();
+        float total = rent + extraCosts;
         try {
-            beginCalendar.setTime(formatter.parse(credit.getStartDate()));
-            finishCalendar.setTime(formatter.parse(credit.getEndDate()));
+            beginCalendar.setTime(formatter.parse(r.getStartDate()));
+            finishCalendar.setTime(formatter.parse(r.getEndDate()));
             todayCalendar.setTime(new Date());
 
             // Credits starts in the future, quit
@@ -48,12 +43,9 @@ public class CreditPaymentCheckProcessor {
             }
 
             while (beginCalendar.before(finishCalendar)) {
-                interest = (total * credit.getInterestRate()) / 12;
-                redemption = totalInstallment - interest;
-                total -= redemption;
-                PaymentCheck tempPaymentCheck = new PaymentCheck("Credit payment " + monthFormatter.format(beginCalendar.getTime()), totalInstallment, formatter.format(beginCalendar.getTime()), 0 );
-                tempPaymentCheck.setPaidAmount(donePayments(credit, tempPaymentCheck, transactions));
-                tempPaymentCheck.setTransaction(new Transaction("Credit payment " + credit.getName() + " " + monthFormatter.format(beginCalendar.getTime()), credit.getId(), formatter.format(beginCalendar.getTime()), Transaction.CREDIT_PAYMENT, u.getId() ,redemption, interest));
+                PaymentCheck tempPaymentCheck = new PaymentCheck("Rent payment " + monthFormatter.format(beginCalendar.getTime()), total, formatter.format(beginCalendar.getTime()), 0 );
+                tempPaymentCheck.setPaidAmount(donePayments(r, tempPaymentCheck, transactions));
+                tempPaymentCheck.setTransaction(new Transaction("Rent " + r.getFirstName() + " " + r.getLastName() + " " + monthFormatter.format(beginCalendar.getTime()), r.getId(), formatter.format(beginCalendar.getTime()), Transaction.RENT_PAYMENT, u.getId() ,rent, extraCosts));
                 retPaymentChecks.add(tempPaymentCheck);
                 beginCalendar.add(Calendar.MONTH, 1);
             }
@@ -63,7 +55,7 @@ public class CreditPaymentCheckProcessor {
         return retPaymentChecks;
     }
 
-    private static float donePayments(Credit credit, PaymentCheck paymentCheck, List<Transaction> transactions) {
+    private static float donePayments(Rent r, PaymentCheck paymentCheck, List<Transaction> transactions) {
         Calendar monthCalendar = Calendar.getInstance();
         Date paymentCheckDateL;
         Date paymentCheckDateR;
@@ -75,7 +67,7 @@ public class CreditPaymentCheckProcessor {
             paymentCheckDateL = monthCalendar.getTime();
             monthCalendar.add(Calendar.MONTH, 1);
             paymentCheckDateR = monthCalendar.getTime();
-            retPaid = transactions.stream().filter(t -> t.getType() == Transaction.CREDIT_PAYMENT).filter(t -> credit.getId().equals(t.getReference())).filter(t -> {
+            retPaid = transactions.stream().filter(t -> t.getType() == Transaction.RENT_PAYMENT).filter(t -> r.getId().equals(t.getReference())).filter(t -> {
                 try {
                     Date tempTransactionDate = formatter.parse(t.getDate());
                     return (tempTransactionDate.equals(paymentCheckDateL) || (tempTransactionDate.after(paymentCheckDateL) && tempTransactionDate.before(paymentCheckDateR)));

@@ -306,7 +306,7 @@
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="4172e" class="javax.swing.JButton" binding="rentCheckButton" default-binding="true">
+                  <component id="4172e" class="javax.swing.JButton" binding="btnCheckRent">
                     <constraints/>
                     <properties>
                       <text value="Rent check"/>
