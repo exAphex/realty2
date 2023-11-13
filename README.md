@@ -8,3 +8,8 @@ Realty is a real estate property management system.
   * Rental
   * Performance
   * Rent payments
+  * Credit payments
+
+## Todo
+* Charts
+* Forecasting
