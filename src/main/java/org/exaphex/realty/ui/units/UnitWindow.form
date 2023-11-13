@@ -378,7 +378,9 @@
                 <children>
                   <component id="edddc" class="javax.swing.JTable" binding="tblValuations">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <autoCreateRowSorter value="true"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>
@@ -401,7 +403,9 @@
                 <children>
                   <component id="8c1b3" class="javax.swing.JTable" binding="tblAccount">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <autoCreateRowSorter value="true"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>
@@ -428,30 +432,6 @@
                     <properties>
                       <icon value="delete.png"/>
                       <text value=""/>
-                    </properties>
-                  </component>
-                  <component id="44258" class="javax.swing.JButton" binding="btnFullPayment">
-                    <constraints/>
-                    <properties>
-                      <icon value="check_payment.png"/>
-                      <text value=""/>
-                      <toolTipText value="Mark as paid"/>
-                    </properties>
-                  </component>
-                  <component id="7ce55" class="javax.swing.JButton" binding="btnPartialPayment">
-                    <constraints/>
-                    <properties>
-                      <icon value="partial_payment.png"/>
-                      <text value=""/>
-                      <toolTipText value="Partial Payment"/>
-                    </properties>
-                  </component>
-                  <component id="933b7" class="javax.swing.JButton" binding="btnDeletePayment">
-                    <constraints/>
-                    <properties>
-                      <icon value="delete_payment.png"/>
-                      <text value=""/>
-                      <toolTipText value="Remove Transaction"/>
                     </properties>
                   </component>
                 </children>

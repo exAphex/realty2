@@ -3,9 +3,12 @@ package org.exaphex.realty.util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 
 public class DateUtils {
@@ -19,5 +22,13 @@ public class DateUtils {
             logger.error(e);
         }
         return retDate;
+    }
+
+    public static void setDateSorter(TableRowSorter<TableModel> sorter, int column) {
+        sorter.setComparator(column, (Comparator<String>) (name1, name2) -> {
+            Date sfLhs = safeFormatDate(name1);
+            Date sfRhs = safeFormatDate(name2);
+            return sfLhs.after(sfRhs) ? 1 : sfLhs.before(sfRhs) ? -1 : 0;
+        });
     }
 }

@@ -11,6 +11,8 @@ import org.exaphex.realty.model.ui.table.*;
 import org.exaphex.realty.processor.CreditProcessor;
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.io.File;
@@ -24,6 +26,8 @@ import java.util.List;
 import static org.exaphex.realty.processor.CreditProcessor.getPaidAmount;
 import static org.exaphex.realty.processor.CreditProcessor.getTotalAmount;
 import static org.exaphex.realty.util.DateUtils.safeFormatDate;
+import static org.exaphex.realty.util.DateUtils.setDateSorter;
+import static org.exaphex.realty.util.PriceUtils.setPriceSorter;
 
 public class UnitWindow extends JFrame {
     protected static final Logger logger = LogManager.getLogger();
@@ -55,8 +59,6 @@ public class UnitWindow extends JFrame {
     private JTable tblRents;
     private JTable tblAccount;
     private JPanel paneAccount;
-    private JButton btnFullPayment;
-    private JButton btnPartialPayment;
     private JButton btnDeletePayment;
     private JButton btnAddTransaction;
     private JPanel paneOverview;
@@ -91,6 +93,26 @@ public class UnitWindow extends JFrame {
         tblRents.setModel(rtm);
         tblAccount.setModel(ttm);
         tblCredit.setModel(ctm);
+
+        // Sorter for Account table
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tblAccount.getModel());
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
+        setDateSorter(sorter, 0);
+        setPriceSorter(sorter, 3);
+        sorter.setSortKeys(sortKeys);
+        sorter.setSortsOnUpdates(true);
+        tblAccount.setRowSorter(sorter);
+
+        TableRowSorter<TableModel> sorterValuation = new TableRowSorter<>(tblValuations.getModel());
+        List<RowSorter.SortKey> sortKeysValuation = new ArrayList<>();
+        sortKeysValuation.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
+        setDateSorter(sorterValuation, 0);
+        setPriceSorter(sorterValuation, 1);
+        sorterValuation.setSortKeys(sortKeysValuation);
+        sorterValuation.setSortsOnUpdates(true);
+        tblValuations.setRowSorter(sorterValuation);
+
         /*tblAccount.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
             @Override
             public Component getTableCellRendererComponent(JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column) {
@@ -140,9 +162,6 @@ public class UnitWindow extends JFrame {
         btnImportValuation.addActionListener(e -> this.onImportValuation());
         btnAddRent.addActionListener(e -> this.onAddNewRent());
         btnDeleteRent.addActionListener(e -> this.onDeleteRent());
-        btnFullPayment.addActionListener(e -> this.onMarkFullPayment());
-        btnPartialPayment.addActionListener(e -> this.onMarkPartialPayment());
-        btnDeletePayment.addActionListener(e -> this.onDeletePayment());
         btnAddTransaction.addActionListener(e -> this.onAddTransaction());
         btnDeleteTransaction.addActionListener(e -> this.onDeleteTransaction());
         btnAddCredit.addActionListener(e -> this.onAddCredit());
@@ -322,18 +341,18 @@ public class UnitWindow extends JFrame {
     }
 
     private void onDeleteValuation() {
-        if (tblValuations.getSelectedRow() == -1)
-            return;
-
-        Valuation valuation = vtm.getValuationAt(tblValuations.getSelectedRow());
-        ValuationService.deleteValuation(valuation);
+        int[] selectedRows = tblValuations.getSelectedRows();
+        for (int i : selectedRows) {
+            Valuation valuation = vtm.getValuationAt(tblValuations.convertRowIndexToModel(i));
+            ValuationService.deleteValuation(valuation);
+        }
         loadValuations(this.selectedUnit);
     }
 
     private void onDeleteTransaction() {
         int[] selectedRows = tblAccount.getSelectedRows();
         for (int i : selectedRows) {
-            Transaction transaction = ttm.getTransactionAt(i);
+            Transaction transaction = ttm.getTransactionAt(tblAccount.convertRowIndexToModel(i));
             TransactionService.deleteTransaction(transaction);
         }
         loadTransactions(this.selectedUnit);
@@ -342,51 +361,17 @@ public class UnitWindow extends JFrame {
     private void onDeleteCredit() {
         int[] selectedRows = tblCredit.getSelectedRows();
         for (int i : selectedRows) {
-            Credit credit = ctm.getCreditAt(i);
+            Credit credit = ctm.getCreditAt(tblCredit.convertRowIndexToModel(i));
             CreditService.deleteCredit(credit);
         }
         loadCredits(this.selectedUnit);
-    }
-
-    private void onMarkFullPayment() {
-        int[] selectedRows = tblAccount.getSelectedRows();
-        for (int i : selectedRows) {
-            Receivable receivable = rvtm.getReceivableAt(i);
-            ReceivableService.setFullPayment(receivable);
-        }
-        loadReceivables(this.selectedUnit);
-    }
-
-    private void onMarkPartialPayment() {
-        String s = JOptionPane.showInputDialog("Amount:");
-        try {
-            float f = Float.parseFloat(s);
-            int[] selectedRows = tblAccount.getSelectedRows();
-            for (int i : selectedRows) {
-                Receivable receivable = rvtm.getReceivableAt(i);
-                ReceivableService.setPartialPayment(receivable, f);
-            }
-            loadReceivables(this.selectedUnit);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(new JFrame(), "Value is not valid!", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void onDeletePayment() {
-        int[] selectedRows = tblAccount.getSelectedRows();
-        for (int i : selectedRows) {
-            Receivable receivable = rvtm.getReceivableAt(i);
-            ReceivableService.deletePayment(receivable);
-        }
-        loadReceivables(this.selectedUnit);
     }
 
     private void onDeleteRent() {
         if (tblRents.getSelectedRow() == -1)
             return;
 
-        Rent rent = rtm.getRentAt(tblRents.getSelectedRow());
+        Rent rent = rtm.getRentAt(tblRents.convertRowIndexToModel(tblRents.getSelectedRow()));
         RentService.deleteRent(rent);
         loadRents(this.selectedUnit);
         loadReceivables(this.selectedUnit);
@@ -396,7 +381,7 @@ public class UnitWindow extends JFrame {
         if (tblCredit.getSelectedRow() == -1)
             return;
 
-        Credit credit = ctm.getCreditAt(tblCredit.getSelectedRow());
+        Credit credit = ctm.getCreditAt(tblCredit.convertRowIndexToModel(tblCredit.getSelectedRow()));
         new PaymentCheckWindow(this, this.selectedUnit, credit);
     }
 
@@ -404,7 +389,7 @@ public class UnitWindow extends JFrame {
         if (tblRents.getSelectedRow() == -1)
             return;
 
-        Rent rent = rtm.getRentAt(tblRents.getSelectedRow());
+        Rent rent = rtm.getRentAt(tblRents.convertRowIndexToModel(tblRents.getSelectedRow()));
         new PaymentCheckWindow(this, this.selectedUnit, rent);
     }
 
