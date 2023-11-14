@@ -7,7 +7,7 @@ import javax.swing.event.ListDataListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UnitComboBoxModel implements ComboBoxModel {
+public class UnitComboBoxModel implements ComboBoxModel<Unit> {
 
     private List<Unit> units;
 
@@ -46,7 +46,7 @@ public class UnitComboBoxModel implements ComboBoxModel {
     }
 
     @Override
-    public Object getElementAt(int index) {
+    public Unit getElementAt(int index) {
         return units.get(index);
     }
 

@@ -7,7 +7,7 @@ import javax.swing.event.ListDataListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RentComboBoxModel implements ComboBoxModel {
+public class RentComboBoxModel implements ComboBoxModel<Rent> {
     private List<Rent> rents;
     int index = -1;
     public RentComboBoxModel(List<Rent> rents) {
@@ -43,7 +43,7 @@ public class RentComboBoxModel implements ComboBoxModel {
     }
 
     @Override
-    public Object getElementAt(int index) {
+    public Rent getElementAt(int index) {
         return rents.get(index);
     }
 

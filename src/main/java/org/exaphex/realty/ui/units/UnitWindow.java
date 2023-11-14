@@ -39,7 +39,7 @@ public class UnitWindow extends JFrame {
     final CreditTableModel ctm = new CreditTableModel(new ArrayList<>());
     Unit selectedUnit;
     private final Building building;
-    private JComboBox cmbUnits;
+    private JComboBox<Unit> cmbUnits;
     private JButton btnAddUnit;
     private JButton btnDeleteUnit;
     private JTabbedPane tabPane;
@@ -59,7 +59,6 @@ public class UnitWindow extends JFrame {
     private JTable tblRents;
     private JTable tblAccount;
     private JPanel paneAccount;
-    private JButton btnDeletePayment;
     private JButton btnAddTransaction;
     private JPanel paneOverview;
     private JLabel lblCurrentValue;
@@ -304,7 +303,7 @@ public class UnitWindow extends JFrame {
         if (retOption == JFileChooser.APPROVE_OPTION) {
             File f = chooser.getSelectedFile();
             try {
-                List<ValuationTransportModel> valuations = new CsvToBeanBuilder(new FileReader(f))
+                List<ValuationTransportModel> valuations = new CsvToBeanBuilder<ValuationTransportModel>(new FileReader(f))
                         .withSeparator(';')
                         .withType(ValuationTransportModel.class)
                         .build()

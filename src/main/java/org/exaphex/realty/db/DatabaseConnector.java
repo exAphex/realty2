@@ -25,29 +25,17 @@ public class DatabaseConnector {
     }
 
     public static void executeSQL(Connection conn, String sql) throws SQLException {
-        Statement st = null;
-        try {
-            st = conn.createStatement();
+        try (Statement st = conn.createStatement()) {
             st.executeUpdate(sql);
-        } finally {
-            if (st != null) {
-                st.close();
-            }
         }
     }
 
     public static int getDatabaseVersion(Connection conn) throws SQLException {
         int retVersion = 0;
-        Statement st = null;
-        try {
-            st = conn.createStatement();
+        try (Statement st = conn.createStatement()) {
             ResultSet rs = st.executeQuery("select * from VERSION order by ID desc");
             if (rs.next()) {
                 retVersion = rs.getInt("ID");
-            }
-        } finally {
-            if (st != null) {
-                st.close();
             }
         }
         return retVersion;

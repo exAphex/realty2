@@ -7,7 +7,7 @@ import javax.swing.event.ListDataListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreditComboBoxModel implements ComboBoxModel {
+public class CreditComboBoxModel implements ComboBoxModel<Credit> {
     private List<Credit> credits;
     int index = -1;
     public CreditComboBoxModel(List<Credit> credits) {
@@ -43,7 +43,7 @@ public class CreditComboBoxModel implements ComboBoxModel {
     }
 
     @Override
-    public Object getElementAt(int index) {
+    public Credit getElementAt(int index) {
         return credits.get(index);
     }
 

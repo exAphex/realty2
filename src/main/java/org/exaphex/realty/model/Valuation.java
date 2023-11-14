@@ -1,7 +1,7 @@
 package org.exaphex.realty.model;
 
 public class Valuation {
-    private String id;
+    private final String id;
     private final String date;
     private final float value;
 

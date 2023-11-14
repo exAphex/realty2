@@ -11,15 +11,9 @@ import java.sql.SQLException;
 public class Main {
 
     public static void setupDatabase() throws SQLException {
-        Connection conn = null;
-        try {
-            conn = DatabaseConnector.getConnection();
+        try (Connection conn = DatabaseConnector.getConnection()) {
             DatabaseConnector.initializeDatabase(conn);
             DatabaseConnector.updateDatabase(conn);
-        } finally {
-            if (conn != null) {
-                conn.close();
-            }
         }
     }
 

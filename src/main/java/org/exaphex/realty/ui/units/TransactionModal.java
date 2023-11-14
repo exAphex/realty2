@@ -35,8 +35,8 @@ public class TransactionModal {
     private JTextField txtDescription;
     private JLabel lblCreditReference;
     private JLabel lblRentReference;
-    private JComboBox cmbCredit;
-    private JComboBox cmbRent;
+    private JComboBox<Credit> cmbCredit;
+    private JComboBox<Rent> cmbRent;
 
     public TransactionModal(UnitWindow uw, Unit u) {
         this.uw = uw;
