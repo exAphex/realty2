@@ -1,12 +1,12 @@
 package org.exaphex.realty.model;
 
 public class Receivable {
-    private String name;
-    private float amount;
-    private String due;
-    private int type;
+    private final String name;
+    private final float amount;
+    private final String due;
+    private final int type;
     private Transaction transaction;
-    private Unit unit;
+    private final Unit unit;
 
     public Receivable(String name, float amount, String due, int type, Unit unit) {
         this.name = name;

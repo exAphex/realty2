@@ -12,8 +12,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static org.exaphex.realty.util.DateUtils.safeFormatDate;
-
 public class CreditPaymentCheckProcessor {
     protected static final Logger logger = LogManager.getLogger();
 
@@ -28,8 +26,8 @@ public class CreditPaymentCheckProcessor {
         Calendar finishCalendar = Calendar.getInstance();
         Calendar todayCalendar = Calendar.getInstance();
         List<PaymentCheck> retPaymentChecks = new ArrayList<>();
-        float interest = 0;
-        float redemption = 0;
+        float interest;
+        float redemption;
         float totalInstallment = credit.getInstallmentAmount();
         float total = credit.getAmount();
         try {

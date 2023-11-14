@@ -11,7 +11,7 @@ import org.h2.jdbcx.JdbcConnectionPool;
 
 public class DatabaseConnector {
     protected static final Logger logger = LogManager.getLogger();
-    public static JdbcConnectionPool cp = JdbcConnectionPool.create(
+    public static final JdbcConnectionPool cp = JdbcConnectionPool.create(
             "jdbc:h2:./test", "sa", "sa");
 
     public static Connection getConnection() throws SQLException {

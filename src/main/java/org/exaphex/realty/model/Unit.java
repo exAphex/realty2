@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Unit {
-    private String id;
+    private final String id;
     private final String name;
     private final String buildingId;
 
@@ -22,10 +22,6 @@ public class Unit {
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {

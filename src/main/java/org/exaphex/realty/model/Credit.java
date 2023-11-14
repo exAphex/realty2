@@ -4,15 +4,15 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Credit {
-    private String id;
-    private String unitId;
-    private String name;
-    private String description;
-    private float interestRate;
-    private float redemptionRate;
-    private String startDate;
-    private String endDate;
-    private float amount;
+    private final String id;
+    private final String unitId;
+    private final String name;
+    private final String description;
+    private final float interestRate;
+    private final float redemptionRate;
+    private final String startDate;
+    private final String endDate;
+    private final float amount;
     private float repaidAmount;
 
     public Credit(String id, String unitId, String name, String description, float interestRate, float redemptionRate, String startDate, String endDate, float amount) {

@@ -14,9 +14,9 @@ import java.util.List;
 
 public class MainWindow extends JFrame {
 
-    BuildingTableModel btm = new BuildingTableModel(new ArrayList<>());
+    final BuildingTableModel btm = new BuildingTableModel(new ArrayList<>());
 
-    List<UnitWindow> uw = new ArrayList<>();
+    final List<UnitWindow> uw = new ArrayList<>();
     private JTabbedPane tabbedPane1;
     private JPanel mainPanel;
     private JButton addButton;

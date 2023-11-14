@@ -13,7 +13,7 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Name:"/>
+          <text resource-bundle="i18n" key="lblName"/>
         </properties>
       </component>
       <vspacer id="f62a">
@@ -34,7 +34,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Description:"/>
+          <text resource-bundle="i18n" key="lblDescription"/>
         </properties>
       </component>
       <component id="bf649" class="javax.swing.JTextField" binding="txtDescription">
@@ -50,7 +50,7 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Start Date:"/>
+          <text resource-bundle="i18n" key="lblStartDate"/>
         </properties>
       </component>
       <component id="1e7d" class="javax.swing.JFormattedTextField" binding="txtStartDate">
@@ -66,7 +66,7 @@
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Interest Rate:"/>
+          <text resource-bundle="i18n" key="lblInterestRate"/>
         </properties>
       </component>
       <component id="11f15" class="javax.swing.JTextField" binding="txtInterestRate">
@@ -82,7 +82,7 @@
           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Redemption Rate:"/>
+          <text resource-bundle="i18n" key="lblRedemptionRate"/>
         </properties>
       </component>
       <component id="753eb" class="javax.swing.JTextField" binding="txtRedemptionRate">
@@ -98,7 +98,7 @@
           <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Save"/>
+          <text resource-bundle="i18n" key="btnSave"/>
         </properties>
       </component>
       <component id="30207" class="javax.swing.JLabel">
@@ -106,7 +106,7 @@
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="End Date:"/>
+          <text resource-bundle="i18n" key="lblEndDate"/>
         </properties>
       </component>
       <component id="9e514" class="javax.swing.JFormattedTextField" binding="txtEndDate">
@@ -122,7 +122,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Amount:"/>
+          <text resource-bundle="i18n" key="lblAmount"/>
         </properties>
       </component>
       <component id="c27fe" class="javax.swing.JTextField" binding="txtAmount">

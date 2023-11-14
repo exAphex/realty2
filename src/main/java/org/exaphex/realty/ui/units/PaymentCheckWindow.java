@@ -71,9 +71,7 @@ public class PaymentCheckWindow {
                 }
                 dialog.dispose();
             });
-        chkShowOnlyUnpaid.addActionListener(e -> {
-            loadData();
-        });
+        chkShowOnlyUnpaid.addActionListener(e -> loadData());
     }
 
     private void loadData() {

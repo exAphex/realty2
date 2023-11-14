@@ -32,11 +32,11 @@ import static org.exaphex.realty.util.PriceUtils.setPriceSorter;
 public class UnitWindow extends JFrame {
     protected static final Logger logger = LogManager.getLogger();
     UnitComboBoxModel utm = new UnitComboBoxModel(new ArrayList<>());
-    ValuationTableModel vtm = new ValuationTableModel(new ArrayList<>());
-    RentTableModel rtm = new RentTableModel(new ArrayList<>());
-    ReceiveableTableModel rvtm = new ReceiveableTableModel(new ArrayList<>());
-    TransactionTableModel ttm = new TransactionTableModel(new ArrayList<>());
-    CreditTableModel ctm = new CreditTableModel(new ArrayList<>());
+    final ValuationTableModel vtm = new ValuationTableModel(new ArrayList<>());
+    final RentTableModel rtm = new RentTableModel(new ArrayList<>());
+    final ReceiveableTableModel rvtm = new ReceiveableTableModel(new ArrayList<>());
+    final TransactionTableModel ttm = new TransactionTableModel(new ArrayList<>());
+    final CreditTableModel ctm = new CreditTableModel(new ArrayList<>());
     Unit selectedUnit;
     private final Building building;
     private JComboBox cmbUnits;
@@ -112,23 +112,6 @@ public class UnitWindow extends JFrame {
         sorterValuation.setSortKeys(sortKeysValuation);
         sorterValuation.setSortsOnUpdates(true);
         tblValuations.setRowSorter(sorterValuation);
-
-        /*tblAccount.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
-            @Override
-            public Component getTableCellRendererComponent(JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column) {
-                Component c = super.getTableCellRendererComponent(table,value,isSelected,hasFocus,row,column);
-                Receivable r = rvtm.getReceivableAt(row);
-                c.setForeground(Color.RED);
-                if (r.getTransaction() != null) {
-                    if (r.getAmount() <= r.getTransaction().getAmount()) {
-                        c.setForeground(Color.GREEN);
-                    } else if (r.getTransaction().getAmount() > 0){
-                        c.setForeground(Color.ORANGE);
-                    }
-                }
-                return c;
-            }
-        });*/
         setContentPane(mainPanel);
         setTabPanelStatus(false);
     }

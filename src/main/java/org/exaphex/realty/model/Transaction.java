@@ -12,8 +12,8 @@ public class Transaction {
     private final String unitId;
     private float amount;
     private float secondaryAmount;
-    private String description;
-    private String reference;
+    private final String description;
+    private final String reference;
 
     public Transaction(String id, String description, String reference, String date, int type, String unitId, float amount) {
         this.id = id;

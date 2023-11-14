@@ -1,9 +1,9 @@
 package org.exaphex.realty.model;
 
 public class PaymentCheck {
-    private String name;
-    private float amount;
-    private String date;
+    private final String name;
+    private final float amount;
+    private final String date;
     private float paidAmount;
     private Transaction transaction;
 

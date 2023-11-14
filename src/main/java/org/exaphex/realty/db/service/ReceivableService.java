@@ -30,30 +30,6 @@ public class ReceivableService {
         return receivables;
     }
 
-    public static void setFullPayment(Receivable receivable) {
-        setPartialPayment(receivable, receivable.getAmount());
-    }
-
-    public static void setPartialPayment(Receivable receivable, float amount) {
-        Transaction transaction = receivable.getTransaction();
-        if (transaction == null) {
-            transaction = new Transaction("","",receivable.getDue(), receivable.getType(), receivable.getUnit().getId(), amount);
-            TransactionService.addTransaction(transaction);
-        } else {
-            transaction.setAmount(amount);
-            TransactionService.updateTransaction(transaction);
-        }
-    }
-
-    public static void deletePayment(Receivable receivable) {
-        Transaction transaction = receivable.getTransaction();
-        if (transaction == null) {
-            return;
-        }
-
-        TransactionService.deleteTransaction(transaction);
-    }
-
     private static void enrichReceivablesWithTransactions(Unit u, List<Receivable> receivables) {
         Calendar tmpReceivableCalendar = Calendar.getInstance();
         Calendar tmpTransactionCalendar = Calendar.getInstance();

@@ -13,8 +13,8 @@ import static org.exaphex.realty.util.PriceUtils.validatePrice;
 
 public class CreditModal {
     private JDialog dialog;
-    private Unit unit;
-    private UnitWindow uw;
+    private final Unit unit;
+    private final UnitWindow uw;
     private JTextField txtName;
     private JTextField txtDescription;
     private JFormattedTextField txtStartDate;

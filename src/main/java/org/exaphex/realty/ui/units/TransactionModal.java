@@ -20,8 +20,8 @@ import static org.exaphex.realty.model.Transaction.getTypeIdByTransactionType;
 import static org.exaphex.realty.util.PriceUtils.validatePrice;
 
 public class TransactionModal {
-    private CreditComboBoxModel ccm = new CreditComboBoxModel(new ArrayList<>());
-    private RentComboBoxModel rcm = new RentComboBoxModel(new ArrayList<>());
+    private final CreditComboBoxModel ccm = new CreditComboBoxModel(new ArrayList<>());
+    private final RentComboBoxModel rcm = new RentComboBoxModel(new ArrayList<>());
     private final UnitWindow uw;
     private final Unit unit;
     private JTextField txtAmount;
@@ -131,7 +131,10 @@ public class TransactionModal {
         cmbTypes.addItemListener(event -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
                 String item = (String) cmbTypes.getSelectedItem();
-                int type = getTypeIdByTransactionType(item);
+                int type = 0;
+                if (item != null) {
+                    type = getTypeIdByTransactionType(item);
+                }
                 setVisibilities(type);
             }
         });

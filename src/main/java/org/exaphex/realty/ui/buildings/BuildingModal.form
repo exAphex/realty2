@@ -13,7 +13,7 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Name:"/>
+          <text resource-bundle="i18n" key="lblName"/>
         </properties>
       </component>
       <component id="eda6c" class="javax.swing.JLabel">
@@ -21,7 +21,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Street:"/>
+          <text resource-bundle="i18n" key="lblStreet"/>
         </properties>
       </component>
       <component id="9e308" class="javax.swing.JLabel">
@@ -29,7 +29,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Number:"/>
+          <text resource-bundle="i18n" key="lblNumber"/>
         </properties>
       </component>
       <component id="c0b03" class="javax.swing.JLabel">
@@ -37,7 +37,7 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Postalcode:"/>
+          <text resource-bundle="i18n" key="lblPostalCode"/>
         </properties>
       </component>
       <component id="7a1fe" class="javax.swing.JLabel">
@@ -45,7 +45,7 @@
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="City:"/>
+          <text resource-bundle="i18n" key="lblCity"/>
         </properties>
       </component>
       <component id="16f55" class="javax.swing.JTextField" binding="textName">
@@ -98,7 +98,7 @@
           <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Save"/>
+          <text resource-bundle="i18n" key="btnSave"/>
         </properties>
       </component>
     </children>
