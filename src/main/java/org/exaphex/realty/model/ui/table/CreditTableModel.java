@@ -7,8 +7,10 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class CreditTableModel extends AbstractTableModel {
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private List<Credit> credits;
 
     public CreditTableModel(List<Credit> credits) {
@@ -34,21 +36,21 @@ public class CreditTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         return switch (column) {
             case 0:
-                yield "Name";
+                yield res.getString("colName");
             case 1:
-                yield "Description";
+                yield res.getString("colDescription");
             case 2:
-                yield "Amount";
+                yield res.getString("colAmount");
             case 3:
-                yield "Remained";
+                yield res.getString("colRemained");
             case 4:
-                yield "Start date";
+                yield res.getString("colStartDate");
             case 5:
-                yield "End date";
+                yield res.getString("colEndDate");
             case 6:
-                yield "Interest rate";
+                yield res.getString("colInterestRate");
             case 7:
-                yield "Redemption rate";
+                yield res.getString("colRedemptionRate");
             default:
                 yield "";
         };

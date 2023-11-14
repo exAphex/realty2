@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.h2.jdbcx.JdbcConnectionPool;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class DatabaseConnector {
     protected static final Logger logger = LogManager.getLogger();
     public static final JdbcConnectionPool cp = JdbcConnectionPool.create(

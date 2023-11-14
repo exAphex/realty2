@@ -3,12 +3,14 @@ import org.exaphex.realty.model.Building;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.swing.table.AbstractTableModel;
 
 
 public class BuildingTableModel extends AbstractTableModel {
 
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private List<Building> buildings;
 
     public BuildingTableModel(List<Building> buildings) {
@@ -34,11 +36,11 @@ public class BuildingTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         return switch (column) {
             case 0:
-                yield "Name";
+                yield res.getString("colName");
             case 1:
-                yield "Street";
+                yield res.getString("colAddress");
             case 2:
-                yield "City";
+                yield res.getString("colCity");
             default:
                 yield "";
         };
@@ -59,7 +61,7 @@ public class BuildingTableModel extends AbstractTableModel {
         };
     }
 
-    public Building getBuldingAt(int row) {
+    public Building getBuildingAt(int row) {
         return buildings.get(row);
     }
 }

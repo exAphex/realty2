@@ -39,7 +39,7 @@ public class MainWindow extends JFrame {
                 int selectedRow = table.getSelectedRow();
                 if (mouseEvent.getClickCount() == 2 && selectedRow != -1) {
                     int selectedModelRow = buildingsTable.convertColumnIndexToModel(selectedRow);
-                    Building selectedBuilding = ((BuildingTableModel) buildingsTable.getModel()).getBuldingAt(selectedModelRow);
+                    Building selectedBuilding = ((BuildingTableModel) buildingsTable.getModel()).getBuildingAt(selectedModelRow);
                     createBuildingDetailView(selectedBuilding);
                 }
             }
@@ -54,7 +54,7 @@ public class MainWindow extends JFrame {
         if (buildingsTable.getSelectedRow() == -1)
             return;
 
-        Building building = btm.getBuldingAt(buildingsTable.getSelectedRow());
+        Building building = btm.getBuildingAt(buildingsTable.getSelectedRow());
         int dialogResult = JOptionPane.showConfirmDialog(null,
                 "Are you sure you want to delete " + building.getName() + "?",
                 "Warning", JOptionPane.YES_NO_OPTION);
