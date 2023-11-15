@@ -6,8 +6,10 @@ import javax.swing.table.AbstractTableModel;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class PaymentCheckTableModel extends AbstractTableModel {
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private List<PaymentCheck> paymentChecks;
 
     public PaymentCheckTableModel(List<PaymentCheck> paymentChecks) {
@@ -33,13 +35,13 @@ public class PaymentCheckTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         return switch (column) {
             case 0:
-                yield "Name";
+                yield res.getString("colName");
             case 1:
-                yield "Amount";
+                yield res.getString("colAmount");
             case 2:
-                yield "Date";
+                yield res.getString("colDate");
             case 3:
-                yield "Paid amount";
+                yield res.getString("colPaidAmount");
             default:
                 yield "";
         };

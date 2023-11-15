@@ -14,12 +14,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import static org.exaphex.realty.model.Transaction.formatTransactionType;
 import static org.exaphex.realty.model.Transaction.getTypeIdByTransactionType;
 import static org.exaphex.realty.util.PriceUtils.validatePrice;
 
 public class TransactionModal {
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private final CreditComboBoxModel ccm = new CreditComboBoxModel(new ArrayList<>());
     private final RentComboBoxModel rcm = new RentComboBoxModel(new ArrayList<>());
     private final UnitWindow uw;
@@ -69,7 +71,7 @@ public class TransactionModal {
         cmbRent.setModel(rcm);
 
         this.dialog = new JDialog();
-        dialog.setTitle("Add Transaction");
+        dialog.setTitle(res.getString("titleAddTransaction"));
         dialog.add(mainPanel);
         dialog.pack();
         dialog.setResizable(false);
@@ -83,17 +85,17 @@ public class TransactionModal {
                 e -> {
                     String reference = "";
                     if (txtDate.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Date is not valid!", "Error",
+                        JOptionPane.showMessageDialog(new JFrame(), res.getString("msgDateInvalid"), res.getString("msgError"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
 
-                    Float fAmount = validatePrice(txtAmount.getText(), "Amount");
+                    Float fAmount = validatePrice(txtAmount.getText(), res.getString("msgAmount"));
                     if (fAmount == null) {
                         return;
                     }
 
-                    Float fSecondaryAmount = validatePrice(txtSecondary.getText(), "Secondary amount");
+                    Float fSecondaryAmount = validatePrice(txtSecondary.getText(), res.getString("msgSecondaryAmount"));
                     if (fSecondaryAmount == null) {
                         return;
                     }
@@ -105,7 +107,7 @@ public class TransactionModal {
                     if (type == Transaction.RENT_PAYMENT) {
                         Rent rent = (Rent) cmbRent.getSelectedItem();
                         if (rent == null) {
-                            JOptionPane.showMessageDialog(new JFrame(), "Select a valid reference rent!", "Error",
+                            JOptionPane.showMessageDialog(new JFrame(), res.getString("msgInvalidRentReference"), res.getString("msgError"),
                                     JOptionPane.ERROR_MESSAGE);
                             return;
                         } else {
@@ -116,7 +118,7 @@ public class TransactionModal {
                     if (type == Transaction.CREDIT_PAYMENT) {
                         Credit credit = (Credit) cmbCredit.getSelectedItem();
                         if (credit == null) {
-                            JOptionPane.showMessageDialog(new JFrame(), "Select a valid reference credit!", "Error",
+                            JOptionPane.showMessageDialog(new JFrame(), res.getString("msgInvalidCreditReference"), res.getString("msgError"),
                                     JOptionPane.ERROR_MESSAGE);
                             return;
                         } else {
@@ -153,13 +155,13 @@ public class TransactionModal {
             txtSecondary.setVisible(true);
             cmbRent.setVisible(true);
             lblRentReference.setVisible(true);
-            lblSecondary.setText("Extra costs:");
+            lblSecondary.setText(res.getString("lblExtraCosts"));
         } else if (type == Transaction.CREDIT_PAYMENT) {
             lblSecondary.setVisible(true);
             txtSecondary.setVisible(true);
             cmbCredit.setVisible(true);
             lblCreditReference.setVisible(true);
-            lblSecondary.setText("Interest:");
+            lblSecondary.setText(res.getString("lblInterest"));
         }
         this.dialog.pack();
     }

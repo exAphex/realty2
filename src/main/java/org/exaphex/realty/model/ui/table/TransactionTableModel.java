@@ -6,10 +6,12 @@ import javax.swing.table.AbstractTableModel;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import static org.exaphex.realty.model.Transaction.formatTransactionType;
 
 public class TransactionTableModel extends AbstractTableModel {
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private List<Transaction> transactions;
 
     public TransactionTableModel(List<Transaction> transactions) {
@@ -39,13 +41,13 @@ public class TransactionTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         return switch (column) {
             case 0:
-                yield "Date";
+                yield res.getString("colDate");
             case 1:
-                yield "Description";
+                yield res.getString("colDescription");
             case 2:
-                yield "Type";
+                yield res.getString("colType");
             case 3:
-                yield "Amount";
+                yield res.getString("colAmount");
             default:
                 yield "";
         };

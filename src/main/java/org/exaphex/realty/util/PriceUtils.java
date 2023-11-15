@@ -9,14 +9,16 @@ import javax.swing.table.TableRowSorter;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Comparator;
+import java.util.ResourceBundle;
 
 public class PriceUtils {
+    private static final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private static final Logger logger = LogManager.getLogger();
     public static Float validatePrice(String val, String fieldName) {
         try {
             return Float.parseFloat(val);
         } catch (NumberFormatException n) {
-            JOptionPane.showMessageDialog(new JFrame(), fieldName + " is not valid!", "Error",
+            JOptionPane.showMessageDialog(new JFrame(), fieldName + res.getString("msgIsNotValid"), res.getString("msgError"),
                     JOptionPane.ERROR_MESSAGE);
             return null;
         }

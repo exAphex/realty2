@@ -6,8 +6,10 @@ import javax.swing.table.AbstractTableModel;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class RentTableModel extends AbstractTableModel  {
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private List<Rent> rents;
 
     public RentTableModel(List<Rent> rents) {
@@ -37,17 +39,17 @@ public class RentTableModel extends AbstractTableModel  {
     public String getColumnName(int column) {
         return switch (column) {
             case 0:
-                yield "Renter";
+                yield res.getString("colRenter");
             case 1:
-                yield "Start date";
+                yield res.getString("colStartDate");
             case 2:
-                yield "End date";
+                yield res.getString("colEndDate");
             case 3:
-                yield "Rental price";
+                yield res.getString("colRentalPrice");
             case 4:
-                yield "Extra costs";
+                yield res.getString("colExtraCosts");
             case 5:
-                yield "Deposit";
+                yield res.getString("colDeposit");
             default:
                 yield "";
         };

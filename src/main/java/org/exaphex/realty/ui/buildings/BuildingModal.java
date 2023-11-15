@@ -4,8 +4,10 @@ import org.exaphex.realty.model.Building;
 import org.exaphex.realty.ui.MainWindow;
 
 import javax.swing.*;
+import java.util.ResourceBundle;
 
 public class BuildingModal {
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private JPanel mainPanel;
     private JTextField textName;
     private JTextField textStreet;
@@ -26,7 +28,7 @@ public class BuildingModal {
 
     private void setupUI() {
         this. dialog = new JDialog();
-        dialog.setTitle("Add Building");
+        dialog.setTitle(res.getString("titleAddBuilding"));
         dialog.add(mainPanel);
         dialog.pack();
         dialog.setResizable(false);

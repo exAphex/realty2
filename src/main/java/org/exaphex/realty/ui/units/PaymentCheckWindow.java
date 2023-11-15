@@ -9,9 +9,11 @@ import org.exaphex.realty.processor.RentPaymentCheckProcessor;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class PaymentCheckWindow {
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private final PaymentCheckTableModel pct = new PaymentCheckTableModel(new ArrayList<>());
     private final UnitWindow uw;
     private final Unit unit;
@@ -49,7 +51,7 @@ public class PaymentCheckWindow {
         tblPaymentCheck.getSelectionModel().addListSelectionListener(event -> btnCreateTransactions.setEnabled(tblPaymentCheck.getSelectedRowCount() > 0));
 
         this.dialog = new JDialog();
-        dialog.setTitle("Credit payment check");
+        dialog.setTitle(res.getString("titlePaymentCheck"));
         dialog.add(mainPanel);
         dialog.pack();
         dialog.setResizable(false);

@@ -8,8 +8,10 @@ import javax.swing.text.DateFormatter;
 import javax.swing.text.DefaultFormatterFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 public class ValuationModal {
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private final UnitWindow uw;
     private final Unit unit;
     private JDialog dialog;
@@ -35,7 +37,7 @@ public class ValuationModal {
         txtValue.setText("0.00");
 
         this.dialog = new JDialog();
-        dialog.setTitle("Add Valuation");
+        dialog.setTitle(res.getString("titleValuation"));
         dialog.add(mainPanel);
         dialog.pack();
         dialog.setResizable(false);
@@ -49,7 +51,7 @@ public class ValuationModal {
                     String date = txtDate.getText();
                     String value = txtValue.getText();
                     if (date.isEmpty()) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Date is not valid!", "Error",
+                        JOptionPane.showMessageDialog(new JFrame(), res.getString("msgDateInvalid"), res.getString("msgError"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
@@ -57,7 +59,7 @@ public class ValuationModal {
                     try {
                         val = Float.parseFloat(value);
                     } catch(NumberFormatException n) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Value is not valid!", "Error",
+                        JOptionPane.showMessageDialog(new JFrame(), res.getString("msgValueInvalid"), res.getString("msgError"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }

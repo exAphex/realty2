@@ -4,9 +4,10 @@ import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.Unit;
 
 import javax.swing.*;
+import java.util.ResourceBundle;
 
 public class UnitModal {
-
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private final UnitWindow uw;
     private final Building building;
     private JDialog dialog;
@@ -23,7 +24,7 @@ public class UnitModal {
 
     private void setupUI() {
         this.dialog = new JDialog();
-        dialog.setTitle("Add Unit");
+        dialog.setTitle(res.getString("titleAddUnit"));
         dialog.add(mainPanel);
         dialog.pack();
         dialog.setResizable(false);

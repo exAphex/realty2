@@ -6,9 +6,10 @@ import javax.swing.table.AbstractTableModel;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class ValuationTableModel extends AbstractTableModel {
-
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private List<Valuation> valuations;
 
     public ValuationTableModel(List<Valuation> valuations) {
@@ -38,9 +39,9 @@ public class ValuationTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         return switch (column) {
             case 0:
-                yield "Date";
+                yield res.getString("colDate");
             case 1:
-                yield "Value";
+                yield res.getString("colValue");
             default:
                 yield "";
         };

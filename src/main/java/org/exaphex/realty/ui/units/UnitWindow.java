@@ -34,7 +34,6 @@ public class UnitWindow extends JFrame {
     UnitComboBoxModel utm = new UnitComboBoxModel(new ArrayList<>());
     final ValuationTableModel vtm = new ValuationTableModel(new ArrayList<>());
     final RentTableModel rtm = new RentTableModel(new ArrayList<>());
-    final ReceiveableTableModel rvtm = new ReceiveableTableModel(new ArrayList<>());
     final TransactionTableModel ttm = new TransactionTableModel(new ArrayList<>());
     final CreditTableModel ctm = new CreditTableModel(new ArrayList<>());
     Unit selectedUnit;
@@ -164,7 +163,6 @@ public class UnitWindow extends JFrame {
         setTabPanelStatus(true);
         loadValuations(this.selectedUnit);
         loadRents(this.selectedUnit);
-        loadReceivables(this.selectedUnit);
         loadTransactions(this.selectedUnit);
         loadCredits(this.selectedUnit);
         setFields(u);
@@ -254,11 +252,6 @@ public class UnitWindow extends JFrame {
     private void loadRents(Unit u) {
         List<Rent> rents = RentService.getRents(u);
         rtm.setRents(rents);
-    }
-
-    private void loadReceivables(Unit u) {
-        List<Receivable> receivables = ReceivableService.getReceivables(u);
-        rvtm.setReceivables(receivables);
     }
 
     public void loadTransactions(Unit u) {
@@ -356,7 +349,6 @@ public class UnitWindow extends JFrame {
         Rent rent = rtm.getRentAt(tblRents.convertRowIndexToModel(tblRents.getSelectedRow()));
         RentService.deleteRent(rent);
         loadRents(this.selectedUnit);
-        loadReceivables(this.selectedUnit);
     }
 
     private void onCheckCredit() {
@@ -405,7 +397,6 @@ public class UnitWindow extends JFrame {
     public void eventAddNewRent(Rent r) {
         RentService.addRent(r);
         loadRents(this.selectedUnit);
-        loadReceivables(this.selectedUnit);
     }
 
     public void eventAddNewTransaction(Transaction t) {

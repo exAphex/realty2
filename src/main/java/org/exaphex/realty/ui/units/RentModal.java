@@ -8,10 +8,12 @@ import javax.swing.text.DateFormatter;
 import javax.swing.text.DefaultFormatterFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import static org.exaphex.realty.util.PriceUtils.validatePrice;
 
 public class RentModal {
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private final Unit unit;
     private final UnitWindow uw;
     private JDialog dialog;
@@ -48,7 +50,7 @@ public class RentModal {
 
 
         this.dialog = new JDialog();
-        dialog.setTitle("Add Rent");
+        dialog.setTitle(res.getString("titleAddRent"));
         dialog.add(mainPanel);
         dialog.pack();
         dialog.setResizable(false);
@@ -60,32 +62,32 @@ public class RentModal {
         btnSave.addActionListener(
                 e -> {
                     if (txtFirstName.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Firstname is not valid!", "Error",
+                        JOptionPane.showMessageDialog(new JFrame(), res.getString("msgFirstNameInvalid"), res.getString("msgError"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
 
                     if (txtLastName.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Lastname is not valid!", "Error",
+                        JOptionPane.showMessageDialog(new JFrame(), res.getString("msgLastNameInvalid"), res.getString("msgError"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
 
                     if (txtStartDate.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Startdate is not valid!", "Error",
+                        JOptionPane.showMessageDialog(new JFrame(), res.getString("msgStartDateInvalid"), res.getString("msgError"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
 
                     if (txtEndDate.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Enddate is not valid!", "Error",
+                        JOptionPane.showMessageDialog(new JFrame(), res.getString("msgEndDateInvalid"), res.getString("msgError"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
 
-                    Float fRentalPrice = validatePrice(txtRentalPrice.getText(), "Rental price");
-                    Float fExtraCosts = validatePrice(txtExtraCost.getText(), "Extra costs");
-                    Float fDeposit = validatePrice(txtDeposit.getText(), "Deposit");
+                    Float fRentalPrice = validatePrice(txtRentalPrice.getText(), res.getString("msgRentalPrice"));
+                    Float fExtraCosts = validatePrice(txtExtraCost.getText(), res.getString("msgExtraCosts"));
+                    Float fDeposit = validatePrice(txtDeposit.getText(), res.getString("msgDeposit"));
                     if (fRentalPrice == null || fExtraCosts == null || fDeposit == null) {
                         return;
                     }

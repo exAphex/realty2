@@ -8,10 +8,12 @@ import javax.swing.text.DateFormatter;
 import javax.swing.text.DefaultFormatterFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import static org.exaphex.realty.util.PriceUtils.validatePrice;
 
 public class CreditModal {
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private JDialog dialog;
     private final Unit unit;
     private final UnitWindow uw;
@@ -48,7 +50,7 @@ public class CreditModal {
         txtAmount.setText("0.00");
 
         this.dialog = new JDialog();
-        dialog.setTitle("Add Credit");
+        dialog.setTitle(res.getString("titleAddCredit"));
         dialog.add(mainPanel);
         dialog.pack();
         dialog.setResizable(false);
@@ -60,34 +62,34 @@ public class CreditModal {
         btnSave.addActionListener(
                 e -> {
                     if (txtName.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Name is mandatory!", "Error",
+                        JOptionPane.showMessageDialog(new JFrame(), res.getString("msgNameMandatory"), res.getString("msgError"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
 
                     if (txtStartDate.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Date is not valid!", "Error",
+                        JOptionPane.showMessageDialog(new JFrame(), res.getString("msgStartDateInvalid"), res.getString("msgError"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
 
                     if (txtEndDate.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Date is not valid!", "Error",
+                        JOptionPane.showMessageDialog(new JFrame(), res.getString("msgEndDateInvalid"), res.getString("msgError"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
 
-                    Float fInterestRate = validatePrice(txtInterestRate.getText(), "Interest rate");
+                    Float fInterestRate = validatePrice(txtInterestRate.getText(), res.getString("msgInterestRate"));
                     if (fInterestRate == null) {
                         return;
                     }
 
-                    Float fRedemptionRate = validatePrice(txtRedemptionRate.getText(), "Redemption rate");
+                    Float fRedemptionRate = validatePrice(txtRedemptionRate.getText(), res.getString("msgRedemptionRate"));
                     if (fRedemptionRate == null) {
                         return;
                     }
 
-                    Float fAmount = validatePrice(txtAmount.getText(), "Amount");
+                    Float fAmount = validatePrice(txtAmount.getText(), res.getString("msgAmount"));
                     if (fAmount == null) {
                         return;
                     }

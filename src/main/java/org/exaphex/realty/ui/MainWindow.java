@@ -11,9 +11,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class MainWindow extends JFrame {
-
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     final BuildingTableModel btm = new BuildingTableModel(new ArrayList<>());
 
     final List<UnitWindow> uw = new ArrayList<>();
@@ -56,8 +57,8 @@ public class MainWindow extends JFrame {
 
         Building building = btm.getBuildingAt(buildingsTable.getSelectedRow());
         int dialogResult = JOptionPane.showConfirmDialog(null,
-                "Are you sure you want to delete " + building.getName() + "?",
-                "Warning", JOptionPane.YES_NO_OPTION);
+                res.getString("msgSureYouWantDelete") + building.getName() + "?",
+                res.getString("msgWarning"), JOptionPane.YES_NO_OPTION);
         if (dialogResult == JOptionPane.YES_OPTION) {
             BuildingService.deleteBuilding(building);
             loadBuildings();
