@@ -1,17 +1,26 @@
 package org.exaphex.realty.ui;
 
-import org.exaphex.realty.db.service.BuildingService;
-import org.exaphex.realty.model.Building;
+import org.exaphex.realty.db.service.*;
+import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.ui.table.BuildingTableModel;
+import org.exaphex.realty.processor.CreditProcessor;
 import org.exaphex.realty.ui.buildings.BuildingModal;
 import org.exaphex.realty.ui.units.UnitWindow;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static org.exaphex.realty.processor.CreditProcessor.getTotalAmount;
+import static org.exaphex.realty.util.DateUtils.safeFormatDate;
 
 public class MainWindow extends JFrame {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
@@ -23,6 +32,14 @@ public class MainWindow extends JFrame {
     private JButton addButton;
     private JButton deleteButton;
     private JTable buildingsTable ;
+    private JButton refreshButton;
+    private JLabel lblPortfolioValue;
+    private JLabel lblRent;
+    private JLabel lblCreditAmount;
+    private JLabel lblCreditPaid;
+    private JLabel lblCreditLeft;
+    private JLabel lblPaidRent;
+    private JLabel lblPaidInterest;
 
     public MainWindow() {
         setContentPane(this.mainPanel);
@@ -43,6 +60,11 @@ public class MainWindow extends JFrame {
                     Building selectedBuilding = ((BuildingTableModel) buildingsTable.getModel()).getBuildingAt(selectedModelRow);
                     createBuildingDetailView(selectedBuilding);
                 }
+            }
+        });
+        tabbedPane1.addChangeListener(e -> {
+            if (tabbedPane1.getSelectedIndex() == 1) {
+                loadStatistics();
             }
         });
     }
@@ -88,5 +110,56 @@ public class MainWindow extends JFrame {
         u.setLocationRelativeTo(null);
         u.setVisible(true);
         this.uw.add(u);
+    }
+
+    private void loadStatistics() {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        List<Building> buildings = BuildingService.getAllBuildings();
+        List<Transaction> transactions = new ArrayList<>();
+        List<Credit> credits = new ArrayList<>();
+        List<Unit> units = new ArrayList<>();
+        float totalValue = 0;
+        float totalRent = 0;
+        for (Building building : buildings) {
+            units.addAll(UnitService.getUnits(building));
+        }
+
+        for (Unit unit : units) {
+            transactions.addAll(TransactionService.getTransactions(unit));
+            credits.addAll(CreditService.getCredit(unit));
+            List<Valuation> valuations = ValuationService.getValuations(unit);
+            if (!valuations.isEmpty()) {
+                valuations.sort((lhs, rhs) -> {
+                    Date sfLhs = safeFormatDate(lhs.getDate());
+                    Date sfRhs = safeFormatDate(rhs.getDate());
+                    return sfLhs.after(sfRhs) ? -1 : sfLhs.before(sfRhs) ? 1 : 0;
+                });
+                totalValue += valuations.get(0).getValue();
+            }
+            List<Rent> rents = RentService.getRents(unit);
+            totalRent += rents.stream().filter(e -> {
+                Date startDate = safeFormatDate(e.getStartDate());
+                Date endDate = safeFormatDate(e.getEndDate());
+                Date now = new Date();
+                if ((now.before(endDate) || now.equals(endDate)) && (now.after(startDate) || now.equals(startDate))) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }).map(Rent::getRentalPrice).reduce(0f, Float::sum);
+        }
+
+        float totalCredit = credits.stream().map(Credit::getAmount).reduce(0f, Float::sum);
+        float paidAmount = transactions.stream().filter(t -> t.getType() == Transaction.CREDIT_PAYMENT).map(Transaction::getAmount).reduce(0f, Float::sum);
+        float leftAmount = totalCredit - paidAmount;
+        float paidRent = transactions.stream().filter(t -> t.getType() == Transaction.RENT_PAYMENT).map(Transaction::getAmount).reduce(0f, Float::sum);
+        float paidInterest = transactions.stream().filter(t -> t.getType() == Transaction.CREDIT_PAYMENT).map(Transaction::getSecondaryAmount).reduce(0f, Float::sum);
+        lblPortfolioValue.setText(formatter.format(totalValue));
+        lblCreditAmount.setText(formatter.format(totalCredit));
+        lblRent.setText(formatter.format(totalRent));
+        lblCreditLeft.setText(formatter.format(leftAmount));
+        lblCreditPaid.setText(formatter.format(paidAmount));
+        lblPaidRent.setText(formatter.format(paidRent));
+        lblPaidInterest.setText(formatter.format(paidInterest));
     }
 }
