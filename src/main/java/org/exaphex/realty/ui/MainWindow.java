@@ -4,6 +4,7 @@ import org.exaphex.realty.db.service.*;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.ui.table.BuildingTableModel;
 import org.exaphex.realty.processor.CreditProcessor;
+import org.exaphex.realty.processor.export.ExportProcessor;
 import org.exaphex.realty.ui.buildings.BuildingModal;
 import org.exaphex.realty.ui.units.UnitWindow;
 
@@ -12,6 +13,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -40,12 +42,31 @@ public class MainWindow extends JFrame {
     private JLabel lblCreditLeft;
     private JLabel lblPaidRent;
     private JLabel lblPaidInterest;
+    private JMenuBar menuBar;
+    private JMenu menuFile;
+    private JMenuItem menuImportFile;
+    private JMenuItem menuExportFile;
 
     public MainWindow() {
         setContentPane(this.mainPanel);
+        setMenu();
         buildingsTable.setModel(btm);
         setListeners();
         loadBuildings();
+    }
+
+    private void setMenu() {
+        menuBar = new JMenuBar();
+        menuFile = new JMenu(res.getString("menuFile"));
+        menuImportFile = new JMenuItem(res.getString("menuImport"));
+        menuExportFile = new JMenuItem(res.getString("menuExport"));
+
+        menuFile.add(menuImportFile);
+        menuFile.add(menuExportFile);
+
+        menuBar.add(menuFile);
+
+        this.setJMenuBar(menuBar);
     }
 
     public void setListeners() {
@@ -67,6 +88,8 @@ public class MainWindow extends JFrame {
                 loadStatistics();
             }
         });
+        menuImportFile.addActionListener(e -> this.onImportFile());
+        menuExportFile.addActionListener(e -> this.onExportFile());
     }
 
     public void onAddNewBuilding() {
@@ -161,5 +184,34 @@ public class MainWindow extends JFrame {
         lblCreditPaid.setText(formatter.format(paidAmount));
         lblPaidRent.setText(formatter.format(paidRent));
         lblPaidInterest.setText(formatter.format(paidInterest));
+    }
+
+    private void onImportFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle(res.getString("titleFileDialog"));
+
+        int userSelection = fileChooser.showOpenDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileImport = fileChooser.getSelectedFile();
+            ExportProcessor.importFromFile(fileImport);
+            loadBuildings();
+            JOptionPane.showMessageDialog(new JFrame(), res.getString("msgFileImported"), res.getString("msgInfo"),
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void onExportFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle(res.getString("titleFileDialog"));
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileExport = fileChooser.getSelectedFile();
+            ExportProcessor.exportToFile(fileExport);
+            JOptionPane.showMessageDialog(new JFrame(), res.getString("msgFileExported"), res.getString("msgInfo"),
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }

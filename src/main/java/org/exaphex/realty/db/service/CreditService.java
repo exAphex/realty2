@@ -22,8 +22,16 @@ public class CreditService {
         List<Credit> retCredits = new ArrayList<>();
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("select * from credits where unitid = ?");
-            statement.setString(1, u.getId());
+
+            String query = "select * from credits";
+            if (u != null) {
+                query += " where unitid = ?";
+                statement = conn.prepareStatement(query);
+                statement.setString(1, u.getId());
+            } else {
+                statement = conn.prepareStatement(query);
+            }
+
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Credit tmpCredit = new Credit(rs.getString("id"), rs.getString("unitid"), rs.getString("name"), rs.getString("description"), rs.getFloat("interestrate"), rs.getFloat("redemptionrate"), rs.getString("startdate"), rs.getString("enddate"), rs.getFloat("amount"));
@@ -59,6 +67,12 @@ public class CreditService {
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
+        }
+    }
+
+    public static void addCredits(List<Credit> credits) {
+        for (Credit c : credits) {
+            addCredit(c);
         }
     }
 

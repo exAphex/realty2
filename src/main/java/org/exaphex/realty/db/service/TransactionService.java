@@ -22,8 +22,15 @@ public class TransactionService {
         List<Transaction> retTransactions = new ArrayList<>();
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("select * from transactions where unitid = ?");
-            statement.setString(1, u.getId());
+
+            String query = "select * from transactions";
+            if (u != null) {
+                statement = conn.prepareStatement(query + " where unitid = ?");
+                statement.setString(1, u.getId());
+            } else {
+                statement = conn.prepareStatement(query);
+            }
+
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Transaction tmpTransaction = new Transaction(rs.getString("id"), rs.getString("description"), rs.getString("reference"), rs.getString("date"), rs.getInt("type"), rs.getString("unitid"), rs.getFloat("amount"), rs.getFloat("secondaryamount"));
@@ -58,6 +65,12 @@ public class TransactionService {
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
+        }
+    }
+
+    public static void addTransactions(List<Transaction> transactions) {
+        for (Transaction t : transactions) {
+            addTransaction(t);
         }
     }
 

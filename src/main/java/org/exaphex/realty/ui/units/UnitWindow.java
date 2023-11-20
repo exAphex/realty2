@@ -43,8 +43,8 @@ public class UnitWindow extends JFrame {
     private JButton btnDeleteUnit;
     private JTabbedPane tabPane;
     private JTextField txtName;
-    private JTextField textField2;
-    private JButton saveButton;
+    private JTextField txtArea;
+    private JButton btnSave;
     private JPanel mainPanel;
     private JPanel paneGeneral;
     private JPanel paneRent;
@@ -156,6 +156,18 @@ public class UnitWindow extends JFrame {
                 selectUnit(item);
             }
         });
+
+        tabPane.addChangeListener(e -> {
+            if (this.selectedUnit == null) {
+                return;
+            }
+
+            if (tabPane.getSelectedIndex() == 0) {
+                setOverviewData(this.selectedUnit);
+            } else if (tabPane.getSelectedIndex() == 1) {
+                setFields(this.selectedUnit);
+            }
+        });
     }
 
     private void selectUnit(Unit u) {
@@ -165,12 +177,12 @@ public class UnitWindow extends JFrame {
         loadRents(this.selectedUnit);
         loadTransactions(this.selectedUnit);
         loadCredits(this.selectedUnit);
-        setFields(u);
+        setOverviewData(u);
     }
 
     private void setFields(Unit u) {
-        setOverviewData(u);
         this.txtName.setText(u != null ? u.getName() : "");
+        this.txtArea.setText(u!= null ? ""+u.getArea() : "");
     }
 
     private void setOverviewData(Unit u) {
@@ -178,6 +190,19 @@ public class UnitWindow extends JFrame {
         List<Rent> rents = rtm.getRents();
         List<Transaction> transactions = TransactionService.getTransactions(u);
         List<Credit> credits = ctm.getCredits();
+
+        lblCurrentValue.setText("-");
+        lblEquity.setText("-");
+        lblReturnOnEquity.setText("0%");
+        lblReturnOnInvestment.setText("0%");
+        lblReceivedRents.setText("-");
+        lblTotalCredit.setText("-");
+        lblRemainedCredit.setText("-");
+        lblPaidBackCredit.setText("-");
+
+        if (u == null) {
+            return;
+        }
 
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         DecimalFormat decimalFormatter = new DecimalFormat("##.##%");
@@ -195,9 +220,6 @@ public class UnitWindow extends JFrame {
 
             lblCurrentValue.setText(formatter.format(currValue));
             lblEquity.setText(formatter.format(currEquityValue));
-        } else {
-            lblCurrentValue.setText("-");
-            lblEquity.setText("-");
         }
 
         if (!rents.isEmpty()) {
@@ -212,16 +234,11 @@ public class UnitWindow extends JFrame {
             float returnOnEquity = currEquityValue > 0 ? (currentNetRent * 12) / currEquityValue : 0;
             lblReturnOnEquity.setText(decimalFormatter.format(returnOnEquity));
             lblReturnOnInvestment.setText(decimalFormatter.format(returnOnInvestment));
-        } else {
-            lblReturnOnEquity.setText("0%");
-            lblReturnOnInvestment.setText("0%");
         }
 
         if (!transactions.isEmpty()) {
             float tempTotalRents = transactions.stream().filter(t -> t.getType() == Transaction.RENT_PAYMENT).map(Transaction::getAmount).reduce(0f, Float::sum);
             lblReceivedRents.setText(formatter.format(tempTotalRents));
-        } else {
-            lblReceivedRents.setText("-");
         }
 
         if (!credits.isEmpty()) {
@@ -232,10 +249,6 @@ public class UnitWindow extends JFrame {
             lblTotalCredit.setText(formatter.format(totalCredit));
             lblRemainedCredit.setText(formatter.format(remainedCredit));
             lblPaidBackCredit.setText("(" + decimalFormatter.format(repaidPercent) + ") " + formatter.format(paidBackCredit));
-        } else {
-            lblTotalCredit.setText("-");
-            lblRemainedCredit.setText("-");
-            lblPaidBackCredit.setText("-");
         }
     }
 
@@ -375,7 +388,7 @@ public class UnitWindow extends JFrame {
         utm = new UnitComboBoxModel(new ArrayList<>());
         cmbUnits.setModel(utm);
         setTabPanelStatus(false);
-        setFields(null);
+        setOverviewData(null);
         tabPane.setSelectedIndex(0);
 
         loadUnits(this.building);

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.db.DatabaseConnector;
 import org.exaphex.realty.model.Building;
+import org.exaphex.realty.model.Unit;
 
 public class BuildingService {
     protected static final Logger logger = LogManager.getLogger();
@@ -58,7 +59,13 @@ public class BuildingService {
         }
     }
 
-    public static void deleteBuilding(Building building) {
+    public static void addBuildings(List<Building> buildings) {
+        for (Building b : buildings) {
+            addBuilding(b);
+        }
+    }
+
+    private static void deleteBuildingInternal(Building building) {
         Connection conn = null;
         PreparedStatement statement = null;
         try {
@@ -72,5 +79,13 @@ public class BuildingService {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
         }
+    }
+
+
+    public static void deleteBuilding(Building building) {
+        for (Unit u : UnitService.getUnits(building)) {
+            UnitService.deleteUnit(u);
+        }
+        deleteBuildingInternal(building);
     }
 }

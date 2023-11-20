@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static org.exaphex.realty.processor.export.ExportProcessor.exportToFile;
+
 public class Main {
 
     public static void setupDatabase() throws SQLException {
@@ -22,7 +24,6 @@ public class Main {
         System.setProperty("apple.awt.application.appearance", "system");
         System.setProperty("apple.awt.application.name", "Realty");
         FlatMacDarkLaf.setup();
-
         setupDatabase();
 
         JFrame frame = new MainWindow();

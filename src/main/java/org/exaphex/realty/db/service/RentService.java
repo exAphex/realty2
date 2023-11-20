@@ -19,8 +19,15 @@ public class RentService {
         List<Rent> retUnits = new ArrayList<>();
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("select * from rents where unitid = ?");
-            statement.setString(1, u.getId());
+
+            String query = "select * from rents";
+            if (u != null) {
+                statement = conn.prepareStatement(query + " where unitid = ?");
+                statement.setString(1, u.getId());
+            } else {
+                statement = conn.prepareStatement(query);
+            }
+
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Rent tmpRent = new Rent(rs.getString("id"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("unitid"), rs.getString("startdate"), rs.getString("enddate"), rs.getFloat("rentalprice"), rs.getFloat("extracosts"),rs.getFloat("deposit"));
@@ -56,6 +63,12 @@ public class RentService {
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
+        }
+    }
+
+    public static void addRents(List<Rent> rents) {
+        for (Rent r : rents) {
+            addRent(r);
         }
     }
 

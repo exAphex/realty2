@@ -30,6 +30,21 @@ public class DatabaseConnector {
         }
     }
 
+    public static int getDatabaseVersion() {
+        int retVersion = 0;
+        try (Connection conn = DatabaseConnector.getConnection()) {
+            try (Statement st = conn.createStatement()) {
+                ResultSet rs = st.executeQuery("select * from VERSION order by ID desc");
+                if (rs.next()) {
+                    retVersion = rs.getInt("ID");
+                }
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+        }
+        return retVersion;
+    }
+
     public static int getDatabaseVersion(Connection conn) throws SQLException {
         int retVersion = 0;
         try (Statement st = conn.createStatement()) {
@@ -99,6 +114,11 @@ public class DatabaseConnector {
                 executeSQL(conn,
                         "ALTER TABLE transactions ADD reference VARCHAR(255);");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (10)");
+                break;
+            case 10:
+                executeSQL(conn,
+                        "ALTER TABLE units ADD area DOUBLE;");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (11)");
                 break;
             default:
         }

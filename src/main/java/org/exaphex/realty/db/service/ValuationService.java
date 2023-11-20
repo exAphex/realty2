@@ -18,8 +18,14 @@ public class ValuationService {
         List<Valuation> retValuations = new ArrayList<>();
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("select * from valuations where id = ?");
-            statement.setString(1, u.getId());
+            String query = "select * from valuations";
+            if (u != null) {
+                statement = conn.prepareStatement(query + " where id = ?");
+                statement.setString(1, u.getId());
+            } else {
+                statement = conn.prepareStatement(query);
+            }
+
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Valuation tmpValuation = new Valuation(rs.getString("id"), rs.getString("date"), rs.getFloat("val"));
@@ -77,6 +83,12 @@ public class ValuationService {
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
+        }
+    }
+
+    public static void addValuations(List<Valuation> valuations) {
+        for (Valuation v : valuations) {
+            addValuation(v);
         }
     }
 
