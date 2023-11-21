@@ -1,7 +1,10 @@
 package org.exaphex.realty.db.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.db.DatabaseConnector;
 import org.exaphex.realty.model.Rent;
+import org.exaphex.realty.model.Transaction;
 import org.exaphex.realty.model.Unit;
 
 import java.sql.Connection;
@@ -12,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RentService {
-
+    protected static final Logger logger = LogManager.getLogger();
     public static List<Rent> getRents(Unit u) {
         Connection conn = null;
         PreparedStatement statement = null;
@@ -34,7 +37,7 @@ public class RentService {
                 retUnits.add(tmpRent);
             }
         } catch (SQLException e) {
-            // TODO: proper logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -59,7 +62,7 @@ public class RentService {
             statement.setFloat(9, rent.getDeposit());
             statement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: proper logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -72,6 +75,30 @@ public class RentService {
         }
     }
 
+    public static void updateRent(Rent r) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        try {
+            conn = DatabaseConnector.getConnection();
+            statement = conn.prepareStatement("UPDATE rents SET firstname = ?, lastname = ?, unitid = ?, startdate = ?, enddate = ?, rentalprice = ?, extracosts = ?, deposit = ? where id = ?");
+            statement.setString(1, r.getFirstName());
+            statement.setString(2, r.getLastName());
+            statement.setString(3, r.getUnitId());
+            statement.setString(4, r.getStartDate());
+            statement.setString(5, r.getEndDate());
+            statement.setFloat(6, r.getRentalPrice());
+            statement.setFloat(7, r.getExtraCosts());
+            statement.setFloat(8, r.getDeposit());
+            statement.setString(9, r.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            DatabaseConnector.closeStatement(statement);
+            DatabaseConnector.closeDatabase(conn);
+        }
+    }
+
     public static void deleteRent(Rent r) {
         Connection conn = null;
         PreparedStatement statement = null;
@@ -81,7 +108,7 @@ public class RentService {
             statement.setString(1, r.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: better logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
@@ -97,7 +124,7 @@ public class RentService {
             statement.setString(1, unit.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: better logging
+            logger.error(e);
         } finally {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);

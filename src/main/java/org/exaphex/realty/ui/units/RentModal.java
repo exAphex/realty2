@@ -14,7 +14,8 @@ import static org.exaphex.realty.util.PriceUtils.validatePrice;
 
 public class RentModal {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
-    private final Unit unit;
+    private Unit unit;
+    private Rent selectedRent;
     private final UnitWindow uw;
     private JDialog dialog;
     private JTextField txtFirstName;
@@ -30,15 +31,19 @@ public class RentModal {
     public RentModal(UnitWindow uw, Unit u) {
         this.unit = u;
         this.uw = uw;
-        setupUI();
+        setupCreateUI();
         setupListeners();
     }
 
-    private void setupUI() {
-        DateFormatter df = new DateFormatter(new SimpleDateFormat("dd-MM-yyyy"));
-        DefaultFormatterFactory dff = new DefaultFormatterFactory(df, df, df, df);
-        txtStartDate.setFormatterFactory(dff);
-        txtEndDate.setFormatterFactory(dff);
+    public RentModal(UnitWindow uw, Rent rent) {
+        this.uw = uw;
+        this.selectedRent = rent;
+        setupEditUI();
+        setupListeners();
+    }
+
+    private void setupCreateUI() {
+        setupDialog();
 
         SimpleDateFormat DateFor = new SimpleDateFormat("dd-MM-yyyy");
         txtStartDate.setText(DateFor.format(new Date()));
@@ -47,7 +52,27 @@ public class RentModal {
         txtRentalPrice.setText("0.00");
         txtExtraCost.setText("0.00");
         txtDeposit.setText("0.00");
+    }
 
+    private void setupEditUI() {
+        setupDialog();
+
+        txtFirstName.setText(this.selectedRent.getFirstName());
+        txtLastName.setText(this.selectedRent.getLastName());
+
+        txtStartDate.setText(this.selectedRent.getStartDate());
+        txtEndDate.setText(this.selectedRent.getEndDate());
+
+        txtRentalPrice.setText(this.selectedRent.getRentalPrice()+"");
+        txtExtraCost.setText(this.selectedRent.getExtraCosts()+"");
+        txtDeposit.setText(this.selectedRent.getDeposit()+"");
+    }
+
+    private void setupDialog() {
+        DateFormatter df = new DateFormatter(new SimpleDateFormat("dd-MM-yyyy"));
+        DefaultFormatterFactory dff = new DefaultFormatterFactory(df, df, df, df);
+        txtStartDate.setFormatterFactory(dff);
+        txtEndDate.setFormatterFactory(dff);
 
         this.dialog = new JDialog();
         dialog.setTitle(res.getString("titleAddRent"));
@@ -91,8 +116,12 @@ public class RentModal {
                     if (fRentalPrice == null || fExtraCosts == null || fDeposit == null) {
                         return;
                     }
+                    if (this.selectedRent != null) {
+                        uw.eventEditRent(new Rent(this.selectedRent.getId(), txtFirstName.getText(), txtLastName.getText(), this.selectedRent.getUnitId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit));
+                    } else {
+                        uw.eventAddNewRent(new Rent(txtFirstName.getText(), txtLastName.getText(), this.unit.getId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit));
+                    }
 
-                    uw.eventAddNewRent(new Rent(txtFirstName.getText(), txtLastName.getText(), this.unit.getId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit));
                     dialog.dispose();
                 });
     }

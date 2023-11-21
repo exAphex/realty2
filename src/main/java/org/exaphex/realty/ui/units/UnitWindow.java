@@ -15,6 +15,8 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ItemEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -136,6 +138,7 @@ public class UnitWindow extends JFrame {
     }
 
     private void setListeners() {
+        UnitWindow self = this;
         btnAddUnit.addActionListener(e -> this.onAddNewUnit());
         btnDeleteUnit.addActionListener(e -> this.onDeleteUnit());
         btnAddValuation.addActionListener(e -> this.onAddNewValuation());
@@ -166,6 +169,18 @@ public class UnitWindow extends JFrame {
                 setOverviewData(this.selectedUnit);
             } else if (tabPane.getSelectedIndex() == 1) {
                 setFields(this.selectedUnit);
+            }
+        });
+
+        tblRents.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                JTable table = (JTable) mouseEvent.getSource();
+                int selectedRow = table.getSelectedRow();
+                if (mouseEvent.getClickCount() == 2 && selectedRow != -1) {
+                    int selectedModelRow = tblRents.convertColumnIndexToModel(selectedRow);
+                    Rent selectedRent = ((RentTableModel) tblRents.getModel()).getRentAt(selectedModelRow);
+                    new RentModal(self, selectedRent);
+                }
             }
         });
     }
@@ -409,6 +424,11 @@ public class UnitWindow extends JFrame {
 
     public void eventAddNewRent(Rent r) {
         RentService.addRent(r);
+        loadRents(this.selectedUnit);
+    }
+
+    public void eventEditRent(Rent r) {
+        RentService.updateRent(r);
         loadRents(this.selectedUnit);
     }
 
