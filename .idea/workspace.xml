@@ -7,11 +7,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added import/export functionality">
+    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added editing functionality for rents">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/RentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/RentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/RentModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/RentModal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/ValuationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/ValuationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/ValuationModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/ValuationModal.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -360,7 +360,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700523245119</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="added editing functionality for rents">
+      <option name="closed" value="true" />
+      <created>1700527133548</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1700527133548</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -375,7 +383,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added i18n translation" />
     <MESSAGE value="added renting" />
     <MESSAGE value="added gitignore" />
     <MESSAGE value="added readme" />
@@ -400,17 +407,7 @@
     <MESSAGE value="added german translations" />
     <MESSAGE value="added portfolio statistics" />
     <MESSAGE value="added import/export functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="added import/export functionality" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java</url>
-          <line>179</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="added editing functionality for rents" />
+    <option name="LAST_COMMIT_MESSAGE" value="added editing functionality for rents" />
   </component>
 </project>

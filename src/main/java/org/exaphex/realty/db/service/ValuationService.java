@@ -92,6 +92,24 @@ public class ValuationService {
         }
     }
 
+    public static void updateValuation(Valuation valuation) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        try {
+            conn = DatabaseConnector.getConnection();
+            statement = conn.prepareStatement("UPDATE valuations SET val = ? where date = ? and id = ?");
+            statement.setFloat(1, valuation.getValue());
+            statement.setString(2, valuation.getDate());
+            statement.setString(3, valuation.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            DatabaseConnector.closeStatement(statement);
+            DatabaseConnector.closeDatabase(conn);
+        }
+    }
+
     public static void deleteValuation(Valuation valuation) {
         Connection conn = null;
         PreparedStatement statement = null;

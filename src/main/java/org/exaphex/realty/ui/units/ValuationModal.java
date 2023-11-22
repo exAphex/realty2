@@ -13,7 +13,8 @@ import java.util.ResourceBundle;
 public class ValuationModal {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private final UnitWindow uw;
-    private final Unit unit;
+    private Valuation valuation;
+    private Unit unit;
     private JDialog dialog;
     private JFormattedTextField txtDate;
     private JPanel mainPanel;
@@ -27,14 +28,17 @@ public class ValuationModal {
         setupListeners();
     }
 
-    private void setupUI() {
+    public ValuationModal(UnitWindow uw, Valuation valuation) {
+        this.uw = uw;
+        this.valuation = valuation;
+        setupEditUI();
+        setupListeners();
+    }
+
+    private void setupDialog() {
         DateFormatter df  = new DateFormatter(new SimpleDateFormat("dd-MM-yyyy"));
         DefaultFormatterFactory dff  = new DefaultFormatterFactory(df, df, df, df);
         txtDate.setFormatterFactory(dff);
-
-        SimpleDateFormat DateFor = new SimpleDateFormat("dd-MM-yyyy");
-        txtDate.setText(DateFor.format(new Date()));
-        txtValue.setText("0.00");
 
         this.dialog = new JDialog();
         dialog.setTitle(res.getString("titleValuation"));
@@ -43,6 +47,20 @@ public class ValuationModal {
         dialog.setResizable(false);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
+    }
+
+    private void setupUI() {
+        setupDialog();
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd-MM-yyyy");
+        txtDate.setText(DateFor.format(new Date()));
+        txtValue.setText("0.00");
+    }
+
+    private void setupEditUI() {
+        setupDialog();
+        txtDate.setText(this.valuation.getDate());
+        txtDate.setEnabled(false);
+        txtValue.setText(this.valuation.getValue()+"");
     }
 
     private void setupListeners() {
@@ -63,7 +81,11 @@ public class ValuationModal {
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    uw.eventAddNewValuation(new Valuation(this.unit.getId(), txtDate.getText(), val));
+                    if (this.valuation != null) {
+                        uw.eventEditValuation(new Valuation(this.valuation.getId(), txtDate.getText(), val));
+                    } else {
+                        uw.eventAddNewValuation(new Valuation(this.unit.getId(), txtDate.getText(), val));
+                    }
                     dialog.dispose();
                 });
     }
