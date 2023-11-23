@@ -41,6 +41,27 @@ public class UnitService {
         return retUnits;
     }
 
+    public static Unit getUnitById(String id) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        List<Unit> retUnits = new ArrayList<>();
+        try {
+            conn = DatabaseConnector.getConnection();
+            statement = conn.prepareStatement("select * from units where id = ?");
+            statement.setString(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return new Unit(rs.getString("id"), rs.getString("buildingid"), rs.getString("name"), rs.getFloat("area"));
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            DatabaseConnector.closeStatement(statement);
+            DatabaseConnector.closeDatabase(conn);
+        }
+        return null;
+    }
+
     public static void addUnit(Unit unit) {
         Connection conn = null;
         PreparedStatement statement = null;

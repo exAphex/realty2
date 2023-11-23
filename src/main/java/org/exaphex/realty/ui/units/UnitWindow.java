@@ -194,6 +194,17 @@ public class UnitWindow extends JFrame {
                 }
             }
         });
+
+        tblAccount.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                JTable table = (JTable) mouseEvent.getSource();
+                int selectedRow = table.getSelectedRow();
+                if (mouseEvent.getClickCount() == 2 && selectedRow != -1) {
+                    Transaction transaction = ttm.getTransactionAt(tblAccount.convertRowIndexToModel(selectedRow));
+                    new TransactionModal(self, transaction);
+                }
+            }
+        });
     }
 
     private void selectUnit(Unit u) {
@@ -450,6 +461,11 @@ public class UnitWindow extends JFrame {
 
     public void eventAddNewTransaction(Transaction t) {
         TransactionService.addTransaction(t);
+        loadTransactions(this.selectedUnit);
+    }
+
+    public void eventEditTransaction(Transaction t) {
+        TransactionService.updateTransaction(t);
         loadTransactions(this.selectedUnit);
     }
 

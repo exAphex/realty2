@@ -2,6 +2,7 @@ package org.exaphex.realty.ui.units;
 
 import org.exaphex.realty.db.service.CreditService;
 import org.exaphex.realty.db.service.RentService;
+import org.exaphex.realty.db.service.UnitService;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.ui.cmb.CreditComboBoxModel;
 import org.exaphex.realty.model.ui.cmb.RentComboBoxModel;
@@ -25,7 +26,8 @@ public class TransactionModal {
     private final CreditComboBoxModel ccm = new CreditComboBoxModel(new ArrayList<>());
     private final RentComboBoxModel rcm = new RentComboBoxModel(new ArrayList<>());
     private final UnitWindow uw;
-    private final Unit unit;
+    private Unit unit;
+    private Transaction transaction;
     private JTextField txtAmount;
     private JFormattedTextField txtDate;
     private JButton btnSave;
@@ -48,9 +50,50 @@ public class TransactionModal {
         loadData();
     }
 
+    public TransactionModal(UnitWindow uw, Transaction transaction) {
+        this.uw = uw;
+        this.transaction = transaction;
+        setupUI();
+        setupListeners();
+        loadData();
+        setupEditUI();
+    }
+
+    private void setupEditUI() {
+        String reference = this.transaction.getReference();
+        txtDate.setText(this.transaction.getDate());
+        txtDescription.setText(this.transaction.getDescription());
+        txtSecondary.setText(this.transaction.getSecondaryAmount()+"");
+        txtAmount.setText(this.transaction.getAmount()+"");
+        cmbTypes.setSelectedItem(formatTransactionType(this.transaction.getType()));
+        CreditComboBoxModel creditModel = (CreditComboBoxModel) cmbCredit.getModel();
+        RentComboBoxModel rentModel = (RentComboBoxModel) cmbRent.getModel();
+        switch (this.transaction.getType()) {
+            case Transaction.CREDIT_PAYMENT -> {
+                int pos = creditModel.getCreditIndexById(reference);
+                if (pos >= 0) {
+                    cmbCredit.setSelectedIndex(pos);
+                }
+            }
+            case Transaction.RENT_PAYMENT -> {
+                int pos = rentModel.getRentIndexById(reference);
+                if (pos >= 0) {
+                    cmbRent.setSelectedIndex(pos);
+                }
+            }
+        }
+    }
+
     private void loadData() {
-        loadCredits(this.unit);
-        loadRents(this.unit);
+        if (this.unit != null) {
+            loadCredits(this.unit);
+            loadRents(this.unit);
+        } else {
+            Unit u = UnitService.getUnitById(this.transaction.getUnitId());
+            loadCredits(u);
+            loadRents(u);
+        }
+
     }
 
     private void setupUI() {
@@ -126,7 +169,11 @@ public class TransactionModal {
                         }
                     }
 
-                    uw.eventAddNewTransaction(new Transaction(txtDescription.getText(), reference, txtDate.getText(),type, this.unit.getId(), fAmount, fSecondaryAmount));
+                    if (this.transaction != null) {
+                        uw.eventEditTransaction(new Transaction(this.transaction.getId(), txtDescription.getText(), reference, txtDate.getText(),type, this.transaction.getUnitId(), fAmount, fSecondaryAmount));
+                    } else {
+                        uw.eventAddNewTransaction(new Transaction(txtDescription.getText(), reference, txtDate.getText(),type, this.unit.getId(), fAmount, fSecondaryAmount));
+                    }
                     dialog.dispose();
                 });
 

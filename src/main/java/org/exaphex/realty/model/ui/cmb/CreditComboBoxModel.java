@@ -18,6 +18,18 @@ public class CreditComboBoxModel implements ComboBoxModel<Credit> {
         this.credits = new ArrayList<>(credits);
     }
 
+    public int getCreditIndexById(String id) {
+        if (id == null) {
+            return -1;
+        }
+        for (int i = 0; i < credits.size(); i++) {
+            if (id.equals(credits.get(i).getId())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     @Override
     public void setSelectedItem(Object anItem) {
         for(int i = 0; i < credits.size(); i++) {

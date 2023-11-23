@@ -37,6 +37,18 @@ public class RentComboBoxModel implements ComboBoxModel<Rent> {
         }
     }
 
+    public int getRentIndexById(String id) {
+        if (id == null) {
+            return -1;
+        }
+        for (int i = 0; i < rents.size(); i++) {
+            if (id.equals(rents.get(i).getId())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     @Override
     public int getSize() {
         return rents.size();
