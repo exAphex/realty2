@@ -9,6 +9,7 @@ import org.exaphex.realty.model.transport.ValuationTransportModel;
 import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
 import org.exaphex.realty.model.ui.table.*;
 import org.exaphex.realty.processor.CreditProcessor;
+import org.exaphex.realty.processor.RentPaymentCheckProcessor;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
@@ -24,6 +25,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.exaphex.realty.processor.CreditProcessor.getPaidAmount;
 import static org.exaphex.realty.processor.CreditProcessor.getTotalAmount;
@@ -77,6 +79,11 @@ public class UnitWindow extends JFrame {
     private JLabel lblTotalCredit;
     private JLabel lblPaidBackCredit;
     private JLabel lblRemainedCredit;
+    private JTabbedPane tabBuilding;
+    private JLabel lblPaidRent;
+    private JLabel lblPaidRentNumber;
+    private JLabel lblUnpaidRent;
+    private JLabel lblUnpaidRentNumber;
 
     public UnitWindow(Building b) {
         super();
@@ -88,6 +95,7 @@ public class UnitWindow extends JFrame {
 
     private void buildUI() {
         setTitle(this.building.getName());
+        setBuildingOverviewData(this.building);
         cmbUnits.setModel(utm);
         tblValuations.setModel(vtm);
         tblRents.setModel(rtm);
@@ -172,6 +180,12 @@ public class UnitWindow extends JFrame {
             }
         });
 
+        tabBuilding.addChangeListener(e -> {
+            if (tabBuilding.getSelectedIndex() == 0) {
+                setBuildingOverviewData(this.building);
+            }
+        });
+
         tblRents.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent mouseEvent) {
                 JTable table = (JTable) mouseEvent.getSource();
@@ -220,6 +234,21 @@ public class UnitWindow extends JFrame {
     private void setFields(Unit u) {
         this.txtName.setText(u != null ? u.getName() : "");
         this.txtArea.setText(u!= null ? ""+u.getArea() : "");
+    }
+
+    private void setBuildingOverviewData(Building b) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        List<PaymentCheck> payments = RentPaymentCheckProcessor.getRentPaymentCheck(this.building);
+        List<PaymentCheck> paidRents = payments.stream().filter(p -> p.getPaidAmount() > 0).toList();
+        List<PaymentCheck> unpaidRents = payments.stream().filter(p -> p.getPaidAmount() == 0).toList();
+        float paidRentNumber = paidRents.stream().map(PaymentCheck::getPaidAmount).reduce(0f, Float::sum);
+        float unpaidRentNumber = unpaidRents.stream().map(PaymentCheck::getAmount).reduce(0f, Float::sum);
+
+        lblPaidRent.setText(paidRents.size()+"");
+        lblPaidRentNumber.setText(formatter.format(paidRentNumber));
+
+        lblUnpaidRent.setText(unpaidRents.size()+"");
+        lblUnpaidRentNumber.setText(formatter.format(unpaidRentNumber));
     }
 
     private void setOverviewData(Unit u) {

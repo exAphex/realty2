@@ -77,36 +77,43 @@ public class DatabaseConnector {
                 executeSQL(conn,
                         "CREATE TABLE IF NOT EXISTS valuations(id VARCHAR(255), val DOUBLE, date VARCHAR(10))");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (3)");
+                updateDatabase(conn);
                 break;
             case 3:
                 executeSQL(conn,
                         "CREATE TABLE IF NOT EXISTS rents(id VARCHAR(255), firstname VARCHAR(255), lastname VARCHAR(255), unitid VARCHAR(255), startdate VARCHAR(10), enddate VARCHAR(10), rentalprice DOUBLE, extracosts DOUBLE, deposit DOUBLE)");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (4)");
+                updateDatabase(conn);
                 break;
             case 4:
                 executeSQL(conn,
                         "CREATE TABLE IF NOT EXISTS transactions(id VARCHAR(255), date VARCHAR(10), type INT, unitid VARCHAR(255), amount DOUBLE)");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (5)");
+                updateDatabase(conn);
                 break;
             case 5:
                 executeSQL(conn,
                         "ALTER TABLE transactions ADD secondaryamount DOUBLE;");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (6)");
+                updateDatabase(conn);
                 break;
             case 6:
                 executeSQL(conn,
                         "CREATE TABLE IF NOT EXISTS credits(id VARCHAR(255), unitid VARCHAR(255),name VARCHAR(255), description VARCHAR(255), interestrate DOUBLE, redemptionrate DOUBLE, startdate VARCHAR(10))");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (7)");
+                updateDatabase(conn);
                 break;
             case 7:
                 executeSQL(conn,
                         "ALTER TABLE credits ADD enddate VARCHAR(10);");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (8)");
+                updateDatabase(conn);
                 break;
             case 8:
                 executeSQL(conn,
                         "ALTER TABLE credits ADD amount DOUBLE;");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (9)");
+                updateDatabase(conn);
                 break;
             case 9:
                 executeSQL(conn,
@@ -114,11 +121,13 @@ public class DatabaseConnector {
                 executeSQL(conn,
                         "ALTER TABLE transactions ADD reference VARCHAR(255);");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (10)");
+                updateDatabase(conn);
                 break;
             case 10:
                 executeSQL(conn,
                         "ALTER TABLE units ADD area DOUBLE;");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (11)");
+                updateDatabase(conn);
                 break;
             default:
         }

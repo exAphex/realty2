@@ -2,6 +2,9 @@ package org.exaphex.realty.processor;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.exaphex.realty.db.service.RentService;
+import org.exaphex.realty.db.service.TransactionService;
+import org.exaphex.realty.db.service.UnitService;
 import org.exaphex.realty.model.*;
 
 import java.text.DateFormat;
@@ -17,6 +20,20 @@ public class RentPaymentCheckProcessor {
     public static List<PaymentCheck> getRentPaymentCheck(Unit u, Rent r, List<Transaction> transactions) {
         return calculatePaymentChecks(u, r, transactions);
     }
+
+    public static List<PaymentCheck> getRentPaymentCheck(Building b) {
+        List<Unit> units = UnitService.getUnits(b);
+        List<PaymentCheck> paymentChecks = new ArrayList<>();
+        for (Unit u : units) {
+            List<Rent> rents = RentService.getRents(u);
+            List<Transaction> transactions = TransactionService.getTransactions(u);
+            for (Rent r : rents) {
+                paymentChecks.addAll(calculatePaymentChecks(u, r, transactions));
+            }
+        }
+        return paymentChecks;
+    }
+
     private static List<PaymentCheck> calculatePaymentChecks(Unit u, Rent r, List<Transaction> transactions) {
         DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         DateFormat monthFormatter = new SimpleDateFormat("MM-yyyy");
