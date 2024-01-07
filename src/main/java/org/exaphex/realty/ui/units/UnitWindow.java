@@ -1,5 +1,6 @@
 package org.exaphex.realty.ui.units;
 
+import org.exaphex.realty.processor.chart.IncomeExpenseChartProcessor;
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +11,7 @@ import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
 import org.exaphex.realty.model.ui.table.*;
 import org.exaphex.realty.processor.CreditProcessor;
 import org.exaphex.realty.processor.RentPaymentCheckProcessor;
+import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
@@ -25,7 +27,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.exaphex.realty.processor.CreditProcessor.getPaidAmount;
 import static org.exaphex.realty.processor.CreditProcessor.getTotalAmount;
@@ -84,6 +85,8 @@ public class UnitWindow extends JFrame {
     private JLabel lblPaidRentNumber;
     private JLabel lblUnpaidRent;
     private JLabel lblUnpaidRentNumber;
+    private ChartPanel chartPanel1;
+    private JPanel panelChart;
 
     public UnitWindow(Building b) {
         super();
@@ -122,6 +125,10 @@ public class UnitWindow extends JFrame {
         tblValuations.setRowSorter(sorterValuation);
         setContentPane(mainPanel);
         setTabPanelStatus(false);
+    }
+
+    private void createUIComponents() {
+        chartPanel1 = new ChartPanel(null);
     }
 
     void setTabPanelStatus(Boolean isEnabled) {
@@ -237,6 +244,7 @@ public class UnitWindow extends JFrame {
     }
 
     private void setBuildingOverviewData(Building b) {
+        List<Unit> units = UnitService.getUnits(b);
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         List<PaymentCheck> payments = RentPaymentCheckProcessor.getRentPaymentCheck(this.building);
         List<PaymentCheck> paidRents = payments.stream().filter(p -> p.getPaidAmount() > 0).toList();
@@ -249,6 +257,13 @@ public class UnitWindow extends JFrame {
 
         lblUnpaidRent.setText(unpaidRents.size()+"");
         lblUnpaidRentNumber.setText(formatter.format(unpaidRentNumber));
+
+        List<Transaction> transactions = new ArrayList<>();
+        for (Unit u : units) {
+            transactions.addAll(TransactionService.getTransactions(u));
+        }
+        chartPanel1.setChart(IncomeExpenseChartProcessor.createBuildingChart(transactions));
+        //panelChart.add(IncomeExpenseChartProcessor.createBuildingChart(transactions));
     }
 
     private void setOverviewData(Unit u) {

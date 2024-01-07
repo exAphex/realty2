@@ -109,6 +109,24 @@ public class Transaction {
         };
     }
 
+    public static boolean isExpense(int type) {
+        return switch (type) {
+            case RENT_PAYMENT -> false;
+            case DEPOSIT -> false;
+            case CREDIT_PAYMENT -> true;
+            default -> false;
+        };
+    }
+
+    public static boolean isIncome(int type) {
+        return switch (type) {
+            case RENT_PAYMENT -> true;
+            case DEPOSIT -> true;
+            case CREDIT_PAYMENT -> false;
+            default -> false;
+        };
+    }
+
     public String getDescription() {
         return description;
     }
