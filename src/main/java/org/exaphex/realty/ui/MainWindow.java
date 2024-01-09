@@ -3,31 +3,30 @@ package org.exaphex.realty.ui;
 import org.exaphex.realty.db.service.*;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.ui.table.BuildingTableModel;
-import org.exaphex.realty.processor.CreditProcessor;
+import org.exaphex.realty.model.ui.table.ExpenseCategoryTypeTableModel;
+import org.exaphex.realty.model.ui.table.RentTableModel;
 import org.exaphex.realty.processor.export.ExportProcessor;
 import org.exaphex.realty.ui.buildings.BuildingModal;
+import org.exaphex.realty.ui.settings.CategoryModal;
+import org.exaphex.realty.ui.units.RentModal;
 import org.exaphex.realty.ui.units.UnitWindow;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static org.exaphex.realty.processor.CreditProcessor.getTotalAmount;
 import static org.exaphex.realty.util.DateUtils.safeFormatDate;
 
 public class MainWindow extends JFrame {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     final BuildingTableModel btm = new BuildingTableModel(new ArrayList<>());
-
+    final ExpenseCategoryTypeTableModel ctm = new ExpenseCategoryTypeTableModel(new ArrayList<>());
     final List<UnitWindow> uw = new ArrayList<>();
     private JTabbedPane tabbedPane1;
     private JPanel mainPanel;
@@ -42,6 +41,10 @@ public class MainWindow extends JFrame {
     private JLabel lblCreditLeft;
     private JLabel lblPaidRent;
     private JLabel lblPaidInterest;
+    private JTabbedPane tabbedPane2;
+    private JButton btnAddCategory;
+    private JButton btnDeleteCategory;
+    private JTable tblSettingsCategories;
     private JMenuBar menuBar;
     private JMenu menuFile;
     private JMenuItem menuImportFile;
@@ -51,6 +54,7 @@ public class MainWindow extends JFrame {
         setContentPane(this.mainPanel);
         setMenu();
         buildingsTable.setModel(btm);
+        tblSettingsCategories.setModel(ctm);
         setListeners();
         loadBuildings();
     }
@@ -70,22 +74,38 @@ public class MainWindow extends JFrame {
     }
 
     public void setListeners() {
+        MainWindow self = this;
         addButton.addActionListener(e -> this.onAddNewBuilding());
+        btnAddCategory.addActionListener(e -> this.onAddNewCategory());
         deleteButton.addActionListener(e -> this.onDeleteBuilding());
+        btnDeleteCategory.addActionListener(e -> this.onDeleteCategory());
         buildingsTable.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent mouseEvent) {
                 JTable table = (JTable) mouseEvent.getSource();
                 int selectedRow = table.getSelectedRow();
                 if (mouseEvent.getClickCount() == 2 && selectedRow != -1) {
-                    int selectedModelRow = buildingsTable.convertColumnIndexToModel(selectedRow);
+                    int selectedModelRow = buildingsTable.convertRowIndexToModel(selectedRow);
                     Building selectedBuilding = ((BuildingTableModel) buildingsTable.getModel()).getBuildingAt(selectedModelRow);
                     createBuildingDetailView(selectedBuilding);
+                }
+            }
+        });
+        tblSettingsCategories.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                JTable table = (JTable) mouseEvent.getSource();
+                int selectedRow = table.getSelectedRow();
+                if (mouseEvent.getClickCount() == 2 && selectedRow != -1) {
+                    int selectedModelRow = tblSettingsCategories.convertRowIndexToModel(selectedRow);
+                    ExpenseCategory selectedCategory = ((ExpenseCategoryTypeTableModel) tblSettingsCategories.getModel()).getCategoryById(selectedModelRow);
+                    new CategoryModal(self, selectedCategory);
                 }
             }
         });
         tabbedPane1.addChangeListener(e -> {
             if (tabbedPane1.getSelectedIndex() == 1) {
                 loadStatistics();
+            } else if (tabbedPane1.getSelectedIndex() == 2) {
+                loadExpenseCategories();
             }
         });
         menuImportFile.addActionListener(e -> this.onImportFile());
@@ -95,6 +115,8 @@ public class MainWindow extends JFrame {
     public void onAddNewBuilding() {
         new BuildingModal(this);
     }
+
+    public void onAddNewCategory() { new CategoryModal(this); }
 
     public void onDeleteBuilding() {
         if (buildingsTable.getSelectedRow() == -1)
@@ -110,14 +132,38 @@ public class MainWindow extends JFrame {
         }
     }
 
+    public void onDeleteCategory() {
+        int[] selectedRows = tblSettingsCategories.getSelectedRows();
+        for (int i : selectedRows) {
+            ExpenseCategory category = ctm.getCategoryById(tblSettingsCategories.convertRowIndexToModel(i));
+            ExpenseCategoryService.deleteCategory(category);
+        }
+        loadExpenseCategories();
+    }
+
     public void eventAddNewBuilding(Building b) {
         BuildingService.addBuilding(b);
         loadBuildings();
     }
 
+    public void eventAddNewCategory(ExpenseCategory c) {
+        ExpenseCategoryService.addExpenseCategory(c);
+        loadExpenseCategories();
+    }
+
+    public void eventEditCategory(ExpenseCategory c) {
+        ExpenseCategoryService.updateExpenseCategory(c);
+        loadExpenseCategories();
+    }
+
     public void loadBuildings() {
         List<Building> buildings = BuildingService.getAllBuildings();
         btm.setBuildings(buildings);
+    }
+
+    public void loadExpenseCategories() {
+        List<ExpenseCategory> categories = ExpenseCategoryService.getCategories();
+        ctm.setCategories(categories);
     }
 
     private void createBuildingDetailView(Building b) {

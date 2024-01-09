@@ -12,6 +12,7 @@ public class ExportModel {
     private List<Transaction> transactions;
     private List<Unit> units;
     private List<Valuation> valuations;
+    private List<ExpenseCategory> expenseCategories;
 
     public ExportModel() {
     }
@@ -70,5 +71,13 @@ public class ExportModel {
 
     public void setValuations(List<Valuation> valuations) {
         this.valuations = valuations;
+    }
+
+    public List<ExpenseCategory> getExpenseCategories() {
+        return expenseCategories;
+    }
+
+    public void setExpenseCategories(List<ExpenseCategory> expenseCategories) {
+        this.expenseCategories = expenseCategories;
     }
 }

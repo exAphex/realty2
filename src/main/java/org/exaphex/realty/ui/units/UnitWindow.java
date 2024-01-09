@@ -198,7 +198,7 @@ public class UnitWindow extends JFrame {
                 JTable table = (JTable) mouseEvent.getSource();
                 int selectedRow = table.getSelectedRow();
                 if (mouseEvent.getClickCount() == 2 && selectedRow != -1) {
-                    int selectedModelRow = tblRents.convertColumnIndexToModel(selectedRow);
+                    int selectedModelRow = tblRents.convertRowIndexToModel(selectedRow);
                     Rent selectedRent = ((RentTableModel) tblRents.getModel()).getRentAt(selectedModelRow);
                     new RentModal(self, selectedRent);
                 }

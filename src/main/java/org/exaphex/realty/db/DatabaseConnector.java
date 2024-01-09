@@ -129,6 +129,18 @@ public class DatabaseConnector {
                 executeSQL(conn, "INSERT INTO VERSION VALUES (11)");
                 updateDatabase(conn);
                 break;
+            case 11:
+                executeSQL(conn,
+                        "ALTER TABLE transactions ADD expensecategory VARCHAR(255) DEFAULT '';");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (12)");
+                updateDatabase(conn);
+                break;
+            case 12:
+                executeSQL(conn,
+                        "CREATE TABLE IF NOT EXISTS expensecategory (id VARCHAR(255), name VARCHAR(255), wrapable INT, calculationtype INT)");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (13)");
+                updateDatabase(conn);
+                break;
             default:
         }
     }
