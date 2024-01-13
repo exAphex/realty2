@@ -32,7 +32,7 @@ public class RentTableModel extends AbstractTableModel  {
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return 7;
     }
 
     @Override
@@ -50,6 +50,8 @@ public class RentTableModel extends AbstractTableModel  {
                 yield res.getString("colExtraCosts");
             case 5:
                 yield res.getString("colDeposit");
+            case 6:
+                yield res.getString("colNumOfTentants");
             default:
                 yield "";
         };
@@ -72,6 +74,8 @@ public class RentTableModel extends AbstractTableModel  {
                 yield formatter.format(rent.getExtraCosts());
             case 5:
                 yield formatter.format(rent.getDeposit());
+            case 6:
+                yield rent.getNumOfTentants();
             default:
                 yield "??";
         };

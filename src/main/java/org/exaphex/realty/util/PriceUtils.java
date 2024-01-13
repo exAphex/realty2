@@ -24,6 +24,16 @@ public class PriceUtils {
         }
     }
 
+    public static Integer validateInteger(String val, String fieldName) {
+        try {
+            return Integer.parseInt(val);
+        } catch (NumberFormatException n) {
+            JOptionPane.showMessageDialog(new JFrame(), fieldName + res.getString("msgIsNotValid"), res.getString("msgError"),
+                    JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+    }
+
     public static float parseSafePrice(String val) {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         try {

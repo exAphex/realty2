@@ -33,7 +33,7 @@ public class RentService {
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Rent tmpRent = new Rent(rs.getString("id"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("unitid"), rs.getString("startdate"), rs.getString("enddate"), rs.getFloat("rentalprice"), rs.getFloat("extracosts"),rs.getFloat("deposit"));
+                Rent tmpRent = new Rent(rs.getString("id"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("unitid"), rs.getString("startdate"), rs.getString("enddate"), rs.getFloat("rentalprice"), rs.getFloat("extracosts"),rs.getFloat("deposit"), rs.getInt("numoftentants"));
                 retUnits.add(tmpRent);
             }
         } catch (SQLException e) {
@@ -50,7 +50,7 @@ public class RentService {
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("INSERT INTO rents VALUES (?,?,?,?,?,?,?,?,?)");
+            statement = conn.prepareStatement("INSERT INTO rents (id, firstname, lastname, unitid, startdate, enddate, rentalprice, extracosts, deposit, numoftentants) VALUES (?,?,?,?,?,?,?,?,?,?)");
             statement.setString(1, rent.getId());
             statement.setString(2, rent.getFirstName());
             statement.setString(3, rent.getLastName());
@@ -60,6 +60,7 @@ public class RentService {
             statement.setFloat(7, rent.getRentalPrice());
             statement.setFloat(8, rent.getExtraCosts());
             statement.setFloat(9, rent.getDeposit());
+            statement.setInt(10, rent.getNumOfTentants());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);
@@ -80,7 +81,7 @@ public class RentService {
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("UPDATE rents SET firstname = ?, lastname = ?, unitid = ?, startdate = ?, enddate = ?, rentalprice = ?, extracosts = ?, deposit = ? where id = ?");
+            statement = conn.prepareStatement("UPDATE rents SET firstname = ?, lastname = ?, unitid = ?, startdate = ?, enddate = ?, rentalprice = ?, extracosts = ?, deposit = ?, numoftentants = ? where id = ?");
             statement.setString(1, r.getFirstName());
             statement.setString(2, r.getLastName());
             statement.setString(3, r.getUnitId());
@@ -89,7 +90,8 @@ public class RentService {
             statement.setFloat(6, r.getRentalPrice());
             statement.setFloat(7, r.getExtraCosts());
             statement.setFloat(8, r.getDeposit());
-            statement.setString(9, r.getId());
+            statement.setInt(9, r.getNumOfTentants());
+            statement.setString(10, r.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);

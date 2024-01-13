@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import static org.exaphex.realty.util.PriceUtils.validateInteger;
 import static org.exaphex.realty.util.PriceUtils.validatePrice;
 
 public class RentModal {
@@ -27,6 +28,7 @@ public class RentModal {
     private JButton btnSave;
     private JPanel mainPanel;
     private JFormattedTextField txtEndDate;
+    private JTextField txtNumOfTentants;
 
     public RentModal(UnitWindow uw, Unit u) {
         this.unit = u;
@@ -52,6 +54,7 @@ public class RentModal {
         txtRentalPrice.setText("0.00");
         txtExtraCost.setText("0.00");
         txtDeposit.setText("0.00");
+        txtNumOfTentants.setText("1");
     }
 
     private void setupEditUI() {
@@ -59,6 +62,8 @@ public class RentModal {
 
         txtFirstName.setText(this.selectedRent.getFirstName());
         txtLastName.setText(this.selectedRent.getLastName());
+
+        txtNumOfTentants.setText(this.selectedRent.getNumOfTentants()+"");
 
         txtStartDate.setText(this.selectedRent.getStartDate());
         txtEndDate.setText(this.selectedRent.getEndDate());
@@ -113,13 +118,14 @@ public class RentModal {
                     Float fRentalPrice = validatePrice(txtRentalPrice.getText(), res.getString("msgRentalPrice"));
                     Float fExtraCosts = validatePrice(txtExtraCost.getText(), res.getString("msgExtraCosts"));
                     Float fDeposit = validatePrice(txtDeposit.getText(), res.getString("msgDeposit"));
-                    if (fRentalPrice == null || fExtraCosts == null || fDeposit == null) {
+                    Integer iNumberOfTentant = validateInteger(txtNumOfTentants.getText(), res.getString("msgNumberOfTentants"));
+                    if (fRentalPrice == null || fExtraCosts == null || fDeposit == null || iNumberOfTentant == null) {
                         return;
                     }
                     if (this.selectedRent != null) {
-                        uw.eventEditRent(new Rent(this.selectedRent.getId(), txtFirstName.getText(), txtLastName.getText(), this.selectedRent.getUnitId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit));
+                        uw.eventEditRent(new Rent(this.selectedRent.getId(), txtFirstName.getText(), txtLastName.getText(), this.selectedRent.getUnitId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit, iNumberOfTentant));
                     } else {
-                        uw.eventAddNewRent(new Rent(txtFirstName.getText(), txtLastName.getText(), this.unit.getId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit));
+                        uw.eventAddNewRent(new Rent(txtFirstName.getText(), txtLastName.getText(), this.unit.getId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit, iNumberOfTentant));
                     }
 
                     dialog.dispose();

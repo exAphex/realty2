@@ -14,8 +14,9 @@ public class Rent {
     private final float rentalPrice;
     private final float extraCosts;
     private final float deposit;
+    private final int numOfTentants;
 
-    public Rent(String id, String firstName, String lastName, String unitId, String startDate, String endDate, float rentalPrice, float extraCosts, float deposit) {
+    public Rent(String id, String firstName, String lastName, String unitId, String startDate, String endDate, float rentalPrice, float extraCosts, float deposit, int numOfTentants) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,9 +26,10 @@ public class Rent {
         this.rentalPrice = rentalPrice;
         this.extraCosts = extraCosts;
         this.deposit = deposit;
+        this.numOfTentants = numOfTentants;
     }
 
-    public Rent(String firstName, String lastName, String unitId, String startDate, String endDate, float rentalPrice, float extraCosts, float deposit) {
+    public Rent(String firstName, String lastName, String unitId, String startDate, String endDate, float rentalPrice, float extraCosts, float deposit, int numOfTentants) {
         this.id = UUID.randomUUID().toString();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,6 +39,7 @@ public class Rent {
         this.rentalPrice = rentalPrice;
         this.extraCosts = extraCosts;
         this.deposit = deposit;
+        this.numOfTentants = numOfTentants;
     }
 
     public String getId() {
@@ -73,6 +76,10 @@ public class Rent {
 
     public float getDeposit() {
         return deposit;
+    }
+
+    public int getNumOfTentants() {
+        return numOfTentants;
     }
 
     @Override
