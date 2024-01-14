@@ -26,7 +26,7 @@ public class BuildingService {
             ResultSet rs = statement.executeQuery("select * from buildings");
             while (rs.next()) {
                 Building tmpBuilding = new Building(rs.getString("id"), rs.getString("name"), rs.getString("street"),
-                        rs.getString("number"), rs.getString("postalCode"), rs.getString("city"));
+                        rs.getString("number"), rs.getString("postalCode"), rs.getString("city"), rs.getFloat("totalarea"));
                 retBuildings.add(tmpBuilding);
             }
         } catch (SQLException e) {
@@ -43,13 +43,14 @@ public class BuildingService {
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("INSERT INTO buildings VALUES (?,?,?,?,?,?)");
+            statement = conn.prepareStatement("INSERT INTO buildings (id, name, street, number, postalCode, city, totalarea) VALUES (?,?,?,?,?,?)");
             statement.setString(1, building.getId());
             statement.setString(2, building.getName());
             statement.setString(3, building.getAddress());
             statement.setString(4, building.getNumber());
             statement.setString(5, building.getPostalCode());
             statement.setString(6, building.getCity());
+            statement.setFloat(7, building.getTotalArea());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);

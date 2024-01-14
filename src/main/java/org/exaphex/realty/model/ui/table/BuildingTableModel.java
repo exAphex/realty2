@@ -29,7 +29,7 @@ public class BuildingTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -41,6 +41,8 @@ public class BuildingTableModel extends AbstractTableModel {
                 yield res.getString("colAddress");
             case 2:
                 yield res.getString("colCity");
+            case 3:
+                yield res.getString("colTotalArea");
             default:
                 yield "";
         };
@@ -56,6 +58,8 @@ public class BuildingTableModel extends AbstractTableModel {
                 yield building.getAddress() + " " + building.getNumber();
             case 2:
                 yield building.getPostalCode() + " " + building.getCity();
+            case 3:
+                yield building.getTotalArea() + " m²";
             default:
                 yield "??";
         };

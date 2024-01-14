@@ -146,7 +146,11 @@ public class DatabaseConnector {
                         "ALTER TABLE rents ADD numoftentants INT DEFAULT 1;");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (14)");
                 updateDatabase(conn);
-                break;
+                break;case 14:
+                executeSQL(conn,
+                        "ALTER TABLE buildings ADD totalarea DOUBLE DEFAULT 1;");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (15)");
+                updateDatabase(conn);
             default:
         }
     }

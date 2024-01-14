@@ -6,6 +6,8 @@ import org.exaphex.realty.ui.MainWindow;
 import javax.swing.*;
 import java.util.ResourceBundle;
 
+import static org.exaphex.realty.util.PriceUtils.validatePrice;
+
 public class BuildingModal {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private JPanel mainPanel;
@@ -15,6 +17,7 @@ public class BuildingModal {
     private JTextField textPostalCode;
     private JTextField textCity;
     private JButton saveButton;
+    private JTextField txtTotalArea;
 
     private final MainWindow mw;
 
@@ -27,7 +30,8 @@ public class BuildingModal {
     }
 
     private void setupUI() {
-        this. dialog = new JDialog();
+        txtTotalArea.setText("1.0");
+        this.dialog = new JDialog();
         dialog.setTitle(res.getString("titleAddBuilding"));
         dialog.add(mainPanel);
         dialog.pack();
@@ -39,8 +43,13 @@ public class BuildingModal {
     private void setupListeners() {
         saveButton.addActionListener(
                 e -> {
+                    Float fArea = validatePrice(txtTotalArea.getText(), res.getString("msgArea"));
+                    if (fArea == null || fArea <= 0) {
+                        return;
+                    }
+
                     mw.eventAddNewBuilding(new Building(textName.getText(), textStreet.getText(), textNumber.getText(),
-                            textPostalCode.getText(), textCity.getText()));
+                            textPostalCode.getText(), textCity.getText(),fArea));
                     dialog.dispose();
                 });
     }
