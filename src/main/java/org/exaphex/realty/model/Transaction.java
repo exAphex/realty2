@@ -11,8 +11,8 @@ public class Transaction {
     private final String date;
     private final int type;
     private final String unitId;
-    private float amount;
-    private float secondaryAmount;
+    private final float amount;
+    private final float secondaryAmount;
     private final String description;
     private final String reference;
     private final String expenseCategory;
