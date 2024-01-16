@@ -1,129 +1,225 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.exaphex.realty.ui.units.UnitWindow">
-  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="mainUnitPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="628" height="437"/>
     </constraints>
     <properties>
-      <minimumSize width="500" height="223"/>
+      <minimumSize width="500" height="203"/>
       <preferredSize width="600" height="400"/>
     </properties>
     <border type="none"/>
     <children>
-      <tabbedpane id="fa83d" binding="tabBuilding">
+      <toolbar id="e5cbc">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="3df5e" class="javax.swing.JComboBox" binding="cmbUnits">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="2d291" class="javax.swing.JButton" binding="btnAddUnit">
+            <constraints/>
+            <properties>
+              <icon value="add.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="1b696" class="javax.swing.JButton" binding="btnDeleteUnit">
+            <constraints/>
+            <properties>
+              <icon value="delete.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+        </children>
+      </toolbar>
+      <tabbedpane id="67ee3" binding="tabPane">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="200" height="200"/>
           </grid>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="9718c" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+          <grid id="1a501" binding="paneOverview" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="10" left="10" bottom="10" right="10"/>
             <constraints>
-              <tabbedpane title="Overview"/>
+              <tabbedpane title-resource-bundle="i18n" title-key="tabOverview"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="cee68" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="10" left="10" bottom="10" right="10"/>
+              <grid id="f983" layout-manager="GridLayoutManager" row-count="10" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <grid id="9f710" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
+                  <component id="85443" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <component id="d8416" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Paid rent:"/>
-                        </properties>
-                      </component>
-                      <component id="7d21d" class="javax.swing.JLabel" binding="lblPaidRent">
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <foreground color="-14818019"/>
-                          <text value="-"/>
-                        </properties>
-                      </component>
-                      <component id="3985d" class="javax.swing.JLabel" binding="lblPaidRentNumber">
-                        <constraints>
-                          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <foreground color="-14818019"/>
-                          <text value="-"/>
-                        </properties>
-                      </component>
-                    </children>
-                  </grid>
-                  <grid id="4217f" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <properties>
+                      <text resource-bundle="i18n" key="lblCurrentValue"/>
+                    </properties>
+                  </component>
+                  <vspacer id="11cf4">
                     <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <grid row="9" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <component id="d99a3" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Unpaid rent:"/>
-                        </properties>
-                      </component>
-                      <component id="b7138" class="javax.swing.JLabel" binding="lblUnpaidRent">
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <foreground color="-1765874"/>
-                          <text value="-"/>
-                        </properties>
-                      </component>
-                      <component id="33e73" class="javax.swing.JLabel" binding="lblUnpaidRentNumber">
-                        <constraints>
-                          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <foreground color="-1765874"/>
-                          <text value="-"/>
-                        </properties>
-                      </component>
-                    </children>
-                  </grid>
+                  </vspacer>
+                  <component id="5341f" class="javax.swing.JLabel" binding="lblCurrentValue">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="ce464" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="i18n" key="lblEquity"/>
+                    </properties>
+                  </component>
+                  <component id="c3390" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="i18n" key="lblReturnOnEquity"/>
+                    </properties>
+                  </component>
+                  <component id="4bc40" class="javax.swing.JLabel" binding="lblEquity">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="d2c24" class="javax.swing.JLabel" binding="lblReturnOnInvestment">
+                    <constraints>
+                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="ed9c8" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="i18n" key="lblReceivedRent"/>
+                    </properties>
+                  </component>
+                  <component id="b377c" class="javax.swing.JLabel" binding="lblReceivedRents">
+                    <constraints>
+                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="6d752" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="i18n" key="lblReturnOnEquity"/>
+                    </properties>
+                  </component>
+                  <component id="f2d48" class="javax.swing.JLabel" binding="lblReturnOnEquity">
+                    <constraints>
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="cff4" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="i18n" key="lblCredit"/>
+                    </properties>
+                  </component>
+                  <component id="cec0b" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="i18n" key="lblPaidBack"/>
+                    </properties>
+                  </component>
+                  <component id="62966" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="i18n" key="lblRemainedCredit"/>
+                    </properties>
+                  </component>
+                  <component id="5fe1f" class="javax.swing.JLabel" binding="lblPaidBackCredit">
+                    <constraints>
+                      <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="4b858" class="javax.swing.JLabel" binding="lblRemainedCredit">
+                    <constraints>
+                      <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="b6c0c" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="i18n" key="lblTotalCredit"/>
+                    </properties>
+                  </component>
+                  <component id="bef96" class="javax.swing.JLabel" binding="lblTotalCredit">
+                    <constraints>
+                      <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
                 </children>
               </grid>
-              <component id="af2fd" class="org.jfree.chart.ChartPanel" binding="chartPanel1" custom-create="true" default-binding="true">
+              <grid id="dee73" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
-              </component>
-              <vspacer id="bf9e2">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
+                <border type="none"/>
+                <children/>
+              </grid>
             </children>
           </grid>
-          <grid id="a9275" layout-manager="GridLayoutManager" row-count="8" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="a43bc" binding="paneGeneral" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="10" left="10" bottom="10" right="10"/>
             <constraints>
               <tabbedpane title-resource-bundle="i18n" title-key="tabGeneral"/>
@@ -131,7 +227,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="f8a12" class="javax.swing.JLabel">
+              <component id="aee53" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -139,12 +235,15 @@
                   <text resource-bundle="i18n" key="lblName"/>
                 </properties>
               </component>
-              <vspacer id="2c052">
+              <component id="82cf6" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
-              </vspacer>
-              <component id="73afa" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                <properties>
+                  <text resource-bundle="i18n" key="lblArea"/>
+                </properties>
+              </component>
+              <component id="fdac3" class="javax.swing.JTextField" binding="txtName">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -152,15 +251,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="e7fb8" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text resource-bundle="i18n" key="lblStreet"/>
-                </properties>
-              </component>
-              <component id="33d58" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+              <component id="6bded" class="javax.swing.JTextField" binding="txtArea">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -168,98 +259,31 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="352d5" class="javax.swing.JLabel">
+              <vspacer id="ec29d">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <component id="21f0b" class="javax.swing.JButton" binding="btnSave">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="i18n" key="lblNumber"/>
-                </properties>
-              </component>
-              <component id="68a64" class="javax.swing.JTextField" binding="textField3" default-binding="true">
-                <constraints>
-                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
-              <component id="edfb9" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text resource-bundle="i18n" key="lblPostalCode"/>
-                </properties>
-              </component>
-              <component id="ae89e" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text resource-bundle="i18n" key="lblCity"/>
-                </properties>
-              </component>
-              <component id="6ddc" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text resource-bundle="i18n" key="lblTotalArea"/>
-                </properties>
-              </component>
-              <component id="b9ae6" class="javax.swing.JTextField" binding="textField4" default-binding="true">
-                <constraints>
-                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
-              <component id="29643" class="javax.swing.JTextField" binding="textField5" default-binding="true">
-                <constraints>
-                  <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
-              <component id="d46a7" class="javax.swing.JTextField" binding="textField6" default-binding="true">
-                <constraints>
-                  <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
-              <component id="24ea2" class="javax.swing.JButton" binding="btnBuildingGeneralSave">
-                <constraints>
-                  <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
+                  <horizontalAlignment value="0"/>
                   <text resource-bundle="i18n" key="btnSave"/>
                 </properties>
               </component>
             </children>
           </grid>
-          <grid id="f32bc" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="f0094" binding="paneRent" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title-resource-bundle="i18n" title-key="tabAccount"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children/>
-          </grid>
-          <grid id="aa5c6" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <tabbedpane title="Units"/>
+              <tabbedpane title-resource-bundle="i18n" title-key="tabRent"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <toolbar id="e5cbc">
+              <toolbar id="42c97">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="-1" height="20"/>
@@ -268,18 +292,142 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="3df5e" class="javax.swing.JComboBox" binding="cmbUnits">
-                    <constraints/>
-                    <properties/>
-                  </component>
-                  <component id="2d291" class="javax.swing.JButton" binding="btnAddUnit">
+                  <component id="50718" class="javax.swing.JButton" binding="btnAddRent">
                     <constraints/>
                     <properties>
                       <icon value="add.png"/>
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="1b696" class="javax.swing.JButton" binding="btnDeleteUnit">
+                  <component id="28d94" class="javax.swing.JButton" binding="btnDeleteRent">
+                    <constraints/>
+                    <properties>
+                      <icon value="delete.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="4172e" class="javax.swing.JButton" binding="btnCheckRent">
+                    <constraints/>
+                    <properties>
+                      <text resource-bundle="i18n" key="btnRentCheck"/>
+                    </properties>
+                  </component>
+                </children>
+              </toolbar>
+              <scrollpane id="4d394">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="20071" class="javax.swing.JTable" binding="tblRents">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
+          </grid>
+          <grid id="b9cdc" binding="paneValuation" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title-resource-bundle="i18n" title-key="tabValuation"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <toolbar id="dc672">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="20"/>
+                  </grid>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="bbeac" class="javax.swing.JButton" binding="btnAddValuation">
+                    <constraints/>
+                    <properties>
+                      <icon value="add.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="b47f9" class="javax.swing.JButton" binding="btnDeleteValuation">
+                    <constraints/>
+                    <properties>
+                      <icon value="delete.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="acdc2" class="javax.swing.JButton" binding="btnImportValuation">
+                    <constraints/>
+                    <properties>
+                      <icon value="import.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                </children>
+              </toolbar>
+              <scrollpane id="ef354">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="edddc" class="javax.swing.JTable" binding="tblValuations">
+                    <constraints/>
+                    <properties>
+                      <autoCreateRowSorter value="true"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
+          </grid>
+          <grid id="8543" binding="paneAccount" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title-resource-bundle="i18n" title-key="tabAccount"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <scrollpane id="2b3e8">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="8c1b3" class="javax.swing.JTable" binding="tblAccount">
+                    <constraints/>
+                    <properties>
+                      <autoCreateRowSorter value="true"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
+              <toolbar id="d9f8c">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="20"/>
+                  </grid>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="20e43" class="javax.swing.JButton" binding="btnAddTransaction">
+                    <constraints/>
+                    <properties>
+                      <enabled value="true"/>
+                      <icon value="add.png"/>
+                      <text value=""/>
+                      <toolTipText resource-bundle="i18n" key="btnAddPayment"/>
+                    </properties>
+                  </component>
+                  <component id="8fbed" class="javax.swing.JButton" binding="btnDeleteTransaction">
                     <constraints/>
                     <properties>
                       <icon value="delete.png"/>
@@ -288,463 +436,63 @@
                   </component>
                 </children>
               </toolbar>
-              <tabbedpane id="67ee3" binding="tabPane">
+            </children>
+          </grid>
+          <grid id="ab61" binding="paneCredit" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title-resource-bundle="i18n" title-key="tabCredit"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <toolbar id="759c4">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="200" height="200"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="20"/>
                   </grid>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <grid id="1a501" binding="paneOverview" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="10" left="10" bottom="10" right="10"/>
-                    <constraints>
-                      <tabbedpane title-resource-bundle="i18n" title-key="tabOverview"/>
-                    </constraints>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <grid id="f983" layout-manager="GridLayoutManager" row-count="10" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                        <margin top="0" left="0" bottom="0" right="0"/>
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties/>
-                        <border type="none"/>
-                        <children>
-                          <component id="85443" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text resource-bundle="i18n" key="lblCurrentValue"/>
-                            </properties>
-                          </component>
-                          <vspacer id="11cf4">
-                            <constraints>
-                              <grid row="9" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                          </vspacer>
-                          <component id="5341f" class="javax.swing.JLabel" binding="lblCurrentValue">
-                            <constraints>
-                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="ce464" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text resource-bundle="i18n" key="lblEquity"/>
-                            </properties>
-                          </component>
-                          <component id="c3390" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text resource-bundle="i18n" key="lblReturnOnEquity"/>
-                            </properties>
-                          </component>
-                          <component id="4bc40" class="javax.swing.JLabel" binding="lblEquity">
-                            <constraints>
-                              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="d2c24" class="javax.swing.JLabel" binding="lblReturnOnInvestment">
-                            <constraints>
-                              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="ed9c8" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text resource-bundle="i18n" key="lblReceivedRent"/>
-                            </properties>
-                          </component>
-                          <component id="b377c" class="javax.swing.JLabel" binding="lblReceivedRents">
-                            <constraints>
-                              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="6d752" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text resource-bundle="i18n" key="lblReturnOnEquity"/>
-                            </properties>
-                          </component>
-                          <component id="f2d48" class="javax.swing.JLabel" binding="lblReturnOnEquity">
-                            <constraints>
-                              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="cff4" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text resource-bundle="i18n" key="lblCredit"/>
-                            </properties>
-                          </component>
-                          <component id="cec0b" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text resource-bundle="i18n" key="lblPaidBack"/>
-                            </properties>
-                          </component>
-                          <component id="62966" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text resource-bundle="i18n" key="lblRemainedCredit"/>
-                            </properties>
-                          </component>
-                          <component id="5fe1f" class="javax.swing.JLabel" binding="lblPaidBackCredit">
-                            <constraints>
-                              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="4b858" class="javax.swing.JLabel" binding="lblRemainedCredit">
-                            <constraints>
-                              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="b6c0c" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text resource-bundle="i18n" key="lblTotalCredit"/>
-                            </properties>
-                          </component>
-                          <component id="bef96" class="javax.swing.JLabel" binding="lblTotalCredit">
-                            <constraints>
-                              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                        </children>
-                      </grid>
-                      <grid id="dee73" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                        <margin top="0" left="0" bottom="0" right="0"/>
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties/>
-                        <border type="none"/>
-                        <children/>
-                      </grid>
-                    </children>
-                  </grid>
-                  <grid id="a43bc" binding="paneGeneral" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="10" left="10" bottom="10" right="10"/>
-                    <constraints>
-                      <tabbedpane title-resource-bundle="i18n" title-key="tabGeneral"/>
-                    </constraints>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <component id="aee53" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text resource-bundle="i18n" key="lblName"/>
-                        </properties>
-                      </component>
-                      <component id="82cf6" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text resource-bundle="i18n" key="lblArea"/>
-                        </properties>
-                      </component>
-                      <component id="fdac3" class="javax.swing.JTextField" binding="txtName">
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties/>
-                      </component>
-                      <component id="6bded" class="javax.swing.JTextField" binding="txtArea">
-                        <constraints>
-                          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties/>
-                      </component>
-                      <vspacer id="ec29d">
-                        <constraints>
-                          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                      </vspacer>
-                      <component id="21f0b" class="javax.swing.JButton" binding="btnSave">
-                        <constraints>
-                          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <horizontalAlignment value="0"/>
-                          <text resource-bundle="i18n" key="btnSave"/>
-                        </properties>
-                      </component>
-                    </children>
-                  </grid>
-                  <grid id="f0094" binding="paneRent" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
-                    <constraints>
-                      <tabbedpane title-resource-bundle="i18n" title-key="tabRent"/>
-                    </constraints>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <toolbar id="42c97">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                            <preferred-size width="-1" height="20"/>
-                          </grid>
-                        </constraints>
-                        <properties/>
-                        <border type="none"/>
-                        <children>
-                          <component id="50718" class="javax.swing.JButton" binding="btnAddRent">
-                            <constraints/>
-                            <properties>
-                              <icon value="add.png"/>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="28d94" class="javax.swing.JButton" binding="btnDeleteRent">
-                            <constraints/>
-                            <properties>
-                              <icon value="delete.png"/>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="4172e" class="javax.swing.JButton" binding="btnCheckRent">
-                            <constraints/>
-                            <properties>
-                              <text resource-bundle="i18n" key="btnRentCheck"/>
-                            </properties>
-                          </component>
-                        </children>
-                      </toolbar>
-                      <scrollpane id="4d394">
-                        <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties/>
-                        <border type="none"/>
-                        <children>
-                          <component id="20071" class="javax.swing.JTable" binding="tblRents">
-                            <constraints/>
-                            <properties/>
-                          </component>
-                        </children>
-                      </scrollpane>
-                    </children>
-                  </grid>
-                  <grid id="b9cdc" binding="paneValuation" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
-                    <constraints>
-                      <tabbedpane title-resource-bundle="i18n" title-key="tabValuation"/>
-                    </constraints>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <toolbar id="dc672">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                            <preferred-size width="-1" height="20"/>
-                          </grid>
-                        </constraints>
-                        <properties/>
-                        <border type="none"/>
-                        <children>
-                          <component id="bbeac" class="javax.swing.JButton" binding="btnAddValuation">
-                            <constraints/>
-                            <properties>
-                              <icon value="add.png"/>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="b47f9" class="javax.swing.JButton" binding="btnDeleteValuation">
-                            <constraints/>
-                            <properties>
-                              <icon value="delete.png"/>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="acdc2" class="javax.swing.JButton" binding="btnImportValuation">
-                            <constraints/>
-                            <properties>
-                              <icon value="import.png"/>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                        </children>
-                      </toolbar>
-                      <scrollpane id="ef354">
-                        <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties/>
-                        <border type="none"/>
-                        <children>
-                          <component id="edddc" class="javax.swing.JTable" binding="tblValuations">
-                            <constraints/>
-                            <properties>
-                              <autoCreateRowSorter value="true"/>
-                            </properties>
-                          </component>
-                        </children>
-                      </scrollpane>
-                    </children>
-                  </grid>
-                  <grid id="8543" binding="paneAccount" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
-                    <constraints>
-                      <tabbedpane title-resource-bundle="i18n" title-key="tabAccount"/>
-                    </constraints>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <scrollpane id="2b3e8">
-                        <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties/>
-                        <border type="none"/>
-                        <children>
-                          <component id="8c1b3" class="javax.swing.JTable" binding="tblAccount">
-                            <constraints/>
-                            <properties>
-                              <autoCreateRowSorter value="true"/>
-                            </properties>
-                          </component>
-                        </children>
-                      </scrollpane>
-                      <toolbar id="d9f8c">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                            <preferred-size width="-1" height="20"/>
-                          </grid>
-                        </constraints>
-                        <properties/>
-                        <border type="none"/>
-                        <children>
-                          <component id="20e43" class="javax.swing.JButton" binding="btnAddTransaction">
-                            <constraints/>
-                            <properties>
-                              <enabled value="true"/>
-                              <icon value="add.png"/>
-                              <text value=""/>
-                              <toolTipText resource-bundle="i18n" key="btnAddPayment"/>
-                            </properties>
-                          </component>
-                          <component id="8fbed" class="javax.swing.JButton" binding="btnDeleteTransaction">
-                            <constraints/>
-                            <properties>
-                              <icon value="delete.png"/>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                        </children>
-                      </toolbar>
-                    </children>
-                  </grid>
-                  <grid id="ab61" binding="paneCredit" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
-                    <constraints>
-                      <tabbedpane title-resource-bundle="i18n" title-key="tabCredit"/>
-                    </constraints>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <toolbar id="759c4">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                            <preferred-size width="-1" height="20"/>
-                          </grid>
-                        </constraints>
-                        <properties/>
-                        <border type="none"/>
-                        <children>
-                          <component id="cda63" class="javax.swing.JButton" binding="btnAddCredit">
-                            <constraints/>
-                            <properties>
-                              <icon value="add.png"/>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="ba916" class="javax.swing.JButton" binding="btnDeleteCredit">
-                            <constraints/>
-                            <properties>
-                              <icon value="delete.png"/>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="ad09a" class="javax.swing.JButton" binding="btnCheckCredit">
-                            <constraints/>
-                            <properties>
-                              <text resource-bundle="i18n" key="btnCreditCheck"/>
-                            </properties>
-                          </component>
-                        </children>
-                      </toolbar>
-                      <scrollpane id="34e50">
-                        <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties/>
-                        <border type="none"/>
-                        <children>
-                          <component id="6ee86" class="javax.swing.JTable" binding="tblCredit">
-                            <constraints/>
-                            <properties>
-                              <autoCreateRowSorter value="false"/>
-                              <autoResizeMode value="2"/>
-                            </properties>
-                          </component>
-                        </children>
-                      </scrollpane>
-                    </children>
-                  </grid>
+                  <component id="cda63" class="javax.swing.JButton" binding="btnAddCredit">
+                    <constraints/>
+                    <properties>
+                      <icon value="add.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="ba916" class="javax.swing.JButton" binding="btnDeleteCredit">
+                    <constraints/>
+                    <properties>
+                      <icon value="delete.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="ad09a" class="javax.swing.JButton" binding="btnCheckCredit">
+                    <constraints/>
+                    <properties>
+                      <text resource-bundle="i18n" key="btnCreditCheck"/>
+                    </properties>
+                  </component>
                 </children>
-              </tabbedpane>
+              </toolbar>
+              <scrollpane id="34e50">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="6ee86" class="javax.swing.JTable" binding="tblCredit">
+                    <constraints/>
+                    <properties>
+                      <autoCreateRowSorter value="false"/>
+                      <autoResizeMode value="2"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
         </children>

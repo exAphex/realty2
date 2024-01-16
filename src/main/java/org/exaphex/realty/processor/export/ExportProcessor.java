@@ -19,7 +19,7 @@ public class ExportProcessor {
     private static ExportModel extractData() {
         ExportModel retEM = new ExportModel();
         retEM.setVersion(""+DatabaseConnector.getDatabaseVersion());
-        retEM.setBuildings(BuildingService.getAllBuildings());
+        retEM.setBuildings(BuildingService.getBuilding(null));
         retEM.setCredits(CreditService.getCredit(null));
         retEM.setRents(RentService.getRents(null));
         retEM.setTransactions(TransactionService.getTransactions(null));

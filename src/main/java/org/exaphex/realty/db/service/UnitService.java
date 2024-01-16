@@ -87,6 +87,24 @@ public class UnitService {
         }
     }
 
+    public static void updateUnit(Unit unit) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        try {
+            conn = DatabaseConnector.getConnection();
+            statement = conn.prepareStatement("UPDATE units SET name = ?, area = ? where id = ?");
+            statement.setString(1, unit.getName());
+            statement.setFloat(2, unit.getArea());
+            statement.setString(3, unit.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            DatabaseConnector.closeStatement(statement);
+            DatabaseConnector.closeDatabase(conn);
+        }
+    }
+
     public static void deleteUnit(Unit unit) {
         RentService.deleteRent(unit);
         ValuationService.deleteValuation(unit);

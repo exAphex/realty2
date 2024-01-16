@@ -7,6 +7,7 @@ import org.exaphex.realty.model.ui.table.ExpenseCategoryTypeTableModel;
 import org.exaphex.realty.model.ui.table.RentTableModel;
 import org.exaphex.realty.processor.export.ExportProcessor;
 import org.exaphex.realty.ui.buildings.BuildingModal;
+import org.exaphex.realty.ui.buildings.BuildingWindow;
 import org.exaphex.realty.ui.settings.CategoryModal;
 import org.exaphex.realty.ui.units.RentModal;
 import org.exaphex.realty.ui.units.UnitWindow;
@@ -27,7 +28,7 @@ public class MainWindow extends JFrame {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     final BuildingTableModel btm = new BuildingTableModel(new ArrayList<>());
     final ExpenseCategoryTypeTableModel ctm = new ExpenseCategoryTypeTableModel(new ArrayList<>());
-    final List<UnitWindow> uw = new ArrayList<>();
+    final List<BuildingWindow> bw = new ArrayList<>();
     private JTabbedPane tabbedPane1;
     private JPanel mainPanel;
     private JButton addButton;
@@ -157,7 +158,7 @@ public class MainWindow extends JFrame {
     }
 
     public void loadBuildings() {
-        List<Building> buildings = BuildingService.getAllBuildings();
+        List<Building> buildings = BuildingService.getBuilding(null);
         btm.setBuildings(buildings);
     }
 
@@ -167,23 +168,23 @@ public class MainWindow extends JFrame {
     }
 
     private void createBuildingDetailView(Building b) {
-        for (UnitWindow db : uw) {
+        for (BuildingWindow db : bw) {
             if (db.getBuilding().equals(b)) {
                 db.setVisible(true);
                 return;
             }
         }
 
-        UnitWindow u = new UnitWindow(b);
+        BuildingWindow u = new BuildingWindow(b);
         u.pack();
         u.setLocationRelativeTo(null);
         u.setVisible(true);
-        this.uw.add(u);
+        this.bw.add(u);
     }
 
     private void loadStatistics() {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        List<Building> buildings = BuildingService.getAllBuildings();
+        List<Building> buildings = BuildingService.getBuilding(null);
         List<Transaction> transactions = new ArrayList<>();
         List<Credit> credits = new ArrayList<>();
         List<Unit> units = new ArrayList<>();

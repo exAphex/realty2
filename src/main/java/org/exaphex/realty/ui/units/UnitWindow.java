@@ -33,8 +33,10 @@ import static org.exaphex.realty.processor.CreditProcessor.getTotalAmount;
 import static org.exaphex.realty.util.DateUtils.safeFormatDate;
 import static org.exaphex.realty.util.DateUtils.setDateSorter;
 import static org.exaphex.realty.util.PriceUtils.setPriceSorter;
+import static org.exaphex.realty.util.PriceUtils.validatePrice;
 
-public class UnitWindow extends JFrame {
+public class UnitWindow {
+    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     protected static final Logger logger = LogManager.getLogger();
     UnitComboBoxModel utm = new UnitComboBoxModel(new ArrayList<>());
     final ValuationTableModel vtm = new ValuationTableModel(new ArrayList<>());
@@ -42,15 +44,13 @@ public class UnitWindow extends JFrame {
     final TransactionTableModel ttm = new TransactionTableModel(new ArrayList<>());
     final CreditTableModel ctm = new CreditTableModel(new ArrayList<>());
     Unit selectedUnit;
-    private final Building building;
+    private Building building;
     private JComboBox<Unit> cmbUnits;
     private JButton btnAddUnit;
     private JButton btnDeleteUnit;
     private JTabbedPane tabPane;
     private JTextField txtName;
     private JTextField txtArea;
-    private JButton btnSave;
-    private JPanel mainPanel;
     private JPanel paneGeneral;
     private JPanel paneRent;
     private JPanel paneValuation;
@@ -80,23 +80,11 @@ public class UnitWindow extends JFrame {
     private JLabel lblTotalCredit;
     private JLabel lblPaidBackCredit;
     private JLabel lblRemainedCredit;
-    private JTabbedPane tabBuilding;
-    private JLabel lblPaidRent;
-    private JLabel lblPaidRentNumber;
-    private JLabel lblUnpaidRent;
-    private JLabel lblUnpaidRentNumber;
-    private ChartPanel chartPanel1;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JTextField textField5;
-    private JTextField textField6;
-    private JButton btnBuildingGeneralSave;
-    private JPanel panelChart;
+    private JPanel mainUnitPanel;
 
-    public UnitWindow(Building b) {
-        super();
+    private JButton btnSave;
+
+    public void setUI(Building b) {
         this.building = b;
         buildUI();
         setListeners();
@@ -104,8 +92,6 @@ public class UnitWindow extends JFrame {
     }
 
     private void buildUI() {
-        setTitle(this.building.getName());
-        setBuildingOverviewData(this.building);
         cmbUnits.setModel(utm);
         tblValuations.setModel(vtm);
         tblRents.setModel(rtm);
@@ -130,12 +116,7 @@ public class UnitWindow extends JFrame {
         sorterValuation.setSortKeys(sortKeysValuation);
         sorterValuation.setSortsOnUpdates(true);
         tblValuations.setRowSorter(sorterValuation);
-        setContentPane(mainPanel);
         setTabPanelStatus(false);
-    }
-
-    private void createUIComponents() {
-        chartPanel1 = new ChartPanel(null);
     }
 
     void setTabPanelStatus(Boolean isEnabled) {
@@ -182,6 +163,10 @@ public class UnitWindow extends JFrame {
             }
         });
 
+        btnSave.addActionListener( e -> {
+            onUpdateUnit();
+        });
+
         tabPane.addChangeListener(e -> {
             if (this.selectedUnit == null) {
                 return;
@@ -194,11 +179,7 @@ public class UnitWindow extends JFrame {
             }
         });
 
-        tabBuilding.addChangeListener(e -> {
-            if (tabBuilding.getSelectedIndex() == 0) {
-                setBuildingOverviewData(this.building);
-            }
-        });
+
 
         tblRents.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent mouseEvent) {
@@ -243,34 +224,13 @@ public class UnitWindow extends JFrame {
         loadTransactions(this.selectedUnit);
         loadCredits(this.selectedUnit);
         setOverviewData(u);
+        setFields(u);
     }
 
     private void setFields(Unit u) {
-        this.txtName.setText(u != null ? u.getName() : "");
-        this.txtArea.setText(u!= null ? ""+u.getArea() : "");
-    }
-
-    private void setBuildingOverviewData(Building b) {
-        List<Unit> units = UnitService.getUnits(b);
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        List<PaymentCheck> payments = RentPaymentCheckProcessor.getRentPaymentCheck(this.building);
-        List<PaymentCheck> paidRents = payments.stream().filter(p -> p.getPaidAmount() > 0).toList();
-        List<PaymentCheck> unpaidRents = payments.stream().filter(p -> p.getPaidAmount() == 0).toList();
-        float paidRentNumber = paidRents.stream().map(PaymentCheck::getPaidAmount).reduce(0f, Float::sum);
-        float unpaidRentNumber = unpaidRents.stream().map(PaymentCheck::getAmount).reduce(0f, Float::sum);
-
-        lblPaidRent.setText(paidRents.size()+"");
-        lblPaidRentNumber.setText(formatter.format(paidRentNumber));
-
-        lblUnpaidRent.setText(unpaidRents.size()+"");
-        lblUnpaidRentNumber.setText(formatter.format(unpaidRentNumber));
-
-        List<Transaction> transactions = new ArrayList<>();
-        for (Unit u : units) {
-            transactions.addAll(TransactionService.getTransactions(u));
-        }
-        chartPanel1.setChart(IncomeExpenseChartProcessor.createBuildingChart(transactions));
-        //panelChart.add(IncomeExpenseChartProcessor.createBuildingChart(transactions));
+        Unit unit = UnitService.getUnitById(u.getId());
+        this.txtName.setText(unit != null ? unit.getName() : "");
+        this.txtArea.setText(unit!= null ? ""+unit.getArea() : "");
     }
 
     private void setOverviewData(Unit u) {
@@ -390,6 +350,16 @@ public class UnitWindow extends JFrame {
     }
 
     private void onAddCredit() { new CreditModal(this, this.selectedUnit);}
+
+    private void onUpdateUnit() {
+        Float fArea = validatePrice(txtArea.getText(), res.getString("msgArea"));
+        if (fArea == null || fArea <= 0) {
+            return;
+        }
+
+        UnitService.updateUnit(new Unit(this.selectedUnit.getId(), this.selectedUnit.getBuildingId(), this.selectedUnit.getName(), fArea));
+        setFields(this.selectedUnit);
+    }
 
     private void onImportValuation() {
         JFileChooser chooser = new JFileChooser();
