@@ -4,9 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.db.DatabaseConnector;
 import org.exaphex.realty.model.ExpenseCategory;
-import org.exaphex.realty.model.Rent;
-import org.exaphex.realty.model.Transaction;
-import org.exaphex.realty.model.Unit;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,6 +1,5 @@
 package org.exaphex.realty.ui.units;
 
-import org.exaphex.realty.processor.chart.IncomeExpenseChartProcessor;
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,8 +9,6 @@ import org.exaphex.realty.model.transport.ValuationTransportModel;
 import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
 import org.exaphex.realty.model.ui.table.*;
 import org.exaphex.realty.processor.CreditProcessor;
-import org.exaphex.realty.processor.RentPaymentCheckProcessor;
-import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
@@ -163,9 +160,7 @@ public class UnitWindow {
             }
         });
 
-        btnSave.addActionListener( e -> {
-            onUpdateUnit();
-        });
+        btnSave.addActionListener( e -> onUpdateUnit());
 
         tabPane.addChangeListener(e -> {
             if (this.selectedUnit == null) {

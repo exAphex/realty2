@@ -21,10 +21,6 @@ public class ExpenseCategoryCalculationType {
         return name;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

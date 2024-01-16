@@ -7,7 +7,7 @@ public class Unit {
     private final String id;
     private final String name;
     private final String buildingId;
-    private float area;
+    private final float area;
 
     public Unit(String id, String buildingId, String name, float area) {
         this.id = id;

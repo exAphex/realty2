@@ -6,7 +6,6 @@ import org.exaphex.realty.model.Transaction;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.xy.ClusteredXYBarRenderer;
 import org.jfree.chart.renderer.xy.StandardXYBarPainter;
 import org.jfree.data.time.Month;
@@ -32,7 +31,6 @@ public class IncomeExpenseChartProcessor {
     }
 
     private static IntervalXYDataset createDataset(List<Transaction> transactions) {
-        Calendar monthCalendar = Calendar.getInstance();
         DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         Date now = new Date();
         Calendar beginCalendar = Calendar.getInstance();

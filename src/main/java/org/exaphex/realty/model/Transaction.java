@@ -85,16 +85,8 @@ public class Transaction {
         return amount;
     }
 
-    public void setAmount(float amount) {
-        this.amount = amount;
-    }
-
     public float getSecondaryAmount() {
         return secondaryAmount;
-    }
-
-    public void setSecondaryAmount(float secondaryAmount) {
-        this.secondaryAmount = secondaryAmount;
     }
 
     public static String formatTransactionType(int type) {
@@ -117,8 +109,6 @@ public class Transaction {
 
     public static boolean isExpense(int type) {
         return switch (type) {
-            case RENT_PAYMENT -> false;
-            case DEPOSIT -> false;
             case CREDIT_PAYMENT -> true;
             default -> false;
         };
@@ -126,9 +116,7 @@ public class Transaction {
 
     public static boolean isIncome(int type) {
         return switch (type) {
-            case RENT_PAYMENT -> true;
-            case DEPOSIT -> true;
-            case CREDIT_PAYMENT -> false;
+            case RENT_PAYMENT, DEPOSIT -> true;
             default -> false;
         };
     }

@@ -44,7 +44,6 @@ public class UnitService {
     public static Unit getUnitById(String id) {
         Connection conn = null;
         PreparedStatement statement = null;
-        List<Unit> retUnits = new ArrayList<>();
         try {
             conn = DatabaseConnector.getConnection();
             statement = conn.prepareStatement("select * from units where id = ?");

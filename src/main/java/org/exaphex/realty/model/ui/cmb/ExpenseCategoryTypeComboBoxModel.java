@@ -8,7 +8,7 @@ import javax.swing.event.ListDataListener;
 
 public class ExpenseCategoryTypeComboBoxModel implements ComboBoxModel<ExpenseCategoryCalculationType>  {
 
-    private ExpenseCategoryCalculationType[] options;
+    private final ExpenseCategoryCalculationType[] options;
     int index = -1;
     public ExpenseCategoryTypeComboBoxModel() {
         this.options = ExpenseCategory.calculationTypes;

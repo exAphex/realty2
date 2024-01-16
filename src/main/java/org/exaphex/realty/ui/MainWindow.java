@@ -4,13 +4,10 @@ import org.exaphex.realty.db.service.*;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.ui.table.BuildingTableModel;
 import org.exaphex.realty.model.ui.table.ExpenseCategoryTypeTableModel;
-import org.exaphex.realty.model.ui.table.RentTableModel;
 import org.exaphex.realty.processor.export.ExportProcessor;
 import org.exaphex.realty.ui.buildings.BuildingModal;
 import org.exaphex.realty.ui.buildings.BuildingWindow;
 import org.exaphex.realty.ui.settings.CategoryModal;
-import org.exaphex.realty.ui.units.RentModal;
-import org.exaphex.realty.ui.units.UnitWindow;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -46,8 +43,6 @@ public class MainWindow extends JFrame {
     private JButton btnAddCategory;
     private JButton btnDeleteCategory;
     private JTable tblSettingsCategories;
-    private JMenuBar menuBar;
-    private JMenu menuFile;
     private JMenuItem menuImportFile;
     private JMenuItem menuExportFile;
 
@@ -61,8 +56,8 @@ public class MainWindow extends JFrame {
     }
 
     private void setMenu() {
-        menuBar = new JMenuBar();
-        menuFile = new JMenu(res.getString("menuFile"));
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menuFile = new JMenu(res.getString("menuFile"));
         menuImportFile = new JMenuItem(res.getString("menuImport"));
         menuExportFile = new JMenuItem(res.getString("menuExport"));
 
@@ -211,11 +206,7 @@ public class MainWindow extends JFrame {
                 Date startDate = safeFormatDate(e.getStartDate());
                 Date endDate = safeFormatDate(e.getEndDate());
                 Date now = new Date();
-                if ((now.before(endDate) || now.equals(endDate)) && (now.after(startDate) || now.equals(startDate))) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return (now.before(endDate) || now.equals(endDate)) && (now.after(startDate) || now.equals(startDate));
             }).map(Rent::getRentalPrice).reduce(0f, Float::sum);
         }
 

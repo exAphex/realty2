@@ -8,8 +8,6 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static org.exaphex.realty.processor.export.ExportProcessor.exportToFile;
-
 public class Main {
 
     public static void setupDatabase() throws SQLException {

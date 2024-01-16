@@ -63,7 +63,4 @@ public class ExpenseCategoryTypeTableModel extends AbstractTableModel {
         return categories.get(row);
     }
 
-    public List<ExpenseCategory> getCategories() {
-        return categories;
-    }
 }

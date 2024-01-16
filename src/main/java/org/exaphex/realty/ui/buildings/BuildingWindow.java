@@ -91,9 +91,7 @@ public class BuildingWindow extends JFrame {
             }
         });
 
-        btnBuildingGeneralSave.addActionListener(e -> {
-            onSaveGeneral();
-        });
+        btnBuildingGeneralSave.addActionListener(e -> onSaveGeneral());
     }
 
     private void onSaveGeneral() {

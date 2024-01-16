@@ -2,7 +2,6 @@ package org.exaphex.realty.ui.settings;
 
 import org.exaphex.realty.model.ExpenseCategory;
 import org.exaphex.realty.model.ExpenseCategoryCalculationType;
-import org.exaphex.realty.model.ui.cmb.CreditComboBoxModel;
 import org.exaphex.realty.model.ui.cmb.ExpenseCategoryTypeComboBoxModel;
 import org.exaphex.realty.ui.MainWindow;
 
@@ -17,7 +16,7 @@ public class CategoryModal {
     private JComboBox<ExpenseCategoryCalculationType> cmbType;
     private JButton btnSave;
     private JPanel mainPanel;
-    private MainWindow mw;
+    private final MainWindow mw;
     private JDialog dialog;
     private ExpenseCategory selectedCategory;
 
