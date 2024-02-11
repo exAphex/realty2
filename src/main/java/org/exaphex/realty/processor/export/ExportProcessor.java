@@ -25,6 +25,7 @@ public class ExportProcessor {
         retEM.setUnits(UnitService.getUnits(null));
         retEM.setValuations(ValuationService.getValuations(null));
         retEM.setExpenseCategories(ExpenseCategoryService.getCategories());
+        retEM.setContacts(ContactService.getContacts());
         return retEM;
     }
 
@@ -42,6 +43,7 @@ public class ExportProcessor {
         UnitService.addUnits(em.getUnits());
         ValuationService.addValuations(em.getValuations());
         ExpenseCategoryService.addExpenseCategories(em.getExpenseCategories());
+        ContactService.addContacts(em.getContacts());
     }
 
     public static void exportToFile(File f) {

@@ -67,6 +67,12 @@ public class ContactService {
         }
     }
 
+    public static void addContacts(List<Contact> contact) {
+        for (Contact b : contact) {
+            addContact(b);
+        }
+    }
+
     public static void updateContact(Contact contact) {
         Connection conn = null;
         PreparedStatement statement = null;
