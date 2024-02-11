@@ -22,7 +22,6 @@ public class ContactsPane {
     public void setUI() {
         buildUI();
         setupListeners();
-        loadContacts();
     }
 
     private void buildUI() {
@@ -45,7 +44,7 @@ public class ContactsPane {
         });
     }
 
-    private void loadContacts() {
+    public void loadContacts() {
         List<Contact> contacts = ContactService.getContacts();
         ctm.setContacts(contacts);
     }

@@ -101,10 +101,17 @@ public class MainWindow extends JFrame {
             }
         });
         tabbedPane1.addChangeListener(e -> {
-            if (tabbedPane1.getSelectedIndex() == 1) {
-                loadStatistics();
-            } else if (tabbedPane1.getSelectedIndex() == 2) {
-                loadExpenseCategories();
+            int selectedIndex = tabbedPane1.getSelectedIndex();
+            switch (selectedIndex) {
+                case 1:
+                    this.contactsPane.loadContacts();
+                    break;
+                case 2:
+                    loadStatistics();
+                    break;
+                case 3:
+                    loadExpenseCategories();
+                    break;
             }
         });
         menuImportFile.addActionListener(e -> this.onImportFile());
