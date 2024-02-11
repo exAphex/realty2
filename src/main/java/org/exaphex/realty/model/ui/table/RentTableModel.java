@@ -63,7 +63,7 @@ public class RentTableModel extends AbstractTableModel  {
         Rent rent = rents.get(rowIndex);
         return switch (columnIndex) {
             case 0:
-                yield rent.getFirstName() + " " + rent.getLastName();
+                yield rent.getContact().getFirstName() + " " + rent.getContact().getLastName();
             case 1:
                 yield rent.getStartDate();
             case 2:

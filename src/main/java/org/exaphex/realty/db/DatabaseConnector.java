@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.exaphex.realty.db.migration.RentMigration;
 import org.h2.jdbcx.JdbcConnectionPool;
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -146,11 +147,37 @@ public class DatabaseConnector {
                         "ALTER TABLE rents ADD numoftentants INT DEFAULT 1;");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (14)");
                 updateDatabase(conn);
-                break;case 14:
+                break;
+            case 14:
                 executeSQL(conn,
                         "ALTER TABLE buildings ADD totalarea DOUBLE DEFAULT 1;");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (15)");
                 updateDatabase(conn);
+            case 15:
+                executeSQL(conn,
+                        "CREATE TABLE IF NOT EXISTS contacts (id VARCHAR(255), firstname VARCHAR(255), lastname VARCHAR(255), telnumber VARCHAR(255), mail VARCHAR(255))");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (16)");
+                updateDatabase(conn);
+                break;
+            case 16:
+                executeSQL(conn,
+                        "ALTER TABLE rents ADD contactid VARCHAR(255);");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (17)");
+                updateDatabase(conn);
+                break;
+            case 17:
+                RentMigration.migrateContactsOfRents();
+                executeSQL(conn, "INSERT INTO VERSION VALUES (18)");
+                updateDatabase(conn);
+                break;
+            case 18:
+                executeSQL(conn,
+                        "ALTER TABLE rents DROP COLUMN firstname;");
+                executeSQL(conn,
+                        "ALTER TABLE rents DROP COLUMN lastname;");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (19)");
+                updateDatabase(conn);
+                break;
             default:
         }
     }

@@ -1,13 +1,18 @@
 package org.exaphex.realty.ui.units;
 
+import org.exaphex.realty.db.service.ContactService;
+import org.exaphex.realty.model.Contact;
 import org.exaphex.realty.model.Rent;
 import org.exaphex.realty.model.Unit;
+import org.exaphex.realty.model.ui.cmb.ContactComboBoxModel;
 
 import javax.swing.*;
 import javax.swing.text.DateFormatter;
 import javax.swing.text.DefaultFormatterFactory;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static org.exaphex.realty.util.PriceUtils.validateInteger;
@@ -15,12 +20,11 @@ import static org.exaphex.realty.util.PriceUtils.validatePrice;
 
 public class RentModal {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
+    private final ContactComboBoxModel ccm = new ContactComboBoxModel(new ArrayList<>());
     private Unit unit;
     private Rent selectedRent;
     private final UnitWindow uw;
     private JDialog dialog;
-    private JTextField txtFirstName;
-    private JTextField txtLastName;
     private JFormattedTextField txtStartDate;
     private JTextField txtRentalPrice;
     private JTextField txtExtraCost;
@@ -29,6 +33,7 @@ public class RentModal {
     private JPanel mainPanel;
     private JFormattedTextField txtEndDate;
     private JTextField txtNumOfTentants;
+    private JComboBox<Contact> cmbContact;
 
     public RentModal(UnitWindow uw, Unit u) {
         this.unit = u;
@@ -60,8 +65,10 @@ public class RentModal {
     private void setupEditUI() {
         setupDialog();
 
-        txtFirstName.setText(this.selectedRent.getFirstName());
-        txtLastName.setText(this.selectedRent.getLastName());
+        int pos = ccm.getContactById(this.selectedRent.getContactId());
+        if (pos >= 0) {
+            cmbContact.setSelectedIndex(pos);
+        }
 
         txtNumOfTentants.setText(this.selectedRent.getNumOfTentants()+"");
 
@@ -79,6 +86,10 @@ public class RentModal {
         txtStartDate.setFormatterFactory(dff);
         txtEndDate.setFormatterFactory(dff);
 
+        cmbContact.setModel(ccm);
+
+        loadContacts();
+
         this.dialog = new JDialog();
         dialog.setTitle(res.getString("titleAddRent"));
         dialog.add(mainPanel);
@@ -88,17 +99,18 @@ public class RentModal {
         dialog.setVisible(true);
     }
 
+    private void loadContacts() {
+        List<Contact> contacts = ContactService.getContacts();
+        ccm.setContacts(contacts);
+    }
+
     private void setupListeners() {
         btnSave.addActionListener(
                 e -> {
-                    if (txtFirstName.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(new JFrame(), res.getString("msgFirstNameInvalid"), res.getString("msgError"),
-                                JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
 
-                    if (txtLastName.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(new JFrame(), res.getString("msgLastNameInvalid"), res.getString("msgError"),
+                    Contact contact = (Contact) cmbContact.getSelectedItem();
+                    if (contact == null) {
+                        JOptionPane.showMessageDialog(new JFrame(), res.getString("msgInvalidContact"), res.getString("msgError"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
@@ -123,9 +135,9 @@ public class RentModal {
                         return;
                     }
                     if (this.selectedRent != null) {
-                        uw.eventEditRent(new Rent(this.selectedRent.getId(), txtFirstName.getText(), txtLastName.getText(), this.selectedRent.getUnitId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit, iNumberOfTentant));
+                        uw.eventEditRent(new Rent(this.selectedRent.getId(), contact.getId(), this.selectedRent.getUnitId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit, iNumberOfTentant, false));
                     } else {
-                        uw.eventAddNewRent(new Rent(txtFirstName.getText(), txtLastName.getText(), this.unit.getId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit, iNumberOfTentant));
+                        uw.eventAddNewRent(new Rent(contact.getId(), this.unit.getId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit, iNumberOfTentant, false));
                     }
 
                     dialog.dispose();

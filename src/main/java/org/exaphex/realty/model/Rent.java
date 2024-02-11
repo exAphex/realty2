@@ -1,25 +1,27 @@
 package org.exaphex.realty.model;
 
+import org.exaphex.realty.db.service.ContactService;
+
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 public class Rent {
 
     private final String id;
-    private final String firstName;
-    private final String lastName;
     private final String unitId;
     private final String startDate;
     private final String endDate;
+    private final String contactId;
     private final float rentalPrice;
     private final float extraCosts;
     private final float deposit;
     private final int numOfTentants;
+    private Contact contact = new Contact("","","","");
 
-    public Rent(String id, String firstName, String lastName, String unitId, String startDate, String endDate, float rentalPrice, float extraCosts, float deposit, int numOfTentants) {
+    public Rent(String id, String contactId, String unitId, String startDate, String endDate, float rentalPrice, float extraCosts, float deposit, int numOfTentants, boolean loadEager) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.contactId = contactId;
         this.unitId = unitId;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -27,12 +29,14 @@ public class Rent {
         this.extraCosts = extraCosts;
         this.deposit = deposit;
         this.numOfTentants = numOfTentants;
+        if (loadEager) {
+            loadEagerData();
+        }
     }
 
-    public Rent(String firstName, String lastName, String unitId, String startDate, String endDate, float rentalPrice, float extraCosts, float deposit, int numOfTentants) {
+    public Rent(String contactId, String unitId, String startDate, String endDate, float rentalPrice, float extraCosts, float deposit, int numOfTentants, boolean loadEager) {
         this.id = UUID.randomUUID().toString();
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.contactId = contactId;
         this.unitId = unitId;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -40,20 +44,28 @@ public class Rent {
         this.extraCosts = extraCosts;
         this.deposit = deposit;
         this.numOfTentants = numOfTentants;
+        if (loadEager) {
+            loadEagerData();
+        }
+    }
+
+    private void loadEagerData() {
+        List<Contact> contacts = ContactService.getContacts(this.contactId);
+        if (!contacts.isEmpty()) {
+            this.contact = contacts.get(0);
+        }
+    }
+
+    public Contact getContact() {
+        return contact;
     }
 
     public String getId() {
         return id;
     }
-
-    public String getFirstName() {
-        return firstName;
+    public String getContactId() {
+        return contactId;
     }
-
-    public String getLastName() {
-        return lastName;
-    }
-
     public String getUnitId() {
         return unitId;
     }
@@ -97,6 +109,6 @@ public class Rent {
 
     @Override
     public String toString() {
-        return "Rent: " + this.firstName + " " + this.lastName;
+        return "Rent: " + this.getContact().getFirstName() + " " + this.getContact().getLastName();
     }
 }

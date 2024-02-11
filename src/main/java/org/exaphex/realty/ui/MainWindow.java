@@ -7,6 +7,7 @@ import org.exaphex.realty.model.ui.table.ExpenseCategoryTypeTableModel;
 import org.exaphex.realty.processor.export.ExportProcessor;
 import org.exaphex.realty.ui.buildings.BuildingModal;
 import org.exaphex.realty.ui.buildings.BuildingWindow;
+import org.exaphex.realty.ui.contacts.ContactsPane;
 import org.exaphex.realty.ui.settings.CategoryModal;
 
 import javax.swing.*;
@@ -43,6 +44,7 @@ public class MainWindow extends JFrame {
     private JButton btnAddCategory;
     private JButton btnDeleteCategory;
     private JTable tblSettingsCategories;
+    private ContactsPane contactsPane;
     private JMenuItem menuImportFile;
     private JMenuItem menuExportFile;
 
@@ -51,6 +53,7 @@ public class MainWindow extends JFrame {
         setMenu();
         buildingsTable.setModel(btm);
         tblSettingsCategories.setModel(ctm);
+        this.contactsPane.setUI();
         setListeners();
         loadBuildings();
     }

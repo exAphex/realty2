@@ -62,7 +62,7 @@ public class RentPaymentCheckProcessor {
             while (beginCalendar.before(finishCalendar)) {
                 PaymentCheck tempPaymentCheck = new PaymentCheck("Rent payment " + monthFormatter.format(beginCalendar.getTime()), total, formatter.format(beginCalendar.getTime()), 0 );
                 tempPaymentCheck.setPaidAmount(donePayments(r, tempPaymentCheck, transactions));
-                tempPaymentCheck.setTransaction(new Transaction("Rent " + r.getFirstName() + " " + r.getLastName() + " " + monthFormatter.format(beginCalendar.getTime()), r.getId(), formatter.format(beginCalendar.getTime()), Transaction.RENT_PAYMENT, u.getId() ,rent, extraCosts, ""));
+                tempPaymentCheck.setTransaction(new Transaction("Rent " + r.getContact().getFirstName() + " " + r.getContact().getLastName() + " " + monthFormatter.format(beginCalendar.getTime()), r.getId(), formatter.format(beginCalendar.getTime()), Transaction.RENT_PAYMENT, u.getId() ,rent, extraCosts, ""));
                 retPaymentChecks.add(tempPaymentCheck);
                 beginCalendar.add(Calendar.MONTH, 1);
             }
