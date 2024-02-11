@@ -17,9 +17,10 @@ public class Rent {
     private final float extraCosts;
     private final float deposit;
     private final int numOfTentants;
+    private final int payDay;
     private Contact contact = new Contact("","","","");
 
-    public Rent(String id, String contactId, String unitId, String startDate, String endDate, float rentalPrice, float extraCosts, float deposit, int numOfTentants, boolean loadEager) {
+    public Rent(String id, String contactId, String unitId, String startDate, String endDate, float rentalPrice, float extraCosts, float deposit, int numOfTentants, int payDay, boolean loadEager) {
         this.id = id;
         this.contactId = contactId;
         this.unitId = unitId;
@@ -29,12 +30,13 @@ public class Rent {
         this.extraCosts = extraCosts;
         this.deposit = deposit;
         this.numOfTentants = numOfTentants;
+        this.payDay = payDay;
         if (loadEager) {
             loadEagerData();
         }
     }
 
-    public Rent(String contactId, String unitId, String startDate, String endDate, float rentalPrice, float extraCosts, float deposit, int numOfTentants, boolean loadEager) {
+    public Rent(String contactId, String unitId, String startDate, String endDate, float rentalPrice, float extraCosts, float deposit, int numOfTentants, int payDay, boolean loadEager) {
         this.id = UUID.randomUUID().toString();
         this.contactId = contactId;
         this.unitId = unitId;
@@ -44,6 +46,7 @@ public class Rent {
         this.extraCosts = extraCosts;
         this.deposit = deposit;
         this.numOfTentants = numOfTentants;
+        this.payDay = payDay;
         if (loadEager) {
             loadEagerData();
         }
@@ -92,6 +95,10 @@ public class Rent {
 
     public int getNumOfTentants() {
         return numOfTentants;
+    }
+
+    public int getPayDay() {
+        return payDay;
     }
 
     @Override

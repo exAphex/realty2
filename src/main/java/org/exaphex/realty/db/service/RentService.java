@@ -33,7 +33,7 @@ public class RentService {
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Rent tmpRent = new Rent(rs.getString("id"), rs.getString("contactid"), rs.getString("unitid"), rs.getString("startdate"), rs.getString("enddate"), rs.getFloat("rentalprice"), rs.getFloat("extracosts"),rs.getFloat("deposit"), rs.getInt("numoftentants"), true);
+                Rent tmpRent = new Rent(rs.getString("id"), rs.getString("contactid"), rs.getString("unitid"), rs.getString("startdate"), rs.getString("enddate"), rs.getFloat("rentalprice"), rs.getFloat("extracosts"),rs.getFloat("deposit"), rs.getInt("numoftentants"), rs.getInt("payday"), true);
                 retUnits.add(tmpRent);
             }
         } catch (SQLException e) {
@@ -56,7 +56,7 @@ public class RentService {
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Rent tmpRent = new Rent(rs.getString("id"), rs.getString("contactid"), rs.getString("unitid"), rs.getString("startdate"), rs.getString("enddate"), rs.getFloat("rentalprice"), rs.getFloat("extracosts"),rs.getFloat("deposit"), rs.getInt("numoftentants"), false);
+                Rent tmpRent = new Rent(rs.getString("id"), rs.getString("contactid"), rs.getString("unitid"), rs.getString("startdate"), rs.getString("enddate"), rs.getFloat("rentalprice"), rs.getFloat("extracosts"),rs.getFloat("deposit"), rs.getInt("numoftentants"), rs.getInt("payday"), false);
                 retUnits.add(tmpRent);
             }
         } catch (SQLException e) {
@@ -73,7 +73,7 @@ public class RentService {
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("INSERT INTO rents (id, contactid, unitid, startdate, enddate, rentalprice, extracosts, deposit, numoftentants) VALUES (?,?,?,?,?,?,?,?,?)");
+            statement = conn.prepareStatement("INSERT INTO rents (id, contactid, unitid, startdate, enddate, rentalprice, extracosts, deposit, numoftentants, payday) VALUES (?,?,?,?,?,?,?,?,?,?)");
             statement.setString(1, rent.getId());
             statement.setString(2, rent.getContactId());
             statement.setString(3, rent.getUnitId());
@@ -83,6 +83,7 @@ public class RentService {
             statement.setFloat(7, rent.getExtraCosts());
             statement.setFloat(8, rent.getDeposit());
             statement.setInt(9, rent.getNumOfTentants());
+            statement.setInt(10, rent.getPayDay());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);
@@ -103,7 +104,7 @@ public class RentService {
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("UPDATE rents SET contactid = ?, unitid = ?, startdate = ?, enddate = ?, rentalprice = ?, extracosts = ?, deposit = ?, numoftentants = ? where id = ?");
+            statement = conn.prepareStatement("UPDATE rents SET contactid = ?, unitid = ?, startdate = ?, enddate = ?, rentalprice = ?, extracosts = ?, deposit = ?, numoftentants = ?, payday = ? where id = ?");
             statement.setString(1, r.getContactId());
             statement.setString(2, r.getUnitId());
             statement.setString(3, r.getStartDate());
@@ -112,7 +113,8 @@ public class RentService {
             statement.setFloat(6, r.getExtraCosts());
             statement.setFloat(7, r.getDeposit());
             statement.setInt(8, r.getNumOfTentants());
-            statement.setString(9, r.getId());
+            statement.setInt(9, r.getPayDay());
+            statement.setString(10, r.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);

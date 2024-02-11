@@ -34,6 +34,10 @@ public class RentModal {
     private JFormattedTextField txtEndDate;
     private JTextField txtNumOfTentants;
     private JComboBox<Contact> cmbContact;
+    private JRadioButton radioFirstDay;
+    private JRadioButton radioCustomDay;
+    private JRadioButton radioLastDay;
+    private JTextField txtCustomDay;
 
     public RentModal(UnitWindow uw, Unit u) {
         this.unit = u;
@@ -68,6 +72,18 @@ public class RentModal {
         int pos = ccm.getContactById(this.selectedRent.getContactId());
         if (pos >= 0) {
             cmbContact.setSelectedIndex(pos);
+        }
+
+        switch (this.selectedRent.getPayDay()) {
+            case 0:
+                radioLastDay.setSelected(true);
+                break;
+            case 1:
+                radioFirstDay.setSelected(true);
+                break;
+            default:
+                radioCustomDay.setSelected(true);
+                txtCustomDay.setText(this.selectedRent.getPayDay()+"");
         }
 
         txtNumOfTentants.setText(this.selectedRent.getNumOfTentants()+"");
@@ -127,6 +143,17 @@ public class RentModal {
                         return;
                     }
 
+                    int payDay = 1;
+                    if (radioCustomDay.isSelected()) {
+                        Integer intCustomDay = validateInteger(txtCustomDay.getText(), res.getString("msgNumberOfTentants"));
+                        if (intCustomDay == null) {
+                            return;
+                        }
+                        payDay = intCustomDay;
+                    } else if (radioLastDay.isSelected()) {
+                        payDay = 0;
+                    }
+
                     Float fRentalPrice = validatePrice(txtRentalPrice.getText(), res.getString("msgRentalPrice"));
                     Float fExtraCosts = validatePrice(txtExtraCost.getText(), res.getString("msgExtraCosts"));
                     Float fDeposit = validatePrice(txtDeposit.getText(), res.getString("msgDeposit"));
@@ -135,9 +162,9 @@ public class RentModal {
                         return;
                     }
                     if (this.selectedRent != null) {
-                        uw.eventEditRent(new Rent(this.selectedRent.getId(), contact.getId(), this.selectedRent.getUnitId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit, iNumberOfTentant, false));
+                        uw.eventEditRent(new Rent(this.selectedRent.getId(), contact.getId(), this.selectedRent.getUnitId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit, iNumberOfTentant, payDay, false));
                     } else {
-                        uw.eventAddNewRent(new Rent(contact.getId(), this.unit.getId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit, iNumberOfTentant, false));
+                        uw.eventAddNewRent(new Rent(contact.getId(), this.unit.getId(), txtStartDate.getText(), txtEndDate.getText(), fRentalPrice, fExtraCosts, fDeposit, iNumberOfTentant, payDay, false));
                     }
 
                     dialog.dispose();

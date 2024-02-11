@@ -49,7 +49,7 @@ public class BuildingService {
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("INSERT INTO buildings (id, name, street, number, postalCode, city, totalarea) VALUES (?,?,?,?,?,?)");
+            statement = conn.prepareStatement("INSERT INTO buildings (id, name, street, number, postalCode, city, totalarea) VALUES (?,?,?,?,?,?,?)");
             statement.setString(1, building.getId());
             statement.setString(2, building.getName());
             statement.setString(3, building.getAddress());

@@ -45,7 +45,7 @@ public class ContactComboBoxModel implements ComboBoxModel<Contact> {
         if(index >= 0){
             return contacts.get(index);
         } else {
-            return "";
+            return null;
         }
     }
 
