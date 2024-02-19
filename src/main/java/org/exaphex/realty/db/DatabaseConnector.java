@@ -184,6 +184,12 @@ public class DatabaseConnector {
                 executeSQL(conn, "INSERT INTO VERSION VALUES (20)");
                 updateDatabase(conn);
                 break;
+            case 20:
+                executeSQL(conn,
+                        "CREATE TABLE IF NOT EXISTS accounts (id VARCHAR(255), name VARCHAR(255), iban VARCHAR(255), bic VARCHAR(255))");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (21)");
+                updateDatabase(conn);
+                break;
             default:
         }
     }

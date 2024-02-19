@@ -62,7 +62,7 @@ public class Building {
         if (!(o instanceof Building that))
             return false;
         // check for null keys if you need to
-        return this.name.equals(that.name);
+        return this.id.equals(that.id);
     }
 
     public String getId() {
