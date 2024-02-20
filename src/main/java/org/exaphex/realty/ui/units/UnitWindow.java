@@ -9,6 +9,7 @@ import org.exaphex.realty.model.transport.ValuationTransportModel;
 import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
 import org.exaphex.realty.model.ui.table.*;
 import org.exaphex.realty.processor.CreditProcessor;
+import org.exaphex.realty.ui.overview.OverviewPane;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
@@ -62,11 +63,6 @@ public class UnitWindow {
     private JPanel paneAccount;
     private JButton btnAddTransaction;
     private JPanel paneOverview;
-    private JLabel lblCurrentValue;
-    private JLabel lblEquity;
-    private JLabel lblReturnOnEquity;
-    private JLabel lblReturnOnInvestment;
-    private JLabel lblReceivedRents;
     private JButton btnDeleteTransaction;
     private JPanel paneCredit;
     private JButton btnAddCredit;
@@ -74,12 +70,10 @@ public class UnitWindow {
     private JTable tblCredit;
     private JButton btnCheckCredit;
     private JButton btnCheckRent;
-    private JLabel lblTotalCredit;
-    private JLabel lblPaidBackCredit;
-    private JLabel lblRemainedCredit;
     private JPanel mainUnitPanel;
 
     private JButton btnSave;
+    private OverviewPane overviewPane;
 
     public void setUI(Building b) {
         this.building = b;
@@ -168,7 +162,7 @@ public class UnitWindow {
             }
 
             if (tabPane.getSelectedIndex() == 0) {
-                setOverviewData(this.selectedUnit);
+                loadOverviewData(this.selectedUnit);
             } else if (tabPane.getSelectedIndex() == 1) {
                 setFields(this.selectedUnit);
             }
@@ -218,7 +212,7 @@ public class UnitWindow {
         loadRents(this.selectedUnit);
         loadTransactions(this.selectedUnit);
         loadCredits(this.selectedUnit);
-        setOverviewData(u);
+        loadOverviewData(u);
         setFields(u);
     }
 
@@ -228,71 +222,35 @@ public class UnitWindow {
         this.txtArea.setText(unit!= null ? ""+unit.getArea() : "");
     }
 
-    private void setOverviewData(Unit u) {
-        List<Valuation> valuations = vtm.getValuations();
-        List<Rent> rents = rtm.getRents();
+    private void loadOverviewData(Unit u) {
+        List<Rent> rents = new ArrayList<>();
         List<Transaction> transactions = TransactionService.getTransactions(u);
-        List<Credit> credits = ctm.getCredits();
+        List<Credit> credits = CreditService.getCredit(u);
+        List<Valuation> valuations = new ArrayList<>();
+        List<Rent> tmpRents = RentService.getRents(u);
+        tmpRents = tmpRents.stream().filter(e -> {
+            Date startDate = safeFormatDate(e.getStartDate());
+            Date endDate = safeFormatDate(e.getEndDate());
+            Date now = new Date();
+            return (now.before(endDate) || now.equals(endDate)) && (now.after(startDate) || now.equals(startDate));
+        }).toList();
 
-        lblCurrentValue.setText("-");
-        lblEquity.setText("-");
-        lblReturnOnEquity.setText("0%");
-        lblReturnOnInvestment.setText("0%");
-        lblReceivedRents.setText("-");
-        lblTotalCredit.setText("-");
-        lblRemainedCredit.setText("-");
-        lblPaidBackCredit.setText("-");
-
-        if (u == null) {
-            return;
+        if (!tmpRents.isEmpty()) {
+            rents.add(tmpRents.get(0));
         }
 
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        DecimalFormat decimalFormatter = new DecimalFormat("##.##%");
-        float currValue = 0;
-        float currEquityValue = 0;
-        if (!valuations.isEmpty()) {
-            valuations.sort((lhs, rhs) -> {
-                Date sfLhs = safeFormatDate(lhs.getDate());
-                Date sfRhs = safeFormatDate(rhs.getDate());
-                return sfLhs.after(sfRhs) ? -1 : sfLhs.before(sfRhs) ? 1 : 0;
-            });
-            currValue = valuations.get(0).getValue();
-            float creditTotal = getTotalAmount(CreditService.getCredit(this.selectedUnit));
-            currEquityValue = currValue - creditTotal + CreditProcessor.getTotalPaidAmount(transactions);
+        List<Valuation> tmpValuations = ValuationService.getValuations(u);
+        tmpValuations.sort((lhs, rhs) -> {
+            Date sfLhs = safeFormatDate(lhs.getDate());
+            Date sfRhs = safeFormatDate(rhs.getDate());
+            return sfLhs.after(sfRhs) ? -1 : sfLhs.before(sfRhs) ? 1 : 0;
+        });
 
-            lblCurrentValue.setText(formatter.format(currValue));
-            lblEquity.setText(formatter.format(currEquityValue));
+        if (!tmpValuations.isEmpty()) {
+            valuations.add(tmpValuations.get(0));
         }
 
-        if (!rents.isEmpty()) {
-            rents.sort((lhs, rhs) -> {
-                Date sfLhs = safeFormatDate(lhs.getStartDate());
-                Date sfRhs = safeFormatDate(rhs.getStartDate());
-                return sfLhs.after(sfRhs) ? -1 : sfLhs.before(sfRhs) ? 1 : 0;
-            });
-
-            float currentNetRent = rents.get(0).getRentalPrice();
-            float returnOnInvestment = currValue > 0 ? (currentNetRent * 12) / currValue : 0;
-            float returnOnEquity = currEquityValue > 0 ? (currentNetRent * 12) / currEquityValue : 0;
-            lblReturnOnEquity.setText(decimalFormatter.format(returnOnEquity));
-            lblReturnOnInvestment.setText(decimalFormatter.format(returnOnInvestment));
-        }
-
-        if (!transactions.isEmpty()) {
-            float tempTotalRents = transactions.stream().filter(t -> t.getType() == Transaction.RENT_PAYMENT).map(Transaction::getAmount).reduce(0f, Float::sum);
-            lblReceivedRents.setText(formatter.format(tempTotalRents));
-        }
-
-        if (!credits.isEmpty()) {
-            float totalCredit = credits.stream().map(Credit::getAmount).reduce(0f, Float::sum);
-            float paidBackCredit = credits.stream().map(Credit::getRepaidAmount).reduce(0f, Float::sum);
-            float remainedCredit = totalCredit - paidBackCredit;
-            float repaidPercent = paidBackCredit / totalCredit;
-            lblTotalCredit.setText(formatter.format(totalCredit));
-            lblRemainedCredit.setText(formatter.format(remainedCredit));
-            lblPaidBackCredit.setText("(" + decimalFormatter.format(repaidPercent) + ") " + formatter.format(paidBackCredit));
-        }
+        this.overviewPane.loadData(rents, transactions, valuations, credits);
     }
 
     private void loadUnits(Building b) {
@@ -441,7 +399,7 @@ public class UnitWindow {
         utm = new UnitComboBoxModel(new ArrayList<>());
         cmbUnits.setModel(utm);
         setTabPanelStatus(false);
-        setOverviewData(null);
+        this.overviewPane.clearData();
         tabPane.setSelectedIndex(0);
 
         loadUnits(this.building);

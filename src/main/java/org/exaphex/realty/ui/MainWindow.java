@@ -8,6 +8,7 @@ import org.exaphex.realty.processor.export.ExportProcessor;
 import org.exaphex.realty.ui.buildings.BuildingModal;
 import org.exaphex.realty.ui.buildings.BuildingWindow;
 import org.exaphex.realty.ui.contacts.ContactsPane;
+import org.exaphex.realty.ui.overview.OverviewPane;
 import org.exaphex.realty.ui.settings.CategoryModal;
 
 import javax.swing.*;
@@ -31,20 +32,13 @@ public class MainWindow extends JFrame {
     private JPanel mainPanel;
     private JButton addButton;
     private JButton deleteButton;
-    private JTable buildingsTable ;
-    private JButton refreshButton;
-    private JLabel lblPortfolioValue;
-    private JLabel lblRent;
-    private JLabel lblCreditAmount;
-    private JLabel lblCreditPaid;
-    private JLabel lblCreditLeft;
-    private JLabel lblPaidRent;
-    private JLabel lblPaidInterest;
+    private JTable buildingsTable;
     private JTabbedPane tabbedPane2;
     private JButton btnAddCategory;
     private JButton btnDeleteCategory;
     private JTable tblSettingsCategories;
     private ContactsPane contactsPane;
+    private OverviewPane overviewPane;
     private JMenuItem menuImportFile;
     private JMenuItem menuExportFile;
 
@@ -107,11 +101,10 @@ public class MainWindow extends JFrame {
                     this.contactsPane.loadContacts();
                     break;
                 case 2:
-                    loadStatistics();
-                    break;
-                case 3:
                     loadExpenseCategories();
                     break;
+                case 3:
+                    loadOverviewData();
             }
         });
         menuImportFile.addActionListener(e -> this.onImportFile());
@@ -187,51 +180,40 @@ public class MainWindow extends JFrame {
         this.bw.add(u);
     }
 
-    private void loadStatistics() {
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        List<Building> buildings = BuildingService.getBuilding(null);
-        List<Transaction> transactions = new ArrayList<>();
-        List<Credit> credits = new ArrayList<>();
-        List<Unit> units = new ArrayList<>();
-        float totalValue = 0;
-        float totalRent = 0;
-        for (Building building : buildings) {
-            units.addAll(UnitService.getUnits(building));
-        }
+    private void loadOverviewData() {
+        List<Rent> rents = new ArrayList<>();
+        List<Transaction> transactions = TransactionService.getTransactions(null);
+        List<Credit> credits = CreditService.getCredit(null);
+        List<Valuation> valuations = new ArrayList<>();
+        List<Unit> units = UnitService.getUnits(null);
 
-        for (Unit unit : units) {
-            transactions.addAll(TransactionService.getTransactions(unit));
-            credits.addAll(CreditService.getCredit(unit));
-            List<Valuation> valuations = ValuationService.getValuations(unit);
-            if (!valuations.isEmpty()) {
-                valuations.sort((lhs, rhs) -> {
-                    Date sfLhs = safeFormatDate(lhs.getDate());
-                    Date sfRhs = safeFormatDate(rhs.getDate());
-                    return sfLhs.after(sfRhs) ? -1 : sfLhs.before(sfRhs) ? 1 : 0;
-                });
-                totalValue += valuations.get(0).getValue();
-            }
-            List<Rent> rents = RentService.getRents(unit);
-            totalRent += rents.stream().filter(e -> {
+        for (Unit u : units) {
+            List<Rent> tmpRents = RentService.getRents(u);
+            tmpRents = tmpRents.stream().filter(e -> {
                 Date startDate = safeFormatDate(e.getStartDate());
                 Date endDate = safeFormatDate(e.getEndDate());
                 Date now = new Date();
                 return (now.before(endDate) || now.equals(endDate)) && (now.after(startDate) || now.equals(startDate));
-            }).map(Rent::getRentalPrice).reduce(0f, Float::sum);
+            }).toList();
+
+            if (tmpRents.isEmpty()) continue;
+
+            rents.add(tmpRents.get(0));
         }
 
-        float totalCredit = credits.stream().map(Credit::getAmount).reduce(0f, Float::sum);
-        float paidAmount = transactions.stream().filter(t -> t.getType() == Transaction.CREDIT_PAYMENT).map(Transaction::getAmount).reduce(0f, Float::sum);
-        float leftAmount = totalCredit - paidAmount;
-        float paidRent = transactions.stream().filter(t -> t.getType() == Transaction.RENT_PAYMENT).map(Transaction::getAmount).reduce(0f, Float::sum);
-        float paidInterest = transactions.stream().filter(t -> t.getType() == Transaction.CREDIT_PAYMENT).map(Transaction::getSecondaryAmount).reduce(0f, Float::sum);
-        lblPortfolioValue.setText(formatter.format(totalValue));
-        lblCreditAmount.setText(formatter.format(totalCredit));
-        lblRent.setText(formatter.format(totalRent));
-        lblCreditLeft.setText(formatter.format(leftAmount));
-        lblCreditPaid.setText(formatter.format(paidAmount));
-        lblPaidRent.setText(formatter.format(paidRent));
-        lblPaidInterest.setText(formatter.format(paidInterest));
+        for (Unit u : units) {
+            List<Valuation> tmpValuations = ValuationService.getValuations(u);
+            if (tmpValuations.isEmpty()) continue;
+
+            tmpValuations.sort((lhs, rhs) -> {
+                Date sfLhs = safeFormatDate(lhs.getDate());
+                Date sfRhs = safeFormatDate(rhs.getDate());
+                return sfLhs.after(sfRhs) ? -1 : sfLhs.before(sfRhs) ? 1 : 0;
+            });
+            valuations.add(tmpValuations.get(0));
+        }
+
+        this.overviewPane.loadData(rents, transactions, valuations, credits);
     }
 
     private void onImportFile() {
