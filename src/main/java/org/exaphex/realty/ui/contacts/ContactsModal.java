@@ -14,7 +14,7 @@ public class ContactsModal {
     private JTextField txtTelNr;
     private JButton btnSave;
     private JPanel mainPanel;
-    private ContactsPane cp;
+    private final ContactsPane cp;
     private JDialog dialog;
     private Contact selectedContact;
 

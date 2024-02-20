@@ -8,7 +8,6 @@ import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.transport.ValuationTransportModel;
 import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
 import org.exaphex.realty.model.ui.table.*;
-import org.exaphex.realty.processor.CreditProcessor;
 import org.exaphex.realty.ui.overview.OverviewPane;
 
 import javax.swing.*;
@@ -21,13 +20,10 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.*;
 import java.util.List;
 
 import static org.exaphex.realty.processor.CreditProcessor.getPaidAmount;
-import static org.exaphex.realty.processor.CreditProcessor.getTotalAmount;
 import static org.exaphex.realty.util.DateUtils.safeFormatDate;
 import static org.exaphex.realty.util.DateUtils.setDateSorter;
 import static org.exaphex.realty.util.PriceUtils.setPriceSorter;

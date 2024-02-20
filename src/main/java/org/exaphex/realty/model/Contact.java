@@ -4,11 +4,11 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Contact {
-    private String id;
-    private String firstName;
-    private String lastName;
-    private String telNumber;
-    private String mail;
+    private final String id;
+    private final String firstName;
+    private final String lastName;
+    private final String telNumber;
+    private final String mail;
 
     public Contact(String id, String firstName, String lastName, String telNumber, String mail) {
         this.id = id;

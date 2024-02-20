@@ -16,7 +16,7 @@ public class Account {
     }
 
     public Account(String name, String iban, String bic) {
-        this.id = UUID.randomUUID().toString();;
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.iban = iban;
         this.bic = bic;
