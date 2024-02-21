@@ -1,10 +1,13 @@
 package org.exaphex.realty.ui.units;
 
 import org.exaphex.realty.db.service.CreditService;
+import org.exaphex.realty.db.service.ExpenseCategoryService;
 import org.exaphex.realty.db.service.RentService;
 import org.exaphex.realty.db.service.UnitService;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.ui.cmb.CreditComboBoxModel;
+import org.exaphex.realty.model.ui.cmb.ExpenseCategoryComboBoxModel;
+import org.exaphex.realty.model.ui.cmb.ExpenseCategoryTypeComboBoxModel;
 import org.exaphex.realty.model.ui.cmb.RentComboBoxModel;
 
 import javax.swing.*;
@@ -25,6 +28,7 @@ public class TransactionModal {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private final CreditComboBoxModel ccm = new CreditComboBoxModel(new ArrayList<>());
     private final RentComboBoxModel rcm = new RentComboBoxModel(new ArrayList<>());
+    private final ExpenseCategoryComboBoxModel ecm = new ExpenseCategoryComboBoxModel(new ArrayList<>());
     private final UnitWindow uw;
     private Unit unit;
     private Transaction transaction;
@@ -41,6 +45,8 @@ public class TransactionModal {
     private JLabel lblRentReference;
     private JComboBox<Credit> cmbCredit;
     private JComboBox<Rent> cmbRent;
+    private JComboBox<ExpenseCategory> cmbExpenseType;
+    private JLabel lblExpenseCategory;
 
     public TransactionModal(UnitWindow uw, Unit u) {
         this.uw = uw;
@@ -68,6 +74,7 @@ public class TransactionModal {
         cmbTypes.setSelectedItem(formatTransactionType(this.transaction.getType()));
         CreditComboBoxModel creditModel = (CreditComboBoxModel) cmbCredit.getModel();
         RentComboBoxModel rentModel = (RentComboBoxModel) cmbRent.getModel();
+        ExpenseCategoryComboBoxModel expenseCategoryModel = (ExpenseCategoryComboBoxModel) cmbExpenseType.getModel();
         switch (this.transaction.getType()) {
             case Transaction.CREDIT_PAYMENT -> {
                 int pos = creditModel.getCreditIndexById(reference);
@@ -79,6 +86,12 @@ public class TransactionModal {
                 int pos = rentModel.getRentIndexById(reference);
                 if (pos >= 0) {
                     cmbRent.setSelectedIndex(pos);
+                }
+            }
+            case Transaction.EXPENSE -> {
+                int pos = expenseCategoryModel.getExpenseCategoryIndexById(this.transaction.getExpenseCategory());
+                if (pos >= 0) {
+                    cmbExpenseType.setSelectedIndex(pos);
                 }
             }
         }
@@ -93,7 +106,7 @@ public class TransactionModal {
             loadCredits(u);
             loadRents(u);
         }
-
+        loadExpenseCategories();
     }
 
     private void setupUI() {
@@ -109,9 +122,11 @@ public class TransactionModal {
         cmbTypes.addItem(formatTransactionType(0));
         cmbTypes.addItem(formatTransactionType(1));
         cmbTypes.addItem(formatTransactionType(2));
+        cmbTypes.addItem(formatTransactionType(3));
 
         cmbCredit.setModel(ccm);
         cmbRent.setModel(rcm);
+        cmbExpenseType.setModel(ecm);
 
         this.dialog = new JDialog();
         dialog.setTitle(res.getString("titleAddTransaction"));
@@ -127,6 +142,7 @@ public class TransactionModal {
         btnSave.addActionListener(
                 e -> {
                     String reference = "";
+                    String expenseCategory = "";
                     if (txtDate.getText().isEmpty()) {
                         JOptionPane.showMessageDialog(new JFrame(), res.getString("msgDateInvalid"), res.getString("msgError"),
                                 JOptionPane.ERROR_MESSAGE);
@@ -169,10 +185,21 @@ public class TransactionModal {
                         }
                     }
 
+                    if (type == Transaction.EXPENSE) {
+                        ExpenseCategory ec = (ExpenseCategory) cmbExpenseType.getSelectedItem();
+                        if (ec == null) {
+                            JOptionPane.showMessageDialog(new JFrame(), res.getString("msgInvalidExpenseCategory"), res.getString("msgError"),
+                                    JOptionPane.ERROR_MESSAGE);
+                            return;
+                        } else {
+                            expenseCategory = ec.getId();
+                        }
+                    }
+
                     if (this.transaction != null) {
-                        uw.eventEditTransaction(new Transaction(this.transaction.getId(), txtDescription.getText(), reference, txtDate.getText(),type, this.transaction.getUnitId(), fAmount, fSecondaryAmount,""));
+                        uw.eventEditTransaction(new Transaction(this.transaction.getId(), txtDescription.getText(), reference, txtDate.getText(),type, this.transaction.getUnitId(), fAmount, fSecondaryAmount,expenseCategory));
                     } else {
-                        uw.eventAddNewTransaction(new Transaction(txtDescription.getText(), reference, txtDate.getText(),type, this.unit.getId(), fAmount, fSecondaryAmount,""));
+                        uw.eventAddNewTransaction(new Transaction(txtDescription.getText(), reference, txtDate.getText(),type, this.unit.getId(), fAmount, fSecondaryAmount,expenseCategory));
                     }
                     dialog.dispose();
                 });
@@ -196,6 +223,8 @@ public class TransactionModal {
         cmbRent.setVisible(false);
         lblCreditReference.setVisible(false);
         lblRentReference.setVisible(false);
+        lblExpenseCategory.setVisible(false);
+        cmbExpenseType.setVisible(false);
 
         if (type == Transaction.RENT_PAYMENT) {
             lblSecondary.setVisible(true);
@@ -209,6 +238,9 @@ public class TransactionModal {
             cmbCredit.setVisible(true);
             lblCreditReference.setVisible(true);
             lblSecondary.setText(res.getString("lblInterest"));
+        } else if (type == Transaction.EXPENSE) {
+            cmbExpenseType.setVisible(true);
+            lblExpenseCategory.setVisible(true);
         }
         this.dialog.pack();
     }
@@ -221,5 +253,10 @@ public class TransactionModal {
     private void loadRents(Unit u) {
         List<Rent> rents = RentService.getRents(u);
         rcm.setRents(rents);
+    }
+
+    private void loadExpenseCategories() {
+        List<ExpenseCategory> expenseCategories = ExpenseCategoryService.getCategories();
+        ecm.setExpenseCategories(expenseCategories);
     }
 }

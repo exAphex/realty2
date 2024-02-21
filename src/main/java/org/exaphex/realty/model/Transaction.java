@@ -94,6 +94,7 @@ public class Transaction {
             case RENT_PAYMENT -> "Rent";
             case DEPOSIT -> "Deposit";
             case CREDIT_PAYMENT -> "Credit payment";
+            case EXPENSE -> "Expense";
             default -> "Unknown";
         };
     }
@@ -103,6 +104,7 @@ public class Transaction {
             case "Rent" -> RENT_PAYMENT;
             case "Deposit" -> DEPOSIT;
             case "Credit payment" -> CREDIT_PAYMENT;
+            case "Expense" -> EXPENSE;
             default -> -1;
         };
     }
