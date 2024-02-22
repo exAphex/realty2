@@ -3,6 +3,7 @@ package org.exaphex.realty.db.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.db.DatabaseConnector;
+import org.exaphex.realty.model.Account;
 import org.exaphex.realty.model.Transaction;
 import org.exaphex.realty.model.Unit;
 
@@ -30,6 +31,30 @@ public class TransactionService {
             } else {
                 statement = conn.prepareStatement(query);
             }
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Transaction tmpTransaction = new Transaction(rs.getString("id"), rs.getString("description"), rs.getString("reference"), rs.getString("date"), rs.getInt("type"), rs.getString("unitid"), rs.getFloat("amount"), rs.getFloat("secondaryamount"), rs.getString("expensecategory"));
+                retTransactions.add(tmpTransaction);
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            DatabaseConnector.closeStatement(statement);
+            DatabaseConnector.closeDatabase(conn);
+        }
+        return retTransactions;
+    }
+
+    public static List<Transaction> getTransactionsByAccount(Account account) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        List<Transaction> retTransactions = new ArrayList<>();
+        try {
+            conn = DatabaseConnector.getConnection();
+
+            statement = conn.prepareStatement("select * from transactions where unitid = ?");
+            statement.setString(1, account.getId());
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {

@@ -4,6 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.db.DatabaseConnector;
 import org.exaphex.realty.model.Account;
+import org.exaphex.realty.model.Contact;
+import org.exaphex.realty.model.Rent;
+import org.exaphex.realty.model.Transaction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,5 +45,78 @@ public class AccountService {
             DatabaseConnector.closeDatabase(conn);
         }
         return retAccounts;
+    }
+
+    public static List<Account> getAccounts() {
+        return getAccount(null);
+    }
+
+    public static void addAccount(Account account) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        try {
+            conn = DatabaseConnector.getConnection();
+            statement = conn.prepareStatement("INSERT INTO accounts (id, name, iban, bic) VALUES (?,?,?,?)");
+            statement.setString(1, account.getId());
+            statement.setString(2, account.getName());
+            statement.setString(3, account.getIban());
+            statement.setString(4, account.getBic());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            DatabaseConnector.closeStatement(statement);
+            DatabaseConnector.closeDatabase(conn);
+        }
+    }
+
+    public static void addAccounts(List<Account> accounts) {
+        for (Account a : accounts) {
+            addAccount(a);
+        }
+    }
+
+    public static void updateAccount(Account account) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        try {
+            conn = DatabaseConnector.getConnection();
+            statement = conn.prepareStatement("UPDATE accounts SET name = ?, iban = ?, bic = ? where id = ?");
+            statement.setString(1, account.getName());
+            statement.setString(2, account.getIban());
+            statement.setString(3, account.getBic());
+            statement.setString(4, account.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            DatabaseConnector.closeStatement(statement);
+            DatabaseConnector.closeDatabase(conn);
+        }
+    }
+
+    private static void _deleteAccount(Account account) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        try {
+            conn = DatabaseConnector.getConnection();
+            statement = conn.prepareStatement("DELETE FROM accounts WHERE id = ?");
+            statement.setString(1, account.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            DatabaseConnector.closeStatement(statement);
+            DatabaseConnector.closeDatabase(conn);
+        }
+    }
+
+    public static void deleteAccount(Account account) throws Exception {
+        List<Transaction> foundTransactions = TransactionService.getTransactionsByAccount(account);
+        if (foundTransactions.isEmpty()) {
+            _deleteAccount(account);
+        } else {
+            throw new Exception("DeleteAccountFirstException");
+        }
     }
 }

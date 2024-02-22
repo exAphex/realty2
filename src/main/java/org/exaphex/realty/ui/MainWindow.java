@@ -5,6 +5,7 @@ import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.ui.table.BuildingTableModel;
 import org.exaphex.realty.model.ui.table.ExpenseCategoryTypeTableModel;
 import org.exaphex.realty.processor.export.ExportProcessor;
+import org.exaphex.realty.ui.accounts.AccountPane;
 import org.exaphex.realty.ui.buildings.BuildingModal;
 import org.exaphex.realty.ui.buildings.BuildingWindow;
 import org.exaphex.realty.ui.contacts.ContactsPane;
@@ -38,6 +39,7 @@ public class MainWindow extends JFrame {
     private JTable tblSettingsCategories;
     private ContactsPane contactsPane;
     private OverviewPane overviewPane;
+    private AccountPane accountsPane;
     private JMenuItem menuImportFile;
     private JMenuItem menuExportFile;
 
@@ -47,6 +49,7 @@ public class MainWindow extends JFrame {
         buildingsTable.setModel(btm);
         tblSettingsCategories.setModel(ctm);
         this.contactsPane.setUI();
+        this.accountsPane.setUI();
         setListeners();
         loadBuildings();
     }
