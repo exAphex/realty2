@@ -7,12 +7,14 @@ public class Account {
     private final String name;
     private final String iban;
     private final String bic;
+    private float balance;
 
     public Account(String id, String name, String iban, String bic) {
         this.id = id;
         this.name = name;
         this.iban = iban;
         this.bic = bic;
+        this.balance = 0;
     }
 
     public Account(String name, String iban, String bic) {
@@ -20,6 +22,7 @@ public class Account {
         this.name = name;
         this.iban = iban;
         this.bic = bic;
+        this.balance = 0;
     }
 
     public String getId() {
@@ -38,6 +41,14 @@ public class Account {
         return bic;
     }
 
+    public float getBalance() {
+        return balance;
+    }
+
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -46,5 +57,10 @@ public class Account {
             return false;
         // check for null keys if you need to
         return this.id.equals(that.id);
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

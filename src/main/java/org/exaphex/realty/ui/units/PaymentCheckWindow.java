@@ -1,7 +1,9 @@
 package org.exaphex.realty.ui.units;
 
+import org.exaphex.realty.db.service.AccountService;
 import org.exaphex.realty.db.service.TransactionService;
 import org.exaphex.realty.model.*;
+import org.exaphex.realty.model.ui.cmb.AccountComboBoxModel;
 import org.exaphex.realty.model.ui.table.PaymentCheckTableModel;
 import org.exaphex.realty.processor.CreditPaymentCheckProcessor;
 import org.exaphex.realty.processor.RentPaymentCheckProcessor;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 public class PaymentCheckWindow {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private final PaymentCheckTableModel pct = new PaymentCheckTableModel(new ArrayList<>());
+    private final AccountComboBoxModel acm = new AccountComboBoxModel(new ArrayList<>());
     private final UnitWindow uw;
     private final Unit unit;
     private Credit credit;
@@ -23,6 +26,7 @@ public class PaymentCheckWindow {
     private JTable tblPaymentCheck;
     private JPanel mainPanel;
     private JCheckBox chkShowOnlyUnpaid;
+    private JComboBox<Account> cmbAccount;
     private JDialog dialog;
     private final int type;
 
@@ -50,6 +54,8 @@ public class PaymentCheckWindow {
         tblPaymentCheck.setModel(pct);
         tblPaymentCheck.getSelectionModel().addListSelectionListener(event -> btnCreateTransactions.setEnabled(tblPaymentCheck.getSelectedRowCount() > 0));
 
+        this.cmbAccount.setModel(acm);
+
         this.dialog = new JDialog();
         dialog.setTitle(res.getString("titlePaymentCheck"));
         dialog.add(mainPanel);
@@ -62,9 +68,17 @@ public class PaymentCheckWindow {
     private void setupListeners() {
         btnCreateTransactions.addActionListener(
             e -> {
+                Account account = (Account) cmbAccount.getSelectedItem();
+                if (account == null) {
+                    JOptionPane.showMessageDialog(new JFrame(), res.getString("msgInvalidAccount"), res.getString("msgError"),
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 int[] selectedRows = tblPaymentCheck.getSelectedRows();
                 for (int i : selectedRows) {
                     Transaction transaction = pct.getPaymentCheck(i).getTransaction();
+                    transaction.setAccountId(account.getId());
                     uw.eventAddNewTransaction(transaction);
                 }
                 uw.loadTransactions(this.unit);
@@ -84,6 +98,12 @@ public class PaymentCheckWindow {
             paymentChecks = loadRentData();
         }
         pct.setPaymentChecks(paymentChecks);
+        loadAccounts();
+    }
+
+    private void loadAccounts() {
+        List<Account> accounts = AccountService.getAccounts();
+        this.acm.setAccounts(accounts);
     }
 
     private List<PaymentCheck> loadCreditData() {

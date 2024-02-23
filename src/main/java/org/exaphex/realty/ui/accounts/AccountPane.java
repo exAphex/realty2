@@ -3,6 +3,7 @@ package org.exaphex.realty.ui.accounts;
 import org.exaphex.realty.db.service.AccountService;
 import org.exaphex.realty.model.Account;
 import org.exaphex.realty.model.ui.table.AccountTableModel;
+import org.exaphex.realty.processor.AccountProcessor;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -46,6 +47,9 @@ public class AccountPane {
 
     public void loadAccounts() {
         List<Account> accounts = AccountService.getAccounts();
+        for (Account acc : accounts) {
+            acc.setBalance(AccountProcessor.calculateAccountBalance(acc));
+        }
         atm.setAccounts(accounts);
     }
 

@@ -107,6 +107,9 @@ public class MainWindow extends JFrame {
                     break;
                 case 3:
                     loadOverviewData();
+                    break;
+                case 4:
+                    this.accountsPane.loadAccounts();
             }
         });
         menuImportFile.addActionListener(e -> this.onImportFile());

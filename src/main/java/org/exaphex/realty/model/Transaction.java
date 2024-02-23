@@ -16,8 +16,9 @@ public class Transaction {
     private final String description;
     private final String reference;
     private final String expenseCategory;
+    private String accountId;
 
-    public Transaction(String id, String description, String reference, String date, int type, String unitId, float amount, String expenseCategory) {
+    public Transaction(String id, String description, String reference, String date, int type, String unitId, float amount, String expenseCategory, String accountId) {
         this.id = id;
         this.description = description;
         this.reference = reference;
@@ -27,9 +28,10 @@ public class Transaction {
         this.amount = amount;
         this.secondaryAmount = 0;
         this.expenseCategory = expenseCategory;
+        this.accountId = accountId;
     }
 
-    public Transaction(String id, String description, String reference, String date, int type, String unitId, float amount, float secondaryAmount, String expenseCategory) {
+    public Transaction(String id, String description, String reference, String date, int type, String unitId, float amount, float secondaryAmount, String expenseCategory, String accountId) {
         this.id = id;
         this.description = description;
         this.reference = reference;
@@ -39,9 +41,10 @@ public class Transaction {
         this.amount = amount;
         this.secondaryAmount = secondaryAmount;
         this.expenseCategory = expenseCategory;
+        this.accountId = accountId;
     }
 
-    public Transaction(String description, String reference, String date, int type, String unitId, float amount, String expenseCategory) {
+    public Transaction(String description, String reference, String date, int type, String unitId, float amount, String expenseCategory, String accountId) {
         this.id = UUID.randomUUID().toString();
         this.description = description;
         this.reference = reference;
@@ -51,9 +54,10 @@ public class Transaction {
         this.amount = amount;
         this.secondaryAmount = 0;
         this.expenseCategory = expenseCategory;
+        this.accountId = accountId;
     }
 
-    public Transaction(String description, String reference, String date, int type, String unitId, float amount, float secondaryAmount, String expenseCategory) {
+    public Transaction(String description, String reference, String date, int type, String unitId, float amount, float secondaryAmount, String expenseCategory, String accountId) {
         this.id = UUID.randomUUID().toString();
         this.description = description;
         this.reference = reference;
@@ -63,6 +67,7 @@ public class Transaction {
         this.amount = amount;
         this.secondaryAmount = secondaryAmount;
         this.expenseCategory = expenseCategory;
+        this.accountId = accountId;
     }
 
     public String getId() {
@@ -111,7 +116,7 @@ public class Transaction {
 
     public static boolean isExpense(int type) {
         return switch (type) {
-            case CREDIT_PAYMENT -> true;
+            case CREDIT_PAYMENT, EXPENSE -> true;
             default -> false;
         };
     }
@@ -132,4 +137,12 @@ public class Transaction {
     }
 
     public String getExpenseCategory() {return expenseCategory; }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
 }

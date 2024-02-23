@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.exaphex.realty.db.migration.AccountMigration;
 import org.exaphex.realty.db.migration.RentMigration;
 import org.h2.jdbcx.JdbcConnectionPool;
 
@@ -188,6 +189,17 @@ public class DatabaseConnector {
                 executeSQL(conn,
                         "CREATE TABLE IF NOT EXISTS accounts (id VARCHAR(255), name VARCHAR(255), iban VARCHAR(255), bic VARCHAR(255))");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (21)");
+                updateDatabase(conn);
+                break;
+            case 21:
+                executeSQL(conn,
+                        "ALTER TABLE transactions ADD accountid VARCHAR(255);");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (22)");
+                updateDatabase(conn);
+                break;
+            case 22:
+                AccountMigration.migrateTransactionToAccounts();
+                executeSQL(conn, "INSERT INTO VERSION VALUES (23)");
                 updateDatabase(conn);
                 break;
             default:

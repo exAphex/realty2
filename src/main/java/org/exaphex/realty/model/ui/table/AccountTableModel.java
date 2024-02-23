@@ -3,6 +3,7 @@ package org.exaphex.realty.model.ui.table;
 import org.exaphex.realty.model.Account;
 
 import javax.swing.table.AbstractTableModel;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -10,6 +11,7 @@ import java.util.ResourceBundle;
 public class AccountTableModel extends AbstractTableModel {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private List<Account> accounts;
+    private final NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
     public AccountTableModel(List<Account> accounts) {
         this.accounts = new ArrayList<>(accounts);
@@ -27,7 +29,7 @@ public class AccountTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -39,6 +41,8 @@ public class AccountTableModel extends AbstractTableModel {
                 yield res.getString("colIBAN");
             case 2:
                 yield res.getString("colBIC");
+            case 3:
+                yield res.getString("colBalance");
             default:
                 yield "";
         };
@@ -54,6 +58,8 @@ public class AccountTableModel extends AbstractTableModel {
                 yield account.getIban();
             case 2:
                 yield account.getBic();
+            case 3:
+                yield formatter.format(account.getBalance());
             default:
                 yield "??";
         };

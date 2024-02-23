@@ -1,14 +1,8 @@
 package org.exaphex.realty.ui.units;
 
-import org.exaphex.realty.db.service.CreditService;
-import org.exaphex.realty.db.service.ExpenseCategoryService;
-import org.exaphex.realty.db.service.RentService;
-import org.exaphex.realty.db.service.UnitService;
+import org.exaphex.realty.db.service.*;
 import org.exaphex.realty.model.*;
-import org.exaphex.realty.model.ui.cmb.CreditComboBoxModel;
-import org.exaphex.realty.model.ui.cmb.ExpenseCategoryComboBoxModel;
-import org.exaphex.realty.model.ui.cmb.ExpenseCategoryTypeComboBoxModel;
-import org.exaphex.realty.model.ui.cmb.RentComboBoxModel;
+import org.exaphex.realty.model.ui.cmb.*;
 
 import javax.swing.*;
 import javax.swing.text.DateFormatter;
@@ -29,6 +23,7 @@ public class TransactionModal {
     private final CreditComboBoxModel ccm = new CreditComboBoxModel(new ArrayList<>());
     private final RentComboBoxModel rcm = new RentComboBoxModel(new ArrayList<>());
     private final ExpenseCategoryComboBoxModel ecm = new ExpenseCategoryComboBoxModel(new ArrayList<>());
+    private final AccountComboBoxModel acm = new AccountComboBoxModel(new ArrayList<>());
     private final UnitWindow uw;
     private Unit unit;
     private Transaction transaction;
@@ -47,6 +42,7 @@ public class TransactionModal {
     private JComboBox<Rent> cmbRent;
     private JComboBox<ExpenseCategory> cmbExpenseType;
     private JLabel lblExpenseCategory;
+    private JComboBox<Account> cmbAccount;
 
     public TransactionModal(UnitWindow uw, Unit u) {
         this.uw = uw;
@@ -74,6 +70,7 @@ public class TransactionModal {
         cmbTypes.setSelectedItem(formatTransactionType(this.transaction.getType()));
         CreditComboBoxModel creditModel = (CreditComboBoxModel) cmbCredit.getModel();
         RentComboBoxModel rentModel = (RentComboBoxModel) cmbRent.getModel();
+        AccountComboBoxModel accountModel = (AccountComboBoxModel) cmbAccount.getModel();
         ExpenseCategoryComboBoxModel expenseCategoryModel = (ExpenseCategoryComboBoxModel) cmbExpenseType.getModel();
         switch (this.transaction.getType()) {
             case Transaction.CREDIT_PAYMENT -> {
@@ -95,6 +92,11 @@ public class TransactionModal {
                 }
             }
         }
+
+        int pos = accountModel.getAccountById(this.transaction.getAccountId());
+        if (pos >= 0) {
+            cmbAccount.setSelectedIndex(pos);
+        }
     }
 
     private void loadData() {
@@ -107,6 +109,7 @@ public class TransactionModal {
             loadRents(u);
         }
         loadExpenseCategories();
+        loadAccounts();
     }
 
     private void setupUI() {
@@ -127,6 +130,7 @@ public class TransactionModal {
         cmbCredit.setModel(ccm);
         cmbRent.setModel(rcm);
         cmbExpenseType.setModel(ecm);
+        cmbAccount.setModel(acm);
 
         this.dialog = new JDialog();
         dialog.setTitle(res.getString("titleAddTransaction"));
@@ -143,6 +147,13 @@ public class TransactionModal {
                 e -> {
                     String reference = "";
                     String expenseCategory = "";
+                    Account account = (Account) cmbAccount.getSelectedItem();
+                    if (account == null) {
+                        JOptionPane.showMessageDialog(new JFrame(), res.getString("msgInvalidAccount"), res.getString("msgError"),
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
                     if (txtDate.getText().isEmpty()) {
                         JOptionPane.showMessageDialog(new JFrame(), res.getString("msgDateInvalid"), res.getString("msgError"),
                                 JOptionPane.ERROR_MESSAGE);
@@ -197,9 +208,9 @@ public class TransactionModal {
                     }
 
                     if (this.transaction != null) {
-                        uw.eventEditTransaction(new Transaction(this.transaction.getId(), txtDescription.getText(), reference, txtDate.getText(),type, this.transaction.getUnitId(), fAmount, fSecondaryAmount,expenseCategory));
+                        uw.eventEditTransaction(new Transaction(this.transaction.getId(), txtDescription.getText(), reference, txtDate.getText(),type, this.transaction.getUnitId(), fAmount, fSecondaryAmount,expenseCategory, account.getId()));
                     } else {
-                        uw.eventAddNewTransaction(new Transaction(txtDescription.getText(), reference, txtDate.getText(),type, this.unit.getId(), fAmount, fSecondaryAmount,expenseCategory));
+                        uw.eventAddNewTransaction(new Transaction(txtDescription.getText(), reference, txtDate.getText(),type, this.unit.getId(), fAmount, fSecondaryAmount, expenseCategory, account.getId()));
                     }
                     dialog.dispose();
                 });
@@ -258,5 +269,10 @@ public class TransactionModal {
     private void loadExpenseCategories() {
         List<ExpenseCategory> expenseCategories = ExpenseCategoryService.getCategories();
         ecm.setExpenseCategories(expenseCategories);
+    }
+
+    private void loadAccounts() {
+        List<Account> accounts = AccountService.getAccounts();
+        acm.setAccounts(accounts);
     }
 }

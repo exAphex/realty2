@@ -51,7 +51,7 @@ public class CreditPaymentCheckProcessor {
                 total -= redemption;
                 PaymentCheck tempPaymentCheck = new PaymentCheck("Credit payment " + monthFormatter.format(beginCalendar.getTime()), totalInstallment, formatter.format(beginCalendar.getTime()), 0 );
                 tempPaymentCheck.setPaidAmount(donePayments(credit, tempPaymentCheck, transactions));
-                tempPaymentCheck.setTransaction(new Transaction("Credit payment " + credit.getName() + " " + monthFormatter.format(beginCalendar.getTime()), credit.getId(), formatter.format(beginCalendar.getTime()), Transaction.CREDIT_PAYMENT, u.getId() ,redemption, interest,""));
+                tempPaymentCheck.setTransaction(new Transaction("Credit payment " + credit.getName() + " " + monthFormatter.format(beginCalendar.getTime()), credit.getId(), formatter.format(beginCalendar.getTime()), Transaction.CREDIT_PAYMENT, u.getId() ,redemption, interest,"", ""));
                 retPaymentChecks.add(tempPaymentCheck);
                 beginCalendar.add(Calendar.MONTH, 1);
             }
