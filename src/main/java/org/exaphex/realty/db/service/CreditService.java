@@ -3,9 +3,7 @@ package org.exaphex.realty.db.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.db.DatabaseConnector;
-import org.exaphex.realty.model.Building;
-import org.exaphex.realty.model.Credit;
-import org.exaphex.realty.model.Unit;
+import org.exaphex.realty.model.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +15,7 @@ import java.util.List;
 @SuppressWarnings("SpellCheckingInspection")
 public class CreditService {
     protected static final Logger logger = LogManager.getLogger();
-    public static List<Credit> getCredit(Unit u) {
+    private static List<Credit> _getCredit(String id) {
         Connection conn = null;
         PreparedStatement statement = null;
         List<Credit> retCredits = new ArrayList<>();
@@ -25,10 +23,10 @@ public class CreditService {
             conn = DatabaseConnector.getConnection();
 
             String query = "select * from credits";
-            if (u != null) {
+            if (id != null) {
                 query += " where objectid = ?";
                 statement = conn.prepareStatement(query);
-                statement.setString(1, u.getId());
+                statement.setString(1, id);
             } else {
                 statement = conn.prepareStatement(query);
             }
@@ -45,6 +43,18 @@ public class CreditService {
             DatabaseConnector.closeDatabase(conn);
         }
         return retCredits;
+    }
+
+    public static List<Credit> getCredit() {
+        return _getCredit(null);
+    }
+
+    public static List<Credit> getCredit(Building building) {
+        return _getCredit(building.getId());
+    }
+
+    public static List<Credit> getCredit(Unit unit) {
+        return _getCredit(unit.getId());
     }
 
     public static void addCredit(Credit credit) {

@@ -188,7 +188,7 @@ public class MainWindow extends JFrame {
     private void loadOverviewData() {
         List<Rent> rents = new ArrayList<>();
         List<Transaction> transactions = TransactionService.getTransactions(null);
-        List<Credit> credits = CreditService.getCredit(null);
+        List<Credit> credits = CreditService.getCredit();
         List<Valuation> valuations = new ArrayList<>();
         List<Unit> units = UnitService.getUnits(null);
 

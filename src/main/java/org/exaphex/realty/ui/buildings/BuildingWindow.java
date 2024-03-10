@@ -6,10 +6,12 @@ import org.exaphex.realty.db.service.UnitService;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.processor.RentPaymentCheckProcessor;
 import org.exaphex.realty.processor.chart.IncomeExpenseChartProcessor;
+import org.exaphex.realty.ui.credit.CreditPane;
 import org.exaphex.realty.ui.units.UnitWindow;
 import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,10 @@ public class BuildingWindow extends JFrame {
     private JPanel unitPanel;
     private UnitWindow unitDetail;
     private JTextField txtTotalShares;
+    private JPanel tabCredit;
+    private JPanel tabOverview;
+    private JPanel tabGeneral;
+    private CreditPane creditPane;
 
     public BuildingWindow(Building b) {
         super();
@@ -84,13 +90,20 @@ public class BuildingWindow extends JFrame {
         txtTotalShares.setText(b.getTotalShares()+"");
     }
 
+    private void onSelectTab() {
+        Component selectedComponent = tabBuilding.getSelectedComponent();
+        if (selectedComponent.equals(tabCredit)) {
+            creditPane.setUI(this.selectedBuilding);
+        } else if (selectedComponent.equals(tabOverview)) {
+            setBuildingOverviewData(this.selectedBuilding);
+        } else if (selectedComponent.equals(tabGeneral)) {
+            setBuildingGeneralData(this.selectedBuilding);
+        }
+    }
+
     private void setListeners() {
         tabBuilding.addChangeListener(e -> {
-            if (tabBuilding.getSelectedIndex() == 0) {
-                setBuildingOverviewData(this.selectedBuilding);
-            } else if (tabBuilding.getSelectedIndex() == 1){
-                setBuildingGeneralData(this.selectedBuilding);
-            }
+            onSelectTab();
         });
 
         btnBuildingGeneralSave.addActionListener(e -> onSaveGeneral());

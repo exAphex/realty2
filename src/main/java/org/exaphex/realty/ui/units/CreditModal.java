@@ -1,7 +1,9 @@
 package org.exaphex.realty.ui.units;
 
+import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.Credit;
 import org.exaphex.realty.model.Unit;
+import org.exaphex.realty.ui.credit.CreditPane;
 
 import javax.swing.*;
 import javax.swing.text.DateFormatter;
@@ -15,8 +17,9 @@ import static org.exaphex.realty.util.PriceUtils.validatePrice;
 public class CreditModal {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private JDialog dialog;
-    private final Unit unit;
-    private final UnitWindow uw;
+    private Unit unit;
+    private Building building;
+    private final CreditPane cp;
     private JTextField txtName;
     private JTextField txtDescription;
     private JFormattedTextField txtStartDate;
@@ -27,9 +30,16 @@ public class CreditModal {
     private JFormattedTextField txtEndDate;
     private JTextField txtAmount;
 
-    public CreditModal(UnitWindow uw, Unit u) {
+    public CreditModal(CreditPane cp, Unit u) {
         this.unit = u;
-        this.uw = uw;
+        this.cp = cp;
+        setupUI();
+        setupListeners();
+    }
+
+    public CreditModal(CreditPane cp, Building building) {
+        this.cp = cp;
+        this.building = building;
         setupUI();
         setupListeners();
     }
@@ -94,7 +104,11 @@ public class CreditModal {
                         return;
                     }
 
-                    uw.eventAddNewCredit(new Credit(txtName.getText(), unit.getId(), txtDescription.getText(),fInterestRate/100, fRedemptionRate/100, txtStartDate.getText(), txtEndDate.getText(), fAmount));
+                    if (this.building != null) {
+                        cp.eventAddNewCredit(new Credit(txtName.getText(), building.getId(), txtDescription.getText(),fInterestRate/100, fRedemptionRate/100, txtStartDate.getText(), txtEndDate.getText(), fAmount));
+                    } else {
+                        cp.eventAddNewCredit(new Credit(txtName.getText(), unit.getId(), txtDescription.getText(),fInterestRate/100, fRedemptionRate/100, txtStartDate.getText(), txtEndDate.getText(), fAmount));
+                    }
                     dialog.dispose();
                 });
     }

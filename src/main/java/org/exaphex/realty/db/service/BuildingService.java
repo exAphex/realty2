@@ -117,6 +117,7 @@ public class BuildingService {
         for (Unit u : UnitService.getUnits(building)) {
             UnitService.deleteUnit(u);
         }
+        CreditService.deleteCredit(building);
         deleteBuildingInternal(building);
     }
 }

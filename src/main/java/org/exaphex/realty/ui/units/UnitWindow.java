@@ -139,8 +139,6 @@ public class UnitWindow {
         btnDeleteRent.addActionListener(e -> this.onDeleteRent());
         btnAddTransaction.addActionListener(e -> this.onAddTransaction());
         btnDeleteTransaction.addActionListener(e -> this.onDeleteTransaction());
-        btnAddCredit.addActionListener(e -> this.onAddCredit());
-        btnDeleteCredit.addActionListener(e -> this.onDeleteCredit());
         btnCheckCredit.addActionListener(e -> this.onCheckCredit());
         btnCheckRent.addActionListener(e -> this.onCheckRent());
 
@@ -300,8 +298,6 @@ public class UnitWindow {
         new TransactionModal(this, this.selectedUnit);
     }
 
-    private void onAddCredit() { new CreditModal(this, this.selectedUnit);}
-
     private void onUpdateUnit() {
         Float fArea = validatePrice(txtArea.getText(), res.getString("msgArea"));
         if (fArea == null || fArea <= 0) {
@@ -358,15 +354,6 @@ public class UnitWindow {
             TransactionService.deleteTransaction(transaction);
         }
         loadTransactions(this.selectedUnit);
-    }
-
-    private void onDeleteCredit() {
-        int[] selectedRows = tblCredit.getSelectedRows();
-        for (int i : selectedRows) {
-            Credit credit = ctm.getCreditAt(tblCredit.convertRowIndexToModel(i));
-            CreditService.deleteCredit(credit);
-        }
-        loadCredits(this.selectedUnit);
     }
 
     private void onDeleteRent() {
@@ -444,10 +431,5 @@ public class UnitWindow {
     public void eventEditTransaction(Transaction t) {
         TransactionService.updateTransaction(t);
         loadTransactions(this.selectedUnit);
-    }
-
-    public void eventAddNewCredit(Credit c) {
-        CreditService.addCredit(c);
-        loadCredits(this.selectedUnit);
     }
 }
