@@ -8,19 +8,26 @@ public class Unit {
     private final String name;
     private final String buildingId;
     private final float area;
+    private final float shares;
 
-    public Unit(String id, String buildingId, String name, float area) {
+    public Unit(String id, String buildingId, String name, float area, float shares) {
         this.id = id;
         this.buildingId = buildingId;
         this.name = name;
         this.area = area;
+        this.shares = shares;
     }
 
-    public Unit(String buildingId, String name, float area) {
+    public Unit(String buildingId, String name, float area, float shares) {
         this.id = UUID.randomUUID().toString();
         this.buildingId = buildingId;
         this.name = name;
         this.area = area;
+        this.shares = shares;
+    }
+
+    public float getShares() {
+        return shares;
     }
 
     public String getId() {

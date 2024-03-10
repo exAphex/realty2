@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Credit {
     private final String id;
-    private final String unitId;
+    private final String objectId;
     private final String name;
     private final String description;
     private final float interestRate;
@@ -15,9 +15,9 @@ public class Credit {
     private final float amount;
     private float repaidAmount;
 
-    public Credit(String id, String unitId, String name, String description, float interestRate, float redemptionRate, String startDate, String endDate, float amount) {
+    public Credit(String id, String objectId, String name, String description, float interestRate, float redemptionRate, String startDate, String endDate, float amount) {
         this.id = id;
-        this.unitId = unitId;
+        this.objectId = objectId;
         this.name = name;
         this.description = description;
         this.interestRate = interestRate;
@@ -28,9 +28,9 @@ public class Credit {
         this.repaidAmount = 0;
     }
 
-    public Credit(String name, String unitId, String description, float interestRate, float redemptionRate, String startDate, String endDate, float amount) {
+    public Credit(String name, String objectId, String description, float interestRate, float redemptionRate, String startDate, String endDate, float amount) {
         this.id = UUID.randomUUID().toString();
-        this.unitId = unitId;
+        this.objectId = objectId;
         this.name = name;
         this.description = description;
         this.interestRate = interestRate;
@@ -69,10 +69,9 @@ public class Credit {
         return id;
     }
 
-    public String getUnitId() {
-        return unitId;
+    public String getObjectId() {
+        return objectId;
     }
-
     public float getAmount() {
         return amount;
     }

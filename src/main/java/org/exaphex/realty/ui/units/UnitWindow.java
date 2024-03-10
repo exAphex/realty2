@@ -70,6 +70,7 @@ public class UnitWindow {
 
     private JButton btnSave;
     private OverviewPane overviewPane;
+    private JTextField txtShares;
 
     public void setUI(Building b) {
         this.building = b;
@@ -216,6 +217,7 @@ public class UnitWindow {
         Unit unit = UnitService.getUnitById(u.getId());
         this.txtName.setText(unit != null ? unit.getName() : "");
         this.txtArea.setText(unit!= null ? ""+unit.getArea() : "");
+        this.txtShares.setText(unit != null ? ""+unit.getShares():"");
     }
 
     private void loadOverviewData(Unit u) {
@@ -306,7 +308,12 @@ public class UnitWindow {
             return;
         }
 
-        UnitService.updateUnit(new Unit(this.selectedUnit.getId(), this.selectedUnit.getBuildingId(), this.selectedUnit.getName(), fArea));
+        Float fShares = validatePrice(txtShares.getText(), res.getString("msgShares"));
+        if (fShares == null || fShares <= 0) {
+            return;
+        }
+
+        UnitService.updateUnit(new Unit(this.selectedUnit.getId(), this.selectedUnit.getBuildingId(), this.selectedUnit.getName(), fArea, fShares));
         setFields(this.selectedUnit);
     }
 

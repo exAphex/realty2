@@ -3,6 +3,7 @@ package org.exaphex.realty.db.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.db.DatabaseConnector;
+import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.Credit;
 import org.exaphex.realty.model.Unit;
 
@@ -25,7 +26,7 @@ public class CreditService {
 
             String query = "select * from credits";
             if (u != null) {
-                query += " where unitid = ?";
+                query += " where objectid = ?";
                 statement = conn.prepareStatement(query);
                 statement.setString(1, u.getId());
             } else {
@@ -34,7 +35,7 @@ public class CreditService {
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Credit tmpCredit = new Credit(rs.getString("id"), rs.getString("unitid"), rs.getString("name"), rs.getString("description"), rs.getFloat("interestrate"), rs.getFloat("redemptionrate"), rs.getString("startdate"), rs.getString("enddate"), rs.getFloat("amount"));
+                Credit tmpCredit = new Credit(rs.getString("id"), rs.getString("objectid"), rs.getString("name"), rs.getString("description"), rs.getFloat("interestrate"), rs.getFloat("redemptionrate"), rs.getString("startdate"), rs.getString("enddate"), rs.getFloat("amount"));
                 retCredits.add(tmpCredit);
             }
         } catch (SQLException e) {
@@ -51,9 +52,9 @@ public class CreditService {
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("INSERT INTO credits (id, unitid, name, description, interestrate, redemptionrate, startdate, enddate, amount) VALUES (?,?,?,?,?,?,?,?,?)");
+            statement = conn.prepareStatement("INSERT INTO credits (id, objectid, name, description, interestrate, redemptionrate, startdate, enddate, amount) VALUES (?,?,?,?,?,?,?,?,?)");
             statement.setString(1, credit.getId());
-            statement.setString(2, credit.getUnitId());
+            statement.setString(2, credit.getObjectId());
             statement.setString(3, credit.getName());
             statement.setString(4, credit.getDescription());
             statement.setFloat(5, credit.getInterestRate());
@@ -92,13 +93,13 @@ public class CreditService {
         }
     }
 
-    public static void deleteCredit(Unit unit) {
+    private static void _deleteCredit(String id) {
         Connection conn = null;
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("DELETE FROM credits WHERE unitid = ?");
-            statement.setString(1, unit.getId());
+            statement = conn.prepareStatement("DELETE FROM credits WHERE objectid = ?");
+            statement.setString(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);
@@ -106,5 +107,13 @@ public class CreditService {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
         }
+    }
+
+    public static void deleteCredit(Unit unit) {
+        _deleteCredit(unit.getId());
+    }
+
+    public static void deleteCredit(Building building) {
+        _deleteCredit(building.getId());
     }
 }

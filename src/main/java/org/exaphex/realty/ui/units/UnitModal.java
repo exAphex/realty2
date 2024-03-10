@@ -17,6 +17,7 @@ public class UnitModal {
     private JButton btnSave;
     private JPanel mainPanel;
     private JTextField txtArea;
+    private JTextField txtShares;
 
     public UnitModal(UnitWindow uw, Building b) {
         this.uw = uw;
@@ -26,7 +27,8 @@ public class UnitModal {
     }
 
     private void setupUI() {
-        txtArea.setText("0.00");
+        txtArea.setText("1.00");
+        txtShares.setText("1");
         this.dialog = new JDialog();
         dialog.setTitle(res.getString("titleAddUnit"));
         dialog.add(mainPanel);
@@ -40,11 +42,16 @@ public class UnitModal {
         btnSave.addActionListener(
                 e -> {
                     Float fArea = validatePrice(txtArea.getText(), res.getString("msgArea"));
-                    if (fArea == null) {
+                    if (fArea == null || fArea <= 1) {
                         return;
                     }
 
-                    uw.eventAddNewUnit(new Unit(this.building.getId(), txtName.getText(), fArea));
+                    Float fShares = validatePrice(txtShares.getText(), res.getString("msgShares"));
+                    if (fShares == null || fShares <= 1) {
+                        return;
+                    }
+
+                    uw.eventAddNewUnit(new Unit(this.building.getId(), txtName.getText(), fArea, fShares));
                     dialog.dispose();
                 });
     }

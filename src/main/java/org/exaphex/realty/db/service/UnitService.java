@@ -29,7 +29,7 @@ public class UnitService {
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Unit tmpUnit = new Unit(rs.getString("id"), rs.getString("buildingid"), rs.getString("name"), rs.getFloat("area"));
+                Unit tmpUnit = new Unit(rs.getString("id"), rs.getString("buildingid"), rs.getString("name"), rs.getFloat("area"), rs.getFloat("shares"));
                 retUnits.add(tmpUnit);
             }
         } catch (SQLException e) {
@@ -50,7 +50,7 @@ public class UnitService {
             statement.setString(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                return new Unit(rs.getString("id"), rs.getString("buildingid"), rs.getString("name"), rs.getFloat("area"));
+                return new Unit(rs.getString("id"), rs.getString("buildingid"), rs.getString("name"), rs.getFloat("area"), rs.getFloat("shares"));
             }
         } catch (SQLException e) {
             logger.error(e);
@@ -66,11 +66,12 @@ public class UnitService {
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("INSERT INTO units (id, buildingid, name, area) VALUES (?,?,?,?)");
+            statement = conn.prepareStatement("INSERT INTO units (id, buildingid, name, area, shares) VALUES (?,?,?,?,?)");
             statement.setString(1, unit.getId());
             statement.setString(2, unit.getBuildingId());
             statement.setString(3, unit.getName());
             statement.setFloat(4, unit.getArea());
+            statement.setFloat(5, unit.getShares());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);
@@ -91,10 +92,11 @@ public class UnitService {
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("UPDATE units SET name = ?, area = ? where id = ?");
+            statement = conn.prepareStatement("UPDATE units SET name = ?, area = ?, shares = ? where id = ?");
             statement.setString(1, unit.getName());
             statement.setFloat(2, unit.getArea());
-            statement.setString(3, unit.getId());
+            statement.setFloat(3, unit.getShares());
+            statement.setString(4, unit.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);
