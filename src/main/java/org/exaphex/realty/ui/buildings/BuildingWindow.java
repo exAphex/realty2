@@ -36,6 +36,7 @@ public class BuildingWindow extends JFrame {
     private JButton btnBuildingGeneralSave;
     private JPanel unitPanel;
     private UnitWindow unitDetail;
+    private JTextField txtTotalShares;
 
     public BuildingWindow(Building b) {
         super();
@@ -80,6 +81,7 @@ public class BuildingWindow extends JFrame {
         txtPostalCode.setText(b.getPostalCode());
         txtCity.setText(b.getCity());
         txtTotalArea.setText(b.getTotalArea()+"");
+        txtTotalShares.setText(b.getTotalShares()+"");
     }
 
     private void setListeners() {
@@ -100,7 +102,12 @@ public class BuildingWindow extends JFrame {
             return;
         }
 
-        BuildingService.updateBuilding(new Building(this.selectedBuilding.getId(), txtName.getText(), txtStreet.getText(), txtStreetNumber.getText(), txtPostalCode.getText(), txtCity.getText(), fArea));
+        Float fShares = validatePrice(txtTotalShares.getText(), res.getString("msgShares"));
+        if (fShares == null || fShares <= 0) {
+            return;
+        }
+
+        BuildingService.updateBuilding(new Building(this.selectedBuilding.getId(), txtName.getText(), txtStreet.getText(), txtStreetNumber.getText(), txtPostalCode.getText(), txtCity.getText(), fArea, fShares));
         this.selectedBuilding = BuildingService.getBuilding(this.selectedBuilding).get(0);
     }
 

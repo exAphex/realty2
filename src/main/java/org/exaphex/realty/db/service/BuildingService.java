@@ -32,7 +32,7 @@ public class BuildingService {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Building tmpBuilding = new Building(rs.getString("id"), rs.getString("name"), rs.getString("street"),
-                        rs.getString("number"), rs.getString("postalCode"), rs.getString("city"), rs.getFloat("totalarea"));
+                        rs.getString("number"), rs.getString("postalCode"), rs.getString("city"), rs.getFloat("totalarea"), rs.getFloat("totalshares"));
                 retBuildings.add(tmpBuilding);
             }
         } catch (SQLException e) {
@@ -49,7 +49,7 @@ public class BuildingService {
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("INSERT INTO buildings (id, name, street, number, postalCode, city, totalarea) VALUES (?,?,?,?,?,?,?)");
+            statement = conn.prepareStatement("INSERT INTO buildings (id, name, street, number, postalCode, city, totalarea, totalshares) VALUES (?,?,?,?,?,?,?,?)");
             statement.setString(1, building.getId());
             statement.setString(2, building.getName());
             statement.setString(3, building.getAddress());
@@ -57,6 +57,7 @@ public class BuildingService {
             statement.setString(5, building.getPostalCode());
             statement.setString(6, building.getCity());
             statement.setFloat(7, building.getTotalArea());
+            statement.setFloat(8, building.getTotalShares());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);
@@ -77,14 +78,15 @@ public class BuildingService {
         PreparedStatement statement = null;
         try {
             conn = DatabaseConnector.getConnection();
-            statement = conn.prepareStatement("UPDATE buildings SET name = ?, street = ?, number = ?, postalCode = ?, city = ?, totalarea = ? where id = ?");
+            statement = conn.prepareStatement("UPDATE buildings SET name = ?, street = ?, number = ?, postalCode = ?, city = ?, totalarea = ?, totalshares = ? where id = ?");
             statement.setString(1, building.getName());
             statement.setString(2, building.getAddress());
             statement.setString(3, building.getNumber());
             statement.setString(4, building.getPostalCode());
             statement.setString(5, building.getCity());
             statement.setFloat(6, building.getTotalArea());
-            statement.setString(7, building.getId());
+            statement.setFloat(7, building.getTotalShares());
+            statement.setString(8, building.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);

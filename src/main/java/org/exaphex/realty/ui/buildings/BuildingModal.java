@@ -18,6 +18,7 @@ public class BuildingModal {
     private JTextField textCity;
     private JButton saveButton;
     private JTextField txtTotalArea;
+    private JTextField txtTotalShares;
 
     private final MainWindow mw;
 
@@ -31,6 +32,7 @@ public class BuildingModal {
 
     private void setupUI() {
         txtTotalArea.setText("1.0");
+        txtTotalShares.setText("100");
         this.dialog = new JDialog();
         dialog.setTitle(res.getString("titleAddBuilding"));
         dialog.add(mainPanel);
@@ -48,8 +50,13 @@ public class BuildingModal {
                         return;
                     }
 
+                    Float fShares = validatePrice(txtTotalShares.getText(), res.getString("msgShares"));
+                    if (fShares == null || fShares <= 0) {
+                        return;
+                    }
+
                     mw.eventAddNewBuilding(new Building(textName.getText(), textStreet.getText(), textNumber.getText(),
-                            textPostalCode.getText(), textCity.getText(),fArea));
+                            textPostalCode.getText(), textCity.getText(),fArea, fShares));
                     dialog.dispose();
                 });
     }

@@ -10,8 +10,9 @@ public class Building {
     private final String postalCode;
     private final String city;
     private final float totalArea;
+    private final float totalShares;
 
-    public Building(String name, String address, String number, String postalCode, String city, float totalArea) {
+    public Building(String name, String address, String number, String postalCode, String city, float totalArea, float totalShares) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.address = address;
@@ -19,9 +20,10 @@ public class Building {
         this.postalCode = postalCode;
         this.city = city;
         this.totalArea = totalArea;
+        this.totalShares = totalShares;
     }
 
-    public Building(String id, String name, String address, String number, String postalCode, String city, float totalArea) {
+    public Building(String id, String name, String address, String number, String postalCode, String city, float totalArea, float totalShares) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -29,6 +31,7 @@ public class Building {
         this.postalCode = postalCode;
         this.city = city;
         this.totalArea = totalArea;
+        this.totalShares = totalShares;
     }
 
     public String getName() {
@@ -53,6 +56,10 @@ public class Building {
 
     public float getTotalArea() {
         return totalArea;
+    }
+
+    public float getTotalShares() {
+        return totalShares;
     }
 
     @Override

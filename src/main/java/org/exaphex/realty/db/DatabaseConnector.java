@@ -154,6 +154,7 @@ public class DatabaseConnector {
                         "ALTER TABLE buildings ADD totalarea DOUBLE DEFAULT 1;");
                 executeSQL(conn, "INSERT INTO VERSION VALUES (15)");
                 updateDatabase(conn);
+                break;
             case 15:
                 executeSQL(conn,
                         "CREATE TABLE IF NOT EXISTS contacts (id VARCHAR(255), firstname VARCHAR(255), lastname VARCHAR(255), telnumber VARCHAR(255), mail VARCHAR(255))");
@@ -200,6 +201,12 @@ public class DatabaseConnector {
             case 22:
                 AccountMigration.migrateTransactionToAccounts();
                 executeSQL(conn, "INSERT INTO VERSION VALUES (23)");
+                updateDatabase(conn);
+                break;
+            case 23:
+                executeSQL(conn,
+                        "ALTER TABLE buildings ADD totalshares DOUBLE DEFAULT 1;");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (24)");
                 updateDatabase(conn);
                 break;
             default:
