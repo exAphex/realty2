@@ -104,7 +104,7 @@ public class TransactionModal {
             loadCredits(this.unit);
             loadRents(this.unit);
         } else {
-            Unit u = UnitService.getUnitById(this.transaction.getUnitId());
+            Unit u = UnitService.getUnitById(this.transaction.getObjectId());
             loadCredits(u);
             loadRents(u);
         }
@@ -208,7 +208,7 @@ public class TransactionModal {
                     }
 
                     if (this.transaction != null) {
-                        uw.eventEditTransaction(new Transaction(this.transaction.getId(), txtDescription.getText(), reference, txtDate.getText(),type, this.transaction.getUnitId(), fAmount, fSecondaryAmount,expenseCategory, account.getId()));
+                        uw.eventEditTransaction(new Transaction(this.transaction.getId(), txtDescription.getText(), reference, txtDate.getText(),type, this.transaction.getObjectId(), fAmount, fSecondaryAmount,expenseCategory, account.getId()));
                     } else {
                         uw.eventAddNewTransaction(new Transaction(txtDescription.getText(), reference, txtDate.getText(),type, this.unit.getId(), fAmount, fSecondaryAmount, expenseCategory, account.getId()));
                     }

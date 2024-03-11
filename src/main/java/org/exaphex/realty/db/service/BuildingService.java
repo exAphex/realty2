@@ -118,6 +118,7 @@ public class BuildingService {
             UnitService.deleteUnit(u);
         }
         CreditService.deleteCredit(building);
+        TransactionService.deleteTransactions(building);
         deleteBuildingInternal(building);
     }
 }

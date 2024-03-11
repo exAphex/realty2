@@ -221,6 +221,12 @@ public class DatabaseConnector {
                 executeSQL(conn, "INSERT INTO VERSION VALUES (26)");
                 updateDatabase(conn);
                 break;
+            case 26:
+                executeSQL(conn,
+                        "ALTER TABLE transactions RENAME COLUMN unitid to objectid;");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (27)");
+                updateDatabase(conn);
+                break;
             default:
         }
     }
