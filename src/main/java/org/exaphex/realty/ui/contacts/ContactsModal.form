@@ -13,7 +13,7 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Firstname:"/>
+          <text resource-bundle="i18n" key="lblFirstName"/>
         </properties>
       </component>
       <vspacer id="5d822">
@@ -34,7 +34,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Lastname:"/>
+          <text resource-bundle="i18n" key="lblLastName"/>
         </properties>
       </component>
       <component id="a682b" class="javax.swing.JTextField" binding="txtLastName">
@@ -50,7 +50,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Mail:"/>
+          <text resource-bundle="i18n" key="lblMail"/>
         </properties>
       </component>
       <component id="e6149" class="javax.swing.JLabel">
@@ -58,7 +58,7 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Telephonenumber:"/>
+          <text resource-bundle="i18n" key="lblTelephoneNumber"/>
         </properties>
       </component>
       <component id="1bcba" class="javax.swing.JTextField" binding="txtMail">

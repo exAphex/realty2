@@ -13,7 +13,7 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Name"/>
+          <text resource-bundle="i18n" key="lblName"/>
         </properties>
       </component>
       <component id="3f137" class="javax.swing.JTextField" binding="txtName">
@@ -29,7 +29,7 @@
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Is wrapable?"/>
+          <text resource-bundle="i18n" key="chkIsWrapable"/>
         </properties>
       </component>
       <component id="84b89" class="javax.swing.JLabel">
@@ -37,7 +37,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Calculation type"/>
+          <text resource-bundle="i18n" key="lblCalculationType"/>
         </properties>
       </component>
       <component id="c87b9" class="javax.swing.JComboBox" binding="cmbType">
@@ -51,7 +51,7 @@
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Save"/>
+          <text resource-bundle="i18n" key="btnSave"/>
         </properties>
       </component>
       <vspacer id="448fc">

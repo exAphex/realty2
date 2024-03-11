@@ -14,7 +14,7 @@
         </constraints>
         <properties>
           <font size="18" style="1"/>
-          <text value="Portfolio"/>
+          <text resource-bundle="i18n" key="headerPortfolio"/>
         </properties>
       </component>
       <vspacer id="9a2fc">
@@ -27,7 +27,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Object value:"/>
+          <text resource-bundle="i18n" key="lblObjectValue"/>
         </properties>
       </component>
       <component id="77c31" class="javax.swing.JLabel" binding="lblObjectValue">
@@ -43,7 +43,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Own capital:"/>
+          <text resource-bundle="i18n" key="lblOwnCapital"/>
         </properties>
       </component>
       <component id="ba4a2" class="javax.swing.JLabel" binding="lblOwnCapital">
@@ -60,7 +60,7 @@
         </constraints>
         <properties>
           <font size="18" style="1"/>
-          <text value="Profit"/>
+          <text resource-bundle="i18n" key="headerProfit"/>
         </properties>
       </component>
       <component id="5e313" class="javax.swing.JLabel">
@@ -68,7 +68,7 @@
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Return on investment:"/>
+          <text resource-bundle="i18n" key="lblROI"/>
         </properties>
       </component>
       <component id="9f394" class="javax.swing.JLabel" binding="lblROI">
@@ -84,7 +84,7 @@
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Return on own capital:"/>
+          <text resource-bundle="i18n" key="lblROC"/>
         </properties>
       </component>
       <component id="28745" class="javax.swing.JLabel" binding="lblROC">
@@ -101,7 +101,7 @@
         </constraints>
         <properties>
           <font size="18" style="1"/>
-          <text value="Rent"/>
+          <text resource-bundle="i18n" key="headerRent"/>
         </properties>
       </component>
       <component id="7668f" class="javax.swing.JLabel">
@@ -110,7 +110,7 @@
         </constraints>
         <properties>
           <font size="18" style="1"/>
-          <text value="Credit"/>
+          <text resource-bundle="i18n" key="headerCredit"/>
         </properties>
       </component>
       <component id="acccf" class="javax.swing.JLabel">
@@ -118,7 +118,7 @@
           <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Monthly rent:"/>
+          <text resource-bundle="i18n" key="lblMonthlyRent"/>
         </properties>
       </component>
       <component id="9c5f" class="javax.swing.JLabel" binding="lblRentMonthly">
@@ -142,7 +142,7 @@
           <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Total credit:"/>
+          <text resource-bundle="i18n" key="lblTotalCredit"/>
         </properties>
       </component>
       <component id="ac233" class="javax.swing.JLabel">
@@ -150,7 +150,7 @@
           <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Paid interest:"/>
+          <text resource-bundle="i18n" key="lblPaidInterest"/>
         </properties>
       </component>
       <component id="5ceb5" class="javax.swing.JLabel">
@@ -158,7 +158,7 @@
           <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Paid principal:"/>
+          <text resource-bundle="i18n" key="lblPaidPrincipal"/>
         </properties>
       </component>
       <component id="d66d6" class="javax.swing.JLabel">
@@ -166,7 +166,7 @@
           <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Left amount:"/>
+          <text resource-bundle="i18n" key="lblLeftAmount"/>
         </properties>
       </component>
       <component id="af2f8" class="javax.swing.JLabel" binding="lblTotalCredit">
@@ -206,7 +206,7 @@
           <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Paid rent (acc):"/>
+          <text resource-bundle="i18n" key="lblPaidRentPA"/>
         </properties>
       </component>
       <component id="f45e9" class="javax.swing.JLabel">
@@ -214,7 +214,7 @@
           <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Paid rent (p.a.):"/>
+          <text resource-bundle="i18n" key="lblPaidRentAcc"/>
         </properties>
       </component>
       <component id="243bb" class="javax.swing.JLabel" binding="lblRentAcc">
