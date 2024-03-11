@@ -8,7 +8,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added share functionality for units">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/contacts/ContactsPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/contacts/ContactsPane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/credit/CreditPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/credit/CreditPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/PaymentCheckWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/PaymentCheckWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +65,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "173",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "130",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "346",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",

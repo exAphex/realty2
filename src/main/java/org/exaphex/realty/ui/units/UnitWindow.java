@@ -8,6 +8,7 @@ import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.transport.ValuationTransportModel;
 import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
 import org.exaphex.realty.model.ui.table.*;
+import org.exaphex.realty.ui.credit.CreditPane;
 import org.exaphex.realty.ui.overview.OverviewPane;
 
 import javax.swing.*;
@@ -61,21 +62,20 @@ public class UnitWindow {
     private JPanel paneOverview;
     private JButton btnDeleteTransaction;
     private JPanel paneCredit;
-    private JButton btnAddCredit;
-    private JButton btnDeleteCredit;
     private JTable tblCredit;
     private JButton btnCheckCredit;
     private JButton btnCheckRent;
     private JPanel mainUnitPanel;
-
     private JButton btnSave;
     private OverviewPane overviewPane;
     private JTextField txtShares;
+    private CreditPane creditPane;
 
     public void setUI(Building b) {
         this.building = b;
         buildUI();
         setListeners();
+        this.creditPane.init();
         loadUnits(this.building);
     }
 
@@ -84,7 +84,6 @@ public class UnitWindow {
         tblValuations.setModel(vtm);
         tblRents.setModel(rtm);
         tblAccount.setModel(ttm);
-        tblCredit.setModel(ctm);
 
         // Sorter for Account table
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(tblAccount.getModel());
@@ -139,8 +138,6 @@ public class UnitWindow {
         btnDeleteRent.addActionListener(e -> this.onDeleteRent());
         btnAddTransaction.addActionListener(e -> this.onAddTransaction());
         btnDeleteTransaction.addActionListener(e -> this.onDeleteTransaction());
-        btnCheckCredit.addActionListener(e -> this.onCheckCredit());
-        btnCheckRent.addActionListener(e -> this.onCheckRent());
 
         cmbUnits.addItemListener(event -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -152,15 +149,10 @@ public class UnitWindow {
         btnSave.addActionListener( e -> onUpdateUnit());
 
         tabPane.addChangeListener(e -> {
-            if (this.selectedUnit == null) {
-                return;
-            }
+            onSelectTab();
 
-            if (tabPane.getSelectedIndex() == 0) {
-                loadOverviewData(this.selectedUnit);
-            } else if (tabPane.getSelectedIndex() == 1) {
-                setFields(this.selectedUnit);
-            }
+
+
         });
 
 
@@ -198,6 +190,22 @@ public class UnitWindow {
                 }
             }
         });
+    }
+
+    private void onSelectTab() {
+        Component selectedComponent = tabPane.getSelectedComponent();
+
+        if (this.selectedUnit == null) {
+            return;
+        }
+
+        if (selectedComponent.equals(paneOverview)) {
+            loadOverviewData(this.selectedUnit);
+        } else if (selectedComponent.equals(paneGeneral)) {
+            setFields(this.selectedUnit);
+        } else if (selectedComponent.equals(paneCredit)) {
+            creditPane.setUI(this.selectedUnit);
+        }
     }
 
     private void selectUnit(Unit u) {
@@ -363,22 +371,6 @@ public class UnitWindow {
         Rent rent = rtm.getRentAt(tblRents.convertRowIndexToModel(tblRents.getSelectedRow()));
         RentService.deleteRent(rent);
         loadRents(this.selectedUnit);
-    }
-
-    private void onCheckCredit() {
-        if (tblCredit.getSelectedRow() == -1)
-            return;
-
-        Credit credit = ctm.getCreditAt(tblCredit.convertRowIndexToModel(tblCredit.getSelectedRow()));
-        new PaymentCheckWindow(this, this.selectedUnit, credit);
-    }
-
-    private void onCheckRent() {
-        if (tblRents.getSelectedRow() == -1)
-            return;
-
-        Rent rent = rtm.getRentAt(tblRents.convertRowIndexToModel(tblRents.getSelectedRow()));
-        new PaymentCheckWindow(this, this.selectedUnit, rent);
     }
 
     private void onDeleteUnit() {

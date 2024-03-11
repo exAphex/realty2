@@ -50,6 +50,7 @@ public class BuildingWindow extends JFrame {
         buildUI();
         setListeners();
         this.unitDetail.setUI(b);
+        this.creditPane.init();
     }
 
     private void buildUI() {

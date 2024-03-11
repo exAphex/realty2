@@ -7,6 +7,7 @@ import org.exaphex.realty.model.ui.cmb.AccountComboBoxModel;
 import org.exaphex.realty.model.ui.table.PaymentCheckTableModel;
 import org.exaphex.realty.processor.CreditPaymentCheckProcessor;
 import org.exaphex.realty.processor.RentPaymentCheckProcessor;
+import org.exaphex.realty.ui.credit.CreditPane;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class PaymentCheckWindow {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private final PaymentCheckTableModel pct = new PaymentCheckTableModel(new ArrayList<>());
     private final AccountComboBoxModel acm = new AccountComboBoxModel(new ArrayList<>());
-    private final UnitWindow uw;
+    private final CreditPane cp;
     private final Unit unit;
     private Credit credit;
     private Rent rent;
@@ -30,9 +31,9 @@ public class PaymentCheckWindow {
     private JDialog dialog;
     private final int type;
 
-    public PaymentCheckWindow(UnitWindow uw, Unit u, Credit c) {
+    public PaymentCheckWindow(CreditPane cp, Unit u, Credit c) {
         this.unit = u;
-        this.uw = uw;
+        this.cp = cp;
         this.credit = c;
         this.type = Transaction.CREDIT_PAYMENT;
         setupUI();
@@ -40,9 +41,9 @@ public class PaymentCheckWindow {
         loadData();
     }
 
-    public PaymentCheckWindow(UnitWindow uw, Unit u, Rent r) {
+    public PaymentCheckWindow(CreditPane cp, Unit u, Rent r) {
         this.unit = u;
-        this.uw = uw;
+        this.cp = cp;
         this.rent = r;
         this.type = Transaction.RENT_PAYMENT;
         setupUI();
@@ -79,11 +80,11 @@ public class PaymentCheckWindow {
                 for (int i : selectedRows) {
                     Transaction transaction = pct.getPaymentCheck(i).getTransaction();
                     transaction.setAccountId(account.getId());
-                    uw.eventAddNewTransaction(transaction);
+                    cp.eventAddNewTransaction(transaction);
                 }
-                uw.loadTransactions(this.unit);
+
                 if (type == Transaction.CREDIT_PAYMENT) {
-                    uw.loadCredits(this.unit);
+                    cp.loadData();
                 }
                 dialog.dispose();
             });

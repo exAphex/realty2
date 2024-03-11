@@ -1,8 +1,10 @@
 package org.exaphex.realty.ui.credit;
 
 import org.exaphex.realty.db.service.CreditService;
+import org.exaphex.realty.db.service.TransactionService;
 import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.Credit;
+import org.exaphex.realty.model.Transaction;
 import org.exaphex.realty.model.Unit;
 import org.exaphex.realty.model.ui.table.CreditTableModel;
 import org.exaphex.realty.ui.units.CreditModal;
@@ -22,28 +24,28 @@ public class CreditPane {
     private Building selectedBuilding;
     private Unit selectedUnit;
 
+    public void init() {
+        tblCredit.setModel(ctm);
+        setupListeners();
+    }
+
     public void setUI(Building building) {
         this.selectedBuilding = building;
-        _setUI();
+        loadData();
     }
 
     public void setUI(Unit unit) {
         this.selectedUnit = unit;
-        _setUI();
-    }
-
-    private void _setUI() {
-        tblCredit.setModel(ctm);
-        setupListeners();
         loadData();
     }
 
     private void setupListeners() {
         btnAddCredit.addActionListener(e -> this.onAddNewCredit());
         btnDeleteCredit.addActionListener(e -> this.onDeleteCredit());
+        btnCheckCredit.addActionListener(e -> this.onCheckCredit());
     }
 
-    private void loadData() {
+    public void loadData() {
         List<Credit> credits;
         if (this.selectedBuilding != null) {
             credits = CreditService.getCredit(this.selectedBuilding);
@@ -59,6 +61,10 @@ public class CreditPane {
         } else {
             new CreditModal(this, this.selectedUnit);
         }
+    }
+
+    public void eventAddNewTransaction(Transaction transaction) {
+        TransactionService.addTransaction(transaction);
     }
 
     private void onCheckCredit() {
