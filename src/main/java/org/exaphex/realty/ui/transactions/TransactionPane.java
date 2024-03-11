@@ -1,15 +1,11 @@
 package org.exaphex.realty.ui.transactions;
 
-import org.exaphex.realty.db.service.CreditService;
 import org.exaphex.realty.db.service.TransactionService;
 import org.exaphex.realty.model.Building;
-import org.exaphex.realty.model.Credit;
 import org.exaphex.realty.model.Transaction;
 import org.exaphex.realty.model.Unit;
 import org.exaphex.realty.model.ui.table.TransactionTableModel;
-import org.exaphex.realty.ui.units.CreditModal;
 import org.exaphex.realty.ui.units.TransactionModal;
-import org.exaphex.realty.ui.units.UnitWindow;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;

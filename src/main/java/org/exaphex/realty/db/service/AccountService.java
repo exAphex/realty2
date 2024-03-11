@@ -4,8 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.db.DatabaseConnector;
 import org.exaphex.realty.model.Account;
-import org.exaphex.realty.model.Contact;
-import org.exaphex.realty.model.Rent;
 import org.exaphex.realty.model.Transaction;
 
 import java.sql.Connection;

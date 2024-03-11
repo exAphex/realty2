@@ -2,7 +2,6 @@ package org.exaphex.realty.ui.contacts;
 
 import org.exaphex.realty.db.service.ContactService;
 import org.exaphex.realty.model.Contact;
-import org.exaphex.realty.model.Transaction;
 import org.exaphex.realty.model.ui.table.ContactTableModel;
 
 import javax.swing.*;

@@ -1,7 +1,6 @@
 package org.exaphex.realty.ui.accounts;
 
 import org.exaphex.realty.model.Account;
-import org.exaphex.realty.model.Contact;
 
 import javax.swing.*;
 import java.util.ResourceBundle;

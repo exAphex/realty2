@@ -134,9 +134,7 @@ public class UnitWindow {
 
         btnSave.addActionListener( e -> onUpdateUnit());
 
-        tabPane.addChangeListener(e -> {
-            onSelectTab();
-        });
+        tabPane.addChangeListener(e -> onSelectTab());
 
         tblRents.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent mouseEvent) {

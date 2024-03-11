@@ -153,9 +153,7 @@ public class BuildingWindow extends JFrame {
     }
 
     private void setListeners() {
-        tabBuilding.addChangeListener(e -> {
-            onSelectTab();
-        });
+        tabBuilding.addChangeListener(e -> onSelectTab());
 
         btnBuildingGeneralSave.addActionListener(e -> onSaveGeneral());
     }
