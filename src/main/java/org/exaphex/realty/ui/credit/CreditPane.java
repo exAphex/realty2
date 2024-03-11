@@ -6,6 +6,7 @@ import org.exaphex.realty.model.Credit;
 import org.exaphex.realty.model.Unit;
 import org.exaphex.realty.model.ui.table.CreditTableModel;
 import org.exaphex.realty.ui.units.CreditModal;
+import org.exaphex.realty.ui.units.PaymentCheckWindow;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -58,6 +59,14 @@ public class CreditPane {
         } else {
             new CreditModal(this, this.selectedUnit);
         }
+    }
+
+    private void onCheckCredit() {
+        if (tblCredit.getSelectedRow() == -1)
+            return;
+
+        Credit credit = ctm.getCreditAt(tblCredit.convertRowIndexToModel(tblCredit.getSelectedRow()));
+        new PaymentCheckWindow(this, this.selectedUnit, credit);
     }
 
     private void onDeleteCredit() {
