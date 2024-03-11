@@ -18,7 +18,7 @@ import java.util.List;
 public class TransactionService {
     protected static final Logger logger = LogManager.getLogger();
 
-    public static List<Transaction> getTransactions(Unit u) {
+    private static List<Transaction> _getTransactions(String id) {
         Connection conn = null;
         PreparedStatement statement = null;
         List<Transaction> retTransactions = new ArrayList<>();
@@ -26,9 +26,9 @@ public class TransactionService {
             conn = DatabaseConnector.getConnection();
 
             String query = "select * from transactions";
-            if (u != null) {
+            if (id != null) {
                 statement = conn.prepareStatement(query + " where objectid = ?");
-                statement.setString(1, u.getId());
+                statement.setString(1, id);
             } else {
                 statement = conn.prepareStatement(query);
             }
@@ -45,6 +45,18 @@ public class TransactionService {
             DatabaseConnector.closeDatabase(conn);
         }
         return retTransactions;
+    }
+
+    public static List<Transaction> getTransactions() {
+        return _getTransactions(null);
+    }
+
+    public static List<Transaction> getTransactions(Unit unit) {
+        return _getTransactions(unit.getId());
+    }
+
+    public static List<Transaction> getTransactions(Building building) {
+        return _getTransactions(building.getId());
     }
 
     public static List<Transaction> getTransactionsByAccount(Account account) {

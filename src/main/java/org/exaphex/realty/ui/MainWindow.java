@@ -161,7 +161,7 @@ public class MainWindow extends JFrame {
     }
 
     public void loadBuildings() {
-        List<Building> buildings = BuildingService.getBuilding(null);
+        List<Building> buildings = BuildingService.getBuilding();
         btm.setBuildings(buildings);
     }
 
@@ -187,7 +187,7 @@ public class MainWindow extends JFrame {
 
     private void loadOverviewData() {
         List<Rent> rents = new ArrayList<>();
-        List<Transaction> transactions = TransactionService.getTransactions(null);
+        List<Transaction> transactions = TransactionService.getTransactions();
         List<Credit> credits = CreditService.getCredit();
         List<Valuation> valuations = new ArrayList<>();
         List<Unit> units = UnitService.getUnits(null);

@@ -247,58 +247,6 @@
               </scrollpane>
             </children>
           </grid>
-          <grid id="8543" binding="paneAccount" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <tabbedpane title-resource-bundle="i18n" title-key="tabAccount"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <scrollpane id="2b3e8">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="8c1b3" class="javax.swing.JTable" binding="tblAccount">
-                    <constraints/>
-                    <properties>
-                      <autoCreateRowSorter value="true"/>
-                    </properties>
-                  </component>
-                </children>
-              </scrollpane>
-              <toolbar id="d9f8c">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="-1" height="20"/>
-                  </grid>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="20e43" class="javax.swing.JButton" binding="btnAddTransaction">
-                    <constraints/>
-                    <properties>
-                      <enabled value="true"/>
-                      <icon value="add.png"/>
-                      <text value=""/>
-                      <toolTipText resource-bundle="i18n" key="btnAddPayment"/>
-                    </properties>
-                  </component>
-                  <component id="8fbed" class="javax.swing.JButton" binding="btnDeleteTransaction">
-                    <constraints/>
-                    <properties>
-                      <icon value="delete.png"/>
-                      <text value=""/>
-                    </properties>
-                  </component>
-                </children>
-              </toolbar>
-            </children>
-          </grid>
           <grid id="8f4fc" binding="paneCredit" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
@@ -308,6 +256,21 @@
             <border type="none"/>
             <children>
               <nested-form id="efc31" form-file="org/exaphex/realty/ui/credit/CreditPane.form" binding="creditPane">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </nested-form>
+            </children>
+          </grid>
+          <grid id="a0637" binding="paneTransaction" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="Transactions"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <nested-form id="3e60a" form-file="org/exaphex/realty/ui/transactions/TransactionPane.form" binding="transactionPane">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>

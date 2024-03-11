@@ -72,7 +72,11 @@ public class CreditPane {
             return;
 
         Credit credit = ctm.getCreditAt(tblCredit.convertRowIndexToModel(tblCredit.getSelectedRow()));
-        new PaymentCheckWindow(this, this.selectedUnit, credit);
+        if (this.selectedBuilding != null) {
+            new PaymentCheckWindow(this, this.selectedBuilding, credit);
+        } else if (this.selectedUnit != null) {
+            new PaymentCheckWindow(this, this.selectedUnit, credit);
+        }
     }
 
     private void onDeleteCredit() {

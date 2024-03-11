@@ -20,7 +20,8 @@ public class PaymentCheckWindow {
     private final PaymentCheckTableModel pct = new PaymentCheckTableModel(new ArrayList<>());
     private final AccountComboBoxModel acm = new AccountComboBoxModel(new ArrayList<>());
     private final CreditPane cp;
-    private final Unit unit;
+    private Unit selectedUnit;
+    private Building selectedBuilding;
     private Credit credit;
     private Rent rent;
     private JButton btnCreateTransactions;
@@ -32,7 +33,17 @@ public class PaymentCheckWindow {
     private final int type;
 
     public PaymentCheckWindow(CreditPane cp, Unit u, Credit c) {
-        this.unit = u;
+        this.selectedUnit = u;
+        this.cp = cp;
+        this.credit = c;
+        this.type = Transaction.CREDIT_PAYMENT;
+        setupUI();
+        setupListeners();
+        loadData();
+    }
+
+    public PaymentCheckWindow(CreditPane cp, Building building, Credit c) {
+        this.selectedBuilding = building;
         this.cp = cp;
         this.credit = c;
         this.type = Transaction.CREDIT_PAYMENT;
@@ -42,7 +53,7 @@ public class PaymentCheckWindow {
     }
 
     public PaymentCheckWindow(CreditPane cp, Unit u, Rent r) {
-        this.unit = u;
+        this.selectedUnit = u;
         this.cp = cp;
         this.rent = r;
         this.type = Transaction.RENT_PAYMENT;
@@ -108,8 +119,16 @@ public class PaymentCheckWindow {
     }
 
     private List<PaymentCheck> loadCreditData() {
-        List<Transaction> transactions = TransactionService.getTransactions(this.unit);
-        List<PaymentCheck> paymentChecks = CreditPaymentCheckProcessor.getCreditPaymentCheck(this.unit, this.credit, transactions);
+        List<Transaction> transactions;
+        List<PaymentCheck> paymentChecks;
+        if (this.selectedBuilding != null) {
+            transactions = TransactionService.getTransactions(this.selectedBuilding);
+            paymentChecks = CreditPaymentCheckProcessor.getCreditPaymentCheck(this.selectedBuilding, this.credit, transactions);
+        } else {
+            transactions = TransactionService.getTransactions(this.selectedUnit);
+            paymentChecks = CreditPaymentCheckProcessor.getCreditPaymentCheck(this.selectedUnit, this.credit, transactions);
+        }
+
         if (chkShowOnlyUnpaid.isSelected()) {
             paymentChecks = paymentChecks.stream().filter(p -> p.getPaidAmount() == 0).collect(Collectors.toList());
         }
@@ -118,8 +137,8 @@ public class PaymentCheckWindow {
     }
 
     private List<PaymentCheck> loadRentData() {
-        List<Transaction> transactions = TransactionService.getTransactions(this.unit);
-        List<PaymentCheck> paymentChecks = RentPaymentCheckProcessor.getRentPaymentCheck(this.unit, this.rent, transactions);
+        List<Transaction> transactions = TransactionService.getTransactions(this.selectedUnit);
+        List<PaymentCheck> paymentChecks = RentPaymentCheckProcessor.getRentPaymentCheck(this.selectedUnit, this.rent, transactions);
         if (chkShowOnlyUnpaid.isSelected()) {
             paymentChecks = paymentChecks.stream().filter(p -> p.getPaidAmount() == 0).collect(Collectors.toList());
         }

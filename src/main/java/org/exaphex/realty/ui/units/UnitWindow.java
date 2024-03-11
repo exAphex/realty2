@@ -10,6 +10,7 @@ import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
 import org.exaphex.realty.model.ui.table.*;
 import org.exaphex.realty.ui.credit.CreditPane;
 import org.exaphex.realty.ui.overview.OverviewPane;
+import org.exaphex.realty.ui.transactions.TransactionPane;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
@@ -57,25 +58,23 @@ public class UnitWindow {
     private JButton btnDeleteRent;
     private JTable tblRents;
     private JTable tblAccount;
-    private JPanel paneAccount;
-    private JButton btnAddTransaction;
     private JPanel paneOverview;
-    private JButton btnDeleteTransaction;
     private JPanel paneCredit;
-    private JTable tblCredit;
-    private JButton btnCheckCredit;
     private JButton btnCheckRent;
     private JPanel mainUnitPanel;
     private JButton btnSave;
     private OverviewPane overviewPane;
     private JTextField txtShares;
     private CreditPane creditPane;
+    private TransactionPane transactionPane;
+    private JPanel paneTransaction;
 
     public void setUI(Building b) {
         this.building = b;
         buildUI();
         setListeners();
         this.creditPane.init();
+        this.transactionPane.init();
         loadUnits(this.building);
     }
 
@@ -83,17 +82,6 @@ public class UnitWindow {
         cmbUnits.setModel(utm);
         tblValuations.setModel(vtm);
         tblRents.setModel(rtm);
-        tblAccount.setModel(ttm);
-
-        // Sorter for Account table
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tblAccount.getModel());
-        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
-        sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
-        setDateSorter(sorter, 0);
-        setPriceSorter(sorter, 3);
-        sorter.setSortKeys(sortKeys);
-        sorter.setSortsOnUpdates(true);
-        tblAccount.setRowSorter(sorter);
 
         TableRowSorter<TableModel> sorterValuation = new TableRowSorter<>(tblValuations.getModel());
         List<RowSorter.SortKey> sortKeysValuation = new ArrayList<>();
@@ -112,7 +100,7 @@ public class UnitWindow {
         setPanelEnabled(paneGeneral, isEnabled);
         setPanelEnabled(paneRent, isEnabled);
         setPanelEnabled(paneValuation, isEnabled);
-        setPanelEnabled(paneAccount, isEnabled);
+        setPanelEnabled(paneTransaction, isEnabled);
         setPanelEnabled(paneCredit, isEnabled);
     }
 
@@ -136,8 +124,6 @@ public class UnitWindow {
         btnImportValuation.addActionListener(e -> this.onImportValuation());
         btnAddRent.addActionListener(e -> this.onAddNewRent());
         btnDeleteRent.addActionListener(e -> this.onDeleteRent());
-        btnAddTransaction.addActionListener(e -> this.onAddTransaction());
-        btnDeleteTransaction.addActionListener(e -> this.onDeleteTransaction());
 
         cmbUnits.addItemListener(event -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -150,12 +136,7 @@ public class UnitWindow {
 
         tabPane.addChangeListener(e -> {
             onSelectTab();
-
-
-
         });
-
-
 
         tblRents.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent mouseEvent) {
@@ -180,16 +161,7 @@ public class UnitWindow {
             }
         });
 
-        tblAccount.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent mouseEvent) {
-                JTable table = (JTable) mouseEvent.getSource();
-                int selectedRow = table.getSelectedRow();
-                if (mouseEvent.getClickCount() == 2 && selectedRow != -1) {
-                    Transaction transaction = ttm.getTransactionAt(tblAccount.convertRowIndexToModel(selectedRow));
-                    new TransactionModal(self, transaction);
-                }
-            }
-        });
+
     }
 
     private void onSelectTab() {
@@ -205,6 +177,8 @@ public class UnitWindow {
             setFields(this.selectedUnit);
         } else if (selectedComponent.equals(paneCredit)) {
             creditPane.setUI(this.selectedUnit);
+        } else if (selectedComponent.equals(paneTransaction)) {
+            transactionPane.setUI(this.selectedUnit);
         }
     }
 
@@ -300,10 +274,6 @@ public class UnitWindow {
 
     private void onAddNewValuation() {
         new ValuationModal(this, this.selectedUnit);
-    }
-
-    private void onAddTransaction() {
-        new TransactionModal(this, this.selectedUnit);
     }
 
     private void onUpdateUnit() {

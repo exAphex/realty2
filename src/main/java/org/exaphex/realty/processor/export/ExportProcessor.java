@@ -18,10 +18,10 @@ public class ExportProcessor {
     private static ExportModel extractData() {
         ExportModel retEM = new ExportModel();
         retEM.setVersion(""+DatabaseConnector.getDatabaseVersion());
-        retEM.setBuildings(BuildingService.getBuilding(null));
+        retEM.setBuildings(BuildingService.getBuilding());
         retEM.setCredits(CreditService.getCredit());
         retEM.setRents(RentService.getRents(null));
-        retEM.setTransactions(TransactionService.getTransactions(null));
+        retEM.setTransactions(TransactionService.getTransactions());
         retEM.setUnits(UnitService.getUnits(null));
         retEM.setValuations(ValuationService.getValuations(null));
         retEM.setExpenseCategories(ExpenseCategoryService.getCategories());

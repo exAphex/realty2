@@ -13,7 +13,7 @@ public class AccountMigration {
     protected static final Logger logger = LogManager.getLogger();
 
     public static void migrateTransactionToAccounts() {
-        List<Transaction> transactions = TransactionService.getTransactions(null);
+        List<Transaction> transactions = TransactionService.getTransactions();
         Account acc = new Account("Main", "", "");
         AccountService.addAccount(acc);
         for (Transaction t : transactions) {

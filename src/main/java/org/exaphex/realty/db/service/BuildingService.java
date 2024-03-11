@@ -15,17 +15,17 @@ import org.exaphex.realty.model.Unit;
 public class BuildingService {
     protected static final Logger logger = LogManager.getLogger();
 
-    public static List<Building> getBuilding(Building building) {
+    private static List<Building> _getBuilding(String id) {
         Connection conn = null;
         PreparedStatement statement = null;
         List<Building> retBuildings = new ArrayList<>();
         try {
             conn = DatabaseConnector.getConnection();
             String query = "select * from buildings";
-            if (building != null) {
+            if (id != null) {
                 query += " where id = ?";
                 statement = conn.prepareStatement(query);
-                statement.setString(1, building.getId());
+                statement.setString(1, id);
             } else {
                 statement = conn.prepareStatement(query);
             }
@@ -42,6 +42,18 @@ public class BuildingService {
             DatabaseConnector.closeDatabase(conn);
         }
         return retBuildings;
+    }
+
+    public static List<Building> getBuilding(Building building) {
+        return _getBuilding(building.getId());
+    }
+
+    public static List<Building> getBuilding() {
+        return _getBuilding(null);
+    }
+
+    public static List<Building> getBuilding(String id) {
+        return _getBuilding(id);
     }
 
     public static void addBuilding(Building building) {

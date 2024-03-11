@@ -15,7 +15,7 @@ import java.util.List;
 @SuppressWarnings("SpellCheckingInspection")
 public class CreditService {
     protected static final Logger logger = LogManager.getLogger();
-    private static List<Credit> _getCredit(String id) {
+    public static List<Credit> _getCredit(String id) {
         Connection conn = null;
         PreparedStatement statement = null;
         List<Credit> retCredits = new ArrayList<>();

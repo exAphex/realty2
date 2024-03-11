@@ -16,10 +16,14 @@ public class CreditPaymentCheckProcessor {
     protected static final Logger logger = LogManager.getLogger();
 
     public static List<PaymentCheck> getCreditPaymentCheck(Unit u, Credit credit, List<Transaction> transactions) {
-        return calculatePaymentChecks(u, credit, transactions);
+        return _calculatePaymentChecks(u.getId(), credit, transactions);
     }
 
-    private static List<PaymentCheck> calculatePaymentChecks(Unit u, Credit credit, List<Transaction> transactions) {
+    public static List<PaymentCheck> getCreditPaymentCheck(Building building, Credit credit, List<Transaction> transactions) {
+        return _calculatePaymentChecks(building.getId(), credit, transactions);
+    }
+
+    private static List<PaymentCheck> _calculatePaymentChecks(String id, Credit credit, List<Transaction> transactions) {
         DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         DateFormat monthFormatter = new SimpleDateFormat("MM-yyyy");
         Calendar beginCalendar = Calendar.getInstance();
@@ -51,7 +55,7 @@ public class CreditPaymentCheckProcessor {
                 total -= redemption;
                 PaymentCheck tempPaymentCheck = new PaymentCheck("Credit payment " + monthFormatter.format(beginCalendar.getTime()), totalInstallment, formatter.format(beginCalendar.getTime()), 0 );
                 tempPaymentCheck.setPaidAmount(donePayments(credit, tempPaymentCheck, transactions));
-                tempPaymentCheck.setTransaction(new Transaction("Credit payment " + credit.getName() + " " + monthFormatter.format(beginCalendar.getTime()), credit.getId(), formatter.format(beginCalendar.getTime()), Transaction.CREDIT_PAYMENT, u.getId() ,redemption, interest,"", ""));
+                tempPaymentCheck.setTransaction(new Transaction("Credit payment " + credit.getName() + " " + monthFormatter.format(beginCalendar.getTime()), credit.getId(), formatter.format(beginCalendar.getTime()), Transaction.CREDIT_PAYMENT, id ,redemption, interest,"", ""));
                 retPaymentChecks.add(tempPaymentCheck);
                 beginCalendar.add(Calendar.MONTH, 1);
             }

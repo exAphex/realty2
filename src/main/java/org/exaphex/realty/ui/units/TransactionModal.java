@@ -3,6 +3,7 @@ package org.exaphex.realty.ui.units;
 import org.exaphex.realty.db.service.*;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.ui.cmb.*;
+import org.exaphex.realty.ui.transactions.TransactionPane;
 
 import javax.swing.*;
 import javax.swing.text.DateFormatter;
@@ -24,8 +25,9 @@ public class TransactionModal {
     private final RentComboBoxModel rcm = new RentComboBoxModel(new ArrayList<>());
     private final ExpenseCategoryComboBoxModel ecm = new ExpenseCategoryComboBoxModel(new ArrayList<>());
     private final AccountComboBoxModel acm = new AccountComboBoxModel(new ArrayList<>());
-    private final UnitWindow uw;
-    private Unit unit;
+    private final TransactionPane tp;
+    private Unit selectedUnit;
+    private Building selectedBuilding;
     private Transaction transaction;
     private JTextField txtAmount;
     private JFormattedTextField txtDate;
@@ -44,16 +46,24 @@ public class TransactionModal {
     private JLabel lblExpenseCategory;
     private JComboBox<Account> cmbAccount;
 
-    public TransactionModal(UnitWindow uw, Unit u) {
-        this.uw = uw;
-        this.unit = u;
+    public TransactionModal(TransactionPane tp, Unit u) {
+        this.tp = tp;
+        this.selectedUnit = u;
         setupUI();
         setupListeners();
         loadData();
     }
 
-    public TransactionModal(UnitWindow uw, Transaction transaction) {
-        this.uw = uw;
+    public TransactionModal(TransactionPane tp, Building building) {
+        this.tp = tp;
+        this.selectedBuilding = building;
+        setupUI();
+        setupListeners();
+        loadData();
+    }
+
+    public TransactionModal(TransactionPane tp, Transaction transaction) {
+        this.tp = tp;
         this.transaction = transaction;
         setupUI();
         setupListeners();
@@ -100,13 +110,19 @@ public class TransactionModal {
     }
 
     private void loadData() {
-        if (this.unit != null) {
-            loadCredits(this.unit);
-            loadRents(this.unit);
-        } else {
-            Unit u = UnitService.getUnitById(this.transaction.getObjectId());
-            loadCredits(u);
-            loadRents(u);
+        if (this.selectedUnit != null) {
+            loadCredits(this.selectedUnit);
+            loadRents(this.selectedUnit);
+        } else if (this.transaction != null) {
+            List<Building> buildings = BuildingService.getBuilding(this.transaction.getObjectId());
+            if (buildings.isEmpty()) {
+                Unit u = UnitService.getUnitById(this.transaction.getObjectId());
+                loadCredits(u);
+                loadRents(u);
+            } else {
+                this.cmbTypes.removeItem(formatTransactionType(0));
+                loadCredits(buildings.get(0));
+            }
         }
         loadExpenseCategories();
         loadAccounts();
@@ -122,7 +138,10 @@ public class TransactionModal {
         txtAmount.setText("0.00");
         txtSecondary.setText("0.00");
 
-        cmbTypes.addItem(formatTransactionType(0));
+        if (this.selectedBuilding == null) {
+            cmbTypes.addItem(formatTransactionType(0));
+        }
+
         cmbTypes.addItem(formatTransactionType(1));
         cmbTypes.addItem(formatTransactionType(2));
         cmbTypes.addItem(formatTransactionType(3));
@@ -140,6 +159,11 @@ public class TransactionModal {
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
 
+        if (this.selectedBuilding == null) {
+            setVisibilities(0);
+        } else {
+            setVisibilities(1);
+        }
     }
 
     private void setupListeners() {
@@ -208,9 +232,11 @@ public class TransactionModal {
                     }
 
                     if (this.transaction != null) {
-                        uw.eventEditTransaction(new Transaction(this.transaction.getId(), txtDescription.getText(), reference, txtDate.getText(),type, this.transaction.getObjectId(), fAmount, fSecondaryAmount,expenseCategory, account.getId()));
-                    } else {
-                        uw.eventAddNewTransaction(new Transaction(txtDescription.getText(), reference, txtDate.getText(),type, this.unit.getId(), fAmount, fSecondaryAmount, expenseCategory, account.getId()));
+                        tp.eventEditTransaction(new Transaction(this.transaction.getId(), txtDescription.getText(), reference, txtDate.getText(),type, this.transaction.getObjectId(), fAmount, fSecondaryAmount,expenseCategory, account.getId()));
+                    } else if (this.selectedBuilding != null) {
+                        tp.eventAddNewTransaction(new Transaction(txtDescription.getText(), reference, txtDate.getText(),type, this.selectedBuilding.getId(), fAmount, fSecondaryAmount, expenseCategory, account.getId()));
+                    } else if (this.selectedUnit != null) {
+                        tp.eventAddNewTransaction(new Transaction(txtDescription.getText(), reference, txtDate.getText(),type, this.selectedUnit.getId(), fAmount, fSecondaryAmount, expenseCategory, account.getId()));
                     }
                     dialog.dispose();
                 });
@@ -258,6 +284,11 @@ public class TransactionModal {
 
     private void loadCredits(Unit u) {
         List<Credit> credits = CreditService.getCredit(u);
+        ccm.setCredits(credits);
+    }
+
+    private void loadCredits(Building building) {
+        List<Credit> credits = CreditService.getCredit(building);
         ccm.setCredits(credits);
     }
 
