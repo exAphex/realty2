@@ -14,6 +14,7 @@ public class ExportModel {
     private List<Valuation> valuations;
     private List<ExpenseCategory> expenseCategories;
     private List<Contact> contacts;
+    private List<Account> accounts;
 
     public ExportModel() {
     }
@@ -80,6 +81,14 @@ public class ExportModel {
 
     public void setExpenseCategories(List<ExpenseCategory> expenseCategories) {
         this.expenseCategories = expenseCategories;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public List<Contact> getContacts() {

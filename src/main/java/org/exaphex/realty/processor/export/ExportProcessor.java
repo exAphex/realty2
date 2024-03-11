@@ -18,14 +18,15 @@ public class ExportProcessor {
     private static ExportModel extractData() {
         ExportModel retEM = new ExportModel();
         retEM.setVersion(""+DatabaseConnector.getDatabaseVersion());
+        retEM.setAccounts(AccountService.getAccounts());
         retEM.setBuildings(BuildingService.getBuilding());
+        retEM.setContacts(ContactService.getContacts());
         retEM.setCredits(CreditService.getCredit());
+        retEM.setExpenseCategories(ExpenseCategoryService.getCategories());
         retEM.setRents(RentService.getRents(null));
         retEM.setTransactions(TransactionService.getTransactions());
         retEM.setUnits(UnitService.getUnits(null));
         retEM.setValuations(ValuationService.getValuations(null));
-        retEM.setExpenseCategories(ExpenseCategoryService.getCategories());
-        retEM.setContacts(ContactService.getContacts());
         return retEM;
     }
 
@@ -36,14 +37,15 @@ public class ExportProcessor {
             return;
         }
 
+        AccountService.addAccounts(em.getAccounts());
         BuildingService.addBuildings(em.getBuildings());
+        ContactService.addContacts(em.getContacts());
         CreditService.addCredits(em.getCredits());
+        ExpenseCategoryService.addExpenseCategories(em.getExpenseCategories());
         RentService.addRents(em.getRents());
         TransactionService.addTransactions(em.getTransactions());
         UnitService.addUnits(em.getUnits());
         ValuationService.addValuations(em.getValuations());
-        ExpenseCategoryService.addExpenseCategories(em.getExpenseCategories());
-        ContactService.addContacts(em.getContacts());
     }
 
     public static void exportToFile(File f) {

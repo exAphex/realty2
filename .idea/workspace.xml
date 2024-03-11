@@ -7,24 +7,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added transactions also for buildings">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/transactions/TransactionPane.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/transactions/TransactionPane.java" afterDir="false" />
+    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added credits and transactions for buildings">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/migration/AccountMigration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/migration/AccountMigration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/BuildingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/BuildingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/CreditService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/CreditService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/TransactionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/processor/CreditPaymentCheckProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/processor/CreditPaymentCheckProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/transport/ExportModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/transport/ExportModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/processor/export/ExportProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/processor/export/ExportProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/MainWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingWindow.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/credit/CreditPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/credit/CreditPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/PaymentCheckWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/PaymentCheckWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/TransactionModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/TransactionModal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +56,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.org.exaphex.realty.Main.executor": "Debug",
+    "Application.org.exaphex.realty.Main.executor": "Run",
     "I18N_FIX_LAST_USED_CONTEXT": "realty",
     "LAST_USED_PROPERTIES_FILE": "/Users/aydintekin/git/jdev/realty/src/main/resources/i18n.properties",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -152,14 +140,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1698144344837</updated>
-    </task>
-    <task id="LOCAL-00005" summary="added renting">
-      <option name="closed" value="true" />
-      <created>1698274666140</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1698274666140</updated>
     </task>
     <task id="LOCAL-00006" summary="code cleanup">
       <option name="closed" value="true" />
@@ -545,7 +525,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710164027894</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="added credits and transactions for buildings">
+      <option name="closed" value="true" />
+      <created>1710169642401</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1710169642401</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -560,7 +548,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="more code cleanup" />
     <MESSAGE value="added more translations" />
     <MESSAGE value="added german translations" />
     <MESSAGE value="added portfolio statistics" />
@@ -585,6 +572,7 @@
     <MESSAGE value="added share functionality for units" />
     <MESSAGE value="added credit pane for buildings" />
     <MESSAGE value="added transactions also for buildings" />
-    <option name="LAST_COMMIT_MESSAGE" value="added transactions also for buildings" />
+    <MESSAGE value="added credits and transactions for buildings" />
+    <option name="LAST_COMMIT_MESSAGE" value="added credits and transactions for buildings" />
   </component>
 </project>
