@@ -124,7 +124,7 @@ public class UnitWindow {
         btnImportValuation.addActionListener(e -> this.onImportValuation());
         btnAddRent.addActionListener(e -> this.onAddNewRent());
         btnDeleteRent.addActionListener(e -> this.onDeleteRent());
-
+        btnCheckRent.addActionListener(e -> this.onCheckRent());
         cmbUnits.addItemListener(event -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
                 Unit item = (Unit) event.getItem();
@@ -256,6 +256,14 @@ public class UnitWindow {
             c.setRepaidAmount(getPaidAmount(c, transactions));
         }
         ctm.setCredits(credits);
+    }
+
+    private void onCheckRent() {
+        if (tblRents.getSelectedRow() == -1)
+            return;
+
+        Rent rent = rtm.getRentAt(tblRents.convertRowIndexToModel(tblRents.getSelectedRow()));
+        new PaymentCheckWindow(this.creditPane, this.selectedUnit, rent);
     }
 
     public Building getBuilding() {
