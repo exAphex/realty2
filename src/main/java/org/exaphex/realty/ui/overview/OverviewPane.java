@@ -2,10 +2,7 @@ package org.exaphex.realty.ui.overview;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.exaphex.realty.model.Credit;
-import org.exaphex.realty.model.Rent;
-import org.exaphex.realty.model.Transaction;
-import org.exaphex.realty.model.Valuation;
+import org.exaphex.realty.model.*;
 
 import javax.swing.*;
 import java.text.*;
@@ -27,6 +24,7 @@ public class OverviewPane {
     private JLabel lblPaidPrincipal;
     private JLabel lblLeftCredit;
     private JPanel mainPanel;
+    private JLabel lblAverageRentPerSQM;
     private final NumberFormat formatter = NumberFormat.getCurrencyInstance();
     private final DateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
     private final DecimalFormat decimalFormatter = new DecimalFormat("##.##%");
@@ -44,7 +42,7 @@ public class OverviewPane {
         lblROC.setText(decimalFormatter.format(0));
         lblROI.setText(decimalFormatter.format(0));
     }
-    public void loadData(List<Rent> rents, List<Transaction> transactions, List<Valuation> valuations, List<Credit> credits) {
+    public void loadData(List<Unit> units, List<Rent> rents, List<Transaction> transactions, List<Valuation> valuations, List<Credit> credits) {
         List<Transaction> rentTransactions = transactions.stream().filter(t -> t.getType() == Transaction.RENT_PAYMENT).toList();
         Date now = new Date();
         Calendar beginCalendar = Calendar.getInstance();
@@ -71,6 +69,8 @@ public class OverviewPane {
         }).map(Transaction::getAmount).reduce(0f, Float::sum);
         float fROI = fTotalValue > 0 ? (fRentMonthly * 12) / fTotalValue : 0;
         float fROC = fOwnCapital > 0 ? (fRentMonthly * 12) / fOwnCapital : 0;
+        float fTotalArea = units.stream().map(Unit::getArea).reduce(0f, Float::sum);
+        float fAverageRentPerSQM = fRentMonthly / fTotalArea;
 
         lblRentMonthly.setText(formatter.format(fRentMonthly));
         lblTotalCredit.setText(formatter.format(fTotalCredit));
@@ -83,6 +83,7 @@ public class OverviewPane {
         lblRentAcc.setText(formatter.format(paidRentAcc));
         lblROC.setText(decimalFormatter.format(fROC));
         lblROI.setText(decimalFormatter.format(fROI));
+        lblAverageRentPerSQM.setText(formatter.format(fAverageRentPerSQM)+"/m²");
     }
 
 }

@@ -3,6 +3,7 @@ package org.exaphex.realty.model;
 import java.util.UUID;
 
 public class Building {
+
     private final String id;
     private final String name;
     private final String address;
@@ -11,6 +12,7 @@ public class Building {
     private final String city;
     private final float totalArea;
     private final float totalShares;
+
 
     public Building(String name, String address, String number, String postalCode, String city, float totalArea, float totalShares) {
         this.id = UUID.randomUUID().toString();

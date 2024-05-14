@@ -100,7 +100,7 @@ public class BuildingWindow extends JFrame {
             credits.addAll(CreditService.getCredit(u));
         }
 
-        this.overviewPane.loadData(rents, transactions, valuations, credits);
+        this.overviewPane.loadData(units, rents, transactions, valuations, credits);
     }
 
     private void setChartBuildingData(Building b) {

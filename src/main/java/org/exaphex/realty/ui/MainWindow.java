@@ -218,7 +218,7 @@ public class MainWindow extends JFrame {
             valuations.add(tmpValuations.get(0));
         }
 
-        this.overviewPane.loadData(rents, transactions, valuations, credits);
+        this.overviewPane.loadData(units, rents, transactions, valuations, credits);
     }
 
     private void onImportFile() {

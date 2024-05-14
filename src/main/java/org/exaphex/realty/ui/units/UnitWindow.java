@@ -204,6 +204,9 @@ public class UnitWindow {
         List<Credit> credits = CreditService.getCredit(u);
         List<Valuation> valuations = new ArrayList<>();
         List<Rent> tmpRents = RentService.getRents(u);
+        List<Unit> tmpUnits = new ArrayList<>();
+        tmpUnits.add(u);
+
         tmpRents = tmpRents.stream().filter(e -> {
             Date startDate = safeFormatDate(e.getStartDate());
             Date endDate = safeFormatDate(e.getEndDate());
@@ -226,7 +229,7 @@ public class UnitWindow {
             valuations.add(tmpValuations.get(0));
         }
 
-        this.overviewPane.loadData(rents, transactions, valuations, credits);
+        this.overviewPane.loadData(tmpUnits, rents, transactions, valuations, credits);
     }
 
     private void loadUnits(Building b) {
