@@ -2,8 +2,10 @@ package org.exaphex.realty.ui.accounts;
 
 import org.exaphex.realty.db.service.AccountService;
 import org.exaphex.realty.model.Account;
+import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.ui.table.AccountTableModel;
 import org.exaphex.realty.processor.AccountProcessor;
+import org.exaphex.realty.ui.buildings.BuildingWindow;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -19,6 +21,7 @@ public class AccountPane {
     private final AccountTableModel atm = new AccountTableModel(new ArrayList<>());
     private JTable tblAccounts;
     private JPanel mainPanel;
+    final List<AccountOverview> ao = new ArrayList<>();
 
     public void setUI() {
         buildUI();
@@ -39,7 +42,9 @@ public class AccountPane {
                 int selectedRow = table.getSelectedRow();
                 if (mouseEvent.getClickCount() == 2 && selectedRow != -1) {
                     Account account = atm.getAccountAt(tblAccounts.convertRowIndexToModel(selectedRow));
-                    new AccountModal(self, account);
+                    //new AccountModal(self, account);
+                    //new AccountOverview(self, account);
+                    createAccountOverview(account);
                 }
             }
         });
@@ -79,6 +84,21 @@ public class AccountPane {
     public void eventUpdateAccount(Account account) {
         AccountService.updateAccount(account);
         loadAccounts();
+    }
+
+    private void createAccountOverview(Account account) {
+        for (AccountOverview a : ao) {
+            if (a.getAccount().equals(account)) {
+                a.setVisible(true);
+                return;
+            }
+        }
+
+        AccountOverview u = new AccountOverview(this, account);
+        u.pack();
+        u.setLocationRelativeTo(null);
+        u.setVisible(true);
+        this.ao.add(u);
     }
 
 }
