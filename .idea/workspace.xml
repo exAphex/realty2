@@ -7,14 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added better overview tab">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/ui/table/AccountTransactionTableModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/accounts/AccountOverview.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/accounts/AccountOverview.java" afterDir="false" />
+    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added overview of account">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/accounts/AccountModal.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/accounts/AccountModal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/accounts/AccountModal.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/accounts/AccountModal.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/accounts/AccountPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/accounts/AccountPane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/i18n.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/i18n.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/i18n_de.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/i18n_de.properties" afterDir="false" />
     </list>
@@ -148,14 +144,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1698144344837</updated>
-    </task>
-    <task id="LOCAL-00011" summary="added performance overview">
-      <option name="closed" value="true" />
-      <created>1699146805444</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1699146805444</updated>
     </task>
     <task id="LOCAL-00012" summary="updated readme">
       <option name="closed" value="true" />
@@ -541,7 +529,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715724161347</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="added overview of account">
+      <option name="closed" value="true" />
+      <created>1715956765572</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1715956765572</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -556,7 +552,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added editing functionality for valuations" />
     <MESSAGE value="added overview of buildings" />
     <MESSAGE value="added number of tentants" />
     <MESSAGE value="added total area for buildings" />
@@ -581,6 +576,7 @@
     <MESSAGE value="code cleanups" />
     <MESSAGE value="fixed rent check" />
     <MESSAGE value="added better overview tab" />
-    <option name="LAST_COMMIT_MESSAGE" value="added better overview tab" />
+    <MESSAGE value="added overview of account" />
+    <option name="LAST_COMMIT_MESSAGE" value="added overview of account" />
   </component>
 </project>
