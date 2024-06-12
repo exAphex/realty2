@@ -15,6 +15,7 @@ public class ExportModel {
     private List<ExpenseCategory> expenseCategories;
     private List<Contact> contacts;
     private List<Account> accounts;
+    private List<DocumentType> documentTypes;
 
     public ExportModel() {
     }
@@ -97,5 +98,13 @@ public class ExportModel {
 
     public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
+    }
+
+    public List<DocumentType> getDocumentTypes() {
+        return documentTypes;
+    }
+
+    public void setDocumentTypes(List<DocumentType> documentTypes) {
+        this.documentTypes = documentTypes;
     }
 }

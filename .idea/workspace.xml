@@ -7,19 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="small fix for contact lazy loading">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/DocumentTypeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/Document.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/DocumentType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/ui/table/DocumentTypeTableModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/settings/DocumentTypeModal.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/settings/DocumentTypeModal.java" afterDir="false" />
+    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added initial functionality for documents">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/DatabaseConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/MainWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/MainWindow.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/MainWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/i18n.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/i18n.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/i18n_de.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/i18n_de.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/transport/ExportModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/transport/ExportModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/processor/export/ExportProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/processor/export/ExportProcessor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +34,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="SET_USER_NAME_GLOBALLY" value="false" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -151,22 +141,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1698144344837</updated>
-    </task>
-    <task id="LOCAL-00012" summary="updated readme">
-      <option name="closed" value="true" />
-      <created>1699146900787</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1699146900787</updated>
-    </task>
-    <task id="LOCAL-00013" summary="added more transaction types">
-      <option name="closed" value="true" />
-      <created>1699237655204</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1699237655204</updated>
     </task>
     <task id="LOCAL-00014" summary="code cleanup">
       <option name="closed" value="true" />
@@ -544,7 +518,23 @@
       <option name="project" value="LOCAL" />
       <updated>1715956765572</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="added initial functionality for documents">
+      <option name="closed" value="true" />
+      <created>1718235903745</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1718235903745</updated>
+    </task>
+    <task id="LOCAL-00062" summary="added initial functionality for documents">
+      <option name="closed" value="true" />
+      <created>1718235996840</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1718235996840</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -559,7 +549,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added overview of buildings" />
     <MESSAGE value="added number of tentants" />
     <MESSAGE value="added total area for buildings" />
     <MESSAGE value="outsourced unitwindow and added area functionality to buildings and units" />
@@ -584,6 +573,7 @@
     <MESSAGE value="fixed rent check" />
     <MESSAGE value="added better overview tab" />
     <MESSAGE value="added overview of account" />
-    <option name="LAST_COMMIT_MESSAGE" value="added overview of account" />
+    <MESSAGE value="added initial functionality for documents" />
+    <option name="LAST_COMMIT_MESSAGE" value="added initial functionality for documents" />
   </component>
 </project>
