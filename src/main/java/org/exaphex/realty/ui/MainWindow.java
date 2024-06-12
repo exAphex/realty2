@@ -3,6 +3,7 @@ package org.exaphex.realty.ui;
 import org.exaphex.realty.db.service.*;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.ui.table.BuildingTableModel;
+import org.exaphex.realty.model.ui.table.DocumentTypeTableModel;
 import org.exaphex.realty.model.ui.table.ExpenseCategoryTypeTableModel;
 import org.exaphex.realty.processor.export.ExportProcessor;
 import org.exaphex.realty.ui.accounts.AccountPane;
@@ -11,6 +12,7 @@ import org.exaphex.realty.ui.buildings.BuildingWindow;
 import org.exaphex.realty.ui.contacts.ContactsPane;
 import org.exaphex.realty.ui.overview.OverviewPane;
 import org.exaphex.realty.ui.settings.CategoryModal;
+import org.exaphex.realty.ui.settings.DocumentTypeModal;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -27,6 +29,7 @@ public class MainWindow extends JFrame {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     final BuildingTableModel btm = new BuildingTableModel(new ArrayList<>());
     final ExpenseCategoryTypeTableModel ctm = new ExpenseCategoryTypeTableModel(new ArrayList<>());
+    final DocumentTypeTableModel dttm = new DocumentTypeTableModel(new ArrayList<>());
     final List<BuildingWindow> bw = new ArrayList<>();
     private JTabbedPane tabbedPane1;
     private JPanel mainPanel;
@@ -40,6 +43,9 @@ public class MainWindow extends JFrame {
     private ContactsPane contactsPane;
     private OverviewPane overviewPane;
     private AccountPane accountsPane;
+    private JButton btnAddDocumentType;
+    private JButton btnDeleteDocumentType;
+    private JTable tblDocumentTypes;
     private JMenuItem menuImportFile;
     private JMenuItem menuExportFile;
 
@@ -48,6 +54,7 @@ public class MainWindow extends JFrame {
         setMenu();
         buildingsTable.setModel(btm);
         tblSettingsCategories.setModel(ctm);
+        tblDocumentTypes.setModel(dttm);
         this.contactsPane.setUI();
         this.accountsPane.setUI();
         setListeners();
@@ -72,6 +79,8 @@ public class MainWindow extends JFrame {
         MainWindow self = this;
         addButton.addActionListener(e -> this.onAddNewBuilding());
         btnAddCategory.addActionListener(e -> this.onAddNewCategory());
+        btnAddDocumentType.addActionListener(e -> this.onAddNewDocumentType());
+        btnDeleteDocumentType.addActionListener(e -> this.onDeleteDocumentType());
         deleteButton.addActionListener(e -> this.onDeleteBuilding());
         btnDeleteCategory.addActionListener(e -> this.onDeleteCategory());
         buildingsTable.addMouseListener(new MouseAdapter() {
@@ -96,6 +105,17 @@ public class MainWindow extends JFrame {
                 }
             }
         });
+        tblDocumentTypes.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                JTable table = (JTable) mouseEvent.getSource();
+                int selectedRow = table.getSelectedRow();
+                if (mouseEvent.getClickCount() == 2 && selectedRow != -1) {
+                    int selectedModelRow = tblDocumentTypes.convertRowIndexToModel(selectedRow);
+                    DocumentType selectedDocumentType = ((DocumentTypeTableModel) tblDocumentTypes.getModel()).getDocumentTypeById(selectedModelRow);
+                    new DocumentTypeModal(self, selectedDocumentType);
+                }
+            }
+        });
         tabbedPane1.addChangeListener(e -> {
             int selectedIndex = tabbedPane1.getSelectedIndex();
             switch (selectedIndex) {
@@ -104,6 +124,7 @@ public class MainWindow extends JFrame {
                     break;
                 case 2:
                     loadExpenseCategories();
+                    loadDocumentTypes();
                     break;
                 case 3:
                     loadOverviewData();
@@ -120,6 +141,9 @@ public class MainWindow extends JFrame {
         new BuildingModal(this);
     }
 
+    public void onAddNewDocumentType() {
+        new DocumentTypeModal(this);
+    }
     public void onAddNewCategory() { new CategoryModal(this); }
 
     public void onDeleteBuilding() {
@@ -134,6 +158,15 @@ public class MainWindow extends JFrame {
             BuildingService.deleteBuilding(building);
             loadBuildings();
         }
+    }
+
+    public void onDeleteDocumentType() {
+        int[] selectedRows = tblDocumentTypes.getSelectedRows();
+        for (int i : selectedRows) {
+            DocumentType documentType = dttm.getDocumentTypeById(tblDocumentTypes.convertRowIndexToModel(i));
+            DocumentTypeService.deleteDocumentType(documentType);
+        }
+        loadDocumentTypes();
     }
 
     public void onDeleteCategory() {
@@ -160,6 +193,16 @@ public class MainWindow extends JFrame {
         loadExpenseCategories();
     }
 
+    public void eventAddNewDocumentType(DocumentType dt) {
+        DocumentTypeService.addDocumentType(dt);
+        loadDocumentTypes();
+    }
+
+    public void eventEditDocumentType(DocumentType dt) {
+        DocumentTypeService.updateDocumentType(dt);
+        loadDocumentTypes();
+    }
+
     public void loadBuildings() {
         List<Building> buildings = BuildingService.getBuilding();
         btm.setBuildings(buildings);
@@ -168,6 +211,11 @@ public class MainWindow extends JFrame {
     public void loadExpenseCategories() {
         List<ExpenseCategory> categories = ExpenseCategoryService.getCategories();
         ctm.setCategories(categories);
+    }
+
+    public void loadDocumentTypes() {
+        List<DocumentType> documentTypes = DocumentTypeService.getDocumentTypes();
+        dttm.setDocumentTypes(documentTypes);
     }
 
     private void createBuildingDetailView(Building b) {
