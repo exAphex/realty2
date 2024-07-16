@@ -7,10 +7,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added initial functionality for documents">
+    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="readded account modal for new account creation">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/DocumentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/ui/table/DocumentTableModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/documents/DocumentModal.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/documents/DocumentModal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/documents/DocumentPane.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/documents/DocumentPane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/transport/ExportModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/transport/ExportModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/processor/export/ExportProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/processor/export/ExportProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/DatabaseConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/Document.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/i18n.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/i18n.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/i18n_de.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/i18n_de.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -233,6 +233,12 @@ public class DatabaseConnector {
                 executeSQL(conn, "INSERT INTO VERSION VALUES (28)");
                 updateDatabase(conn);
                 break;
+            case 28:
+                executeSQL(conn,
+                        "CREATE TABLE IF NOT EXISTS documents (id VARCHAR(255), name VARCHAR(255), date VARCHAR(255), description VARCHAR(255), filename VARCHAR(255), createdon VARCHAR(255), lastmodified VARCHAR(255), totalsize INT, ismarkdown BOOLEAN, objectid VARCHAR(255), documenttypeid VARCHAR(255), document BLOB)");
+                executeSQL(conn, "INSERT INTO VERSION VALUES (29)");
+                updateDatabase(conn);
+                break;
             default:
         }
     }

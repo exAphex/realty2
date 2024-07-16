@@ -5,6 +5,7 @@ import org.exaphex.realty.model.*;
 import org.exaphex.realty.processor.RentPaymentCheckProcessor;
 import org.exaphex.realty.processor.chart.IncomeExpenseChartProcessor;
 import org.exaphex.realty.ui.credit.CreditPane;
+import org.exaphex.realty.ui.documents.DocumentPane;
 import org.exaphex.realty.ui.overview.OverviewPane;
 import org.exaphex.realty.ui.transactions.TransactionPane;
 import org.exaphex.realty.ui.units.UnitWindow;
@@ -49,6 +50,8 @@ public class BuildingWindow extends JFrame {
     private TransactionPane transactionPane;
     private OverviewPane overviewPane;
     private JPanel tabOverview;
+    private JPanel tabDocuments;
+    private DocumentPane documentPane;
 
     public BuildingWindow(Building b) {
         super();
@@ -58,6 +61,7 @@ public class BuildingWindow extends JFrame {
         this.unitDetail.setUI(b);
         this.transactionPane.init();
         this.creditPane.init();
+        this.documentPane.init();
     }
 
     private void buildUI() {
@@ -149,6 +153,8 @@ public class BuildingWindow extends JFrame {
             transactionPane.setUI(this.selectedBuilding);
         } else if (selectedComponent.equals(tabOverview)) {
             setBuildingOverviewData(this.selectedBuilding);
+        } else if (selectedComponent.equals(tabDocuments)) {
+            documentPane.setUI(this.selectedBuilding);
         }
     }
 
