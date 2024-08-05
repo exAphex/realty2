@@ -16,6 +16,7 @@ public class ExportModel {
     private List<Contact> contacts;
     private List<Account> accounts;
     private List<DocumentType> documentTypes;
+    private List<Document> documents;
 
     public ExportModel() {
     }
@@ -106,5 +107,13 @@ public class ExportModel {
 
     public void setDocumentTypes(List<DocumentType> documentTypes) {
         this.documentTypes = documentTypes;
+    }
+
+    public List<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
     }
 }

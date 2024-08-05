@@ -10,12 +10,13 @@ public class Document {
     private String fileName;
     private String createdOn;
     private String lastModified;
-    private int totalSize;
+    private long totalSize;
     private boolean isMarkdown;
     private String objectId;
     private String documentTypeId;
+    private String documentJSON;
 
-    public Document(String id, String name, String date, String description, String fileName, String createdOn, String lastModified, int totalSize, boolean isMarkdown, String objectId, String documentTypeId) {
+    public Document(String id, String name, String date, String description, String fileName, String createdOn, String lastModified, long totalSize, boolean isMarkdown, String objectId, String documentTypeId) {
         this.name = name;
         this.id = id;
         this.date = date;
@@ -29,7 +30,7 @@ public class Document {
         this.documentTypeId = documentTypeId;
     }
 
-    public Document(String name, String date, String description, String fileName, String createdOn, String lastModified, int totalSize, boolean isMarkdown, String objectId, String documentTypeId) {
+    public Document(String name, String date, String description, String fileName, String createdOn, String lastModified, long totalSize, boolean isMarkdown, String objectId, String documentTypeId) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.date = date;
@@ -63,7 +64,7 @@ public class Document {
         return lastModified;
     }
 
-    public int getTotalSize() {
+    public long getTotalSize() {
         return totalSize;
     }
 
@@ -85,5 +86,13 @@ public class Document {
 
     public String getCreatedOn() {
         return createdOn;
+    }
+
+    public String getDocumentJSON() {
+        return documentJSON;
+    }
+
+    public void setDocumentJSON(String documentJSON) {
+        this.documentJSON = documentJSON;
     }
 }

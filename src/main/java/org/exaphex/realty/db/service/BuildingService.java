@@ -132,5 +132,6 @@ public class BuildingService {
         CreditService.deleteCredit(building);
         TransactionService.deleteTransactions(building);
         deleteBuildingInternal(building);
+        DocumentService.deleteDocument(building);
     }
 }

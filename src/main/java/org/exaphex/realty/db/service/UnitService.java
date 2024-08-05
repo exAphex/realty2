@@ -112,6 +112,7 @@ public class UnitService {
         TransactionService.deleteTransactions(unit);
         CreditService.deleteCredit(unit);
         deleteUnitInternal(unit);
+        DocumentService.deleteDocument(unit);
     }
 
     private static void deleteUnitInternal(Unit unit) {

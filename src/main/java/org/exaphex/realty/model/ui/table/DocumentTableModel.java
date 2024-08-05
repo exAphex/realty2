@@ -1,24 +1,39 @@
 package org.exaphex.realty.model.ui.table;
 
+import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.Document;
+import org.exaphex.realty.model.DocumentType;
+import org.exaphex.realty.model.Unit;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class DocumentTableModel extends AbstractTableModel {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private List<Document> documents;
+    private HashMap<String, String> documentTypes = new HashMap<>();
 
     public DocumentTableModel(List<Document> documents) {
         this.documents = new ArrayList<>(documents);
     }
 
-    public void setDocuments(List<Document> documents) {
+    public void setDocuments(List<Document> documents, List<DocumentType> documentTypes) {
         this.documents = new ArrayList<>(documents);
+        populateHashMap(documentTypes);
         fireTableDataChanged();
     }
+
+    private void populateHashMap(List<DocumentType> documentTypes) {
+        this.documentTypes = new HashMap<>();
+        for (DocumentType dt : documentTypes) {
+            this.documentTypes.put(dt.getId(), dt.getName());
+        }
+    }
+
+
 
     @Override
     public int getRowCount() {
@@ -61,7 +76,7 @@ public class DocumentTableModel extends AbstractTableModel {
             case 3:
                 yield document.getLastModified();
             case 4:
-                yield document.getDocumentTypeId();
+                yield documentTypes.get(document.getDocumentTypeId());
             default:
                 yield "??";
         };

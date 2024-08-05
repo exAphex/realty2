@@ -28,6 +28,7 @@ public class ExportProcessor {
         retEM.setUnits(UnitService.getUnits(null));
         retEM.setValuations(ValuationService.getValuations(null));
         retEM.setDocumentTypes(DocumentTypeService.getDocumentTypes());
+        retEM.setDocuments(DocumentService.getDocumentsWithJSON());
         return retEM;
     }
 
@@ -48,6 +49,7 @@ public class ExportProcessor {
         UnitService.addUnits(em.getUnits());
         ValuationService.addValuations(em.getValuations());
         DocumentTypeService.addDocumentTypes(em.getDocumentTypes());
+        DocumentService.addDocuments(em.getDocuments());
     }
 
     public static void exportToFile(File f) {
