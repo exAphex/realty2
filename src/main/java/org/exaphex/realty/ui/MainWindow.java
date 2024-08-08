@@ -3,6 +3,7 @@ package org.exaphex.realty.ui;
 import org.exaphex.realty.db.service.*;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.ui.table.BuildingTableModel;
+import org.exaphex.realty.model.ui.table.CounterTypeTableModel;
 import org.exaphex.realty.model.ui.table.DocumentTypeTableModel;
 import org.exaphex.realty.model.ui.table.ExpenseCategoryTypeTableModel;
 import org.exaphex.realty.processor.export.ExportProcessor;
@@ -12,7 +13,9 @@ import org.exaphex.realty.ui.buildings.BuildingWindow;
 import org.exaphex.realty.ui.contacts.ContactsPane;
 import org.exaphex.realty.ui.overview.OverviewPane;
 import org.exaphex.realty.ui.settings.CategoryModal;
+import org.exaphex.realty.ui.settings.CounterTypeModal;
 import org.exaphex.realty.ui.settings.DocumentTypeModal;
+import org.w3c.dom.css.Counter;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -30,6 +33,7 @@ public class MainWindow extends JFrame {
     final BuildingTableModel btm = new BuildingTableModel(new ArrayList<>());
     final ExpenseCategoryTypeTableModel ctm = new ExpenseCategoryTypeTableModel(new ArrayList<>());
     final DocumentTypeTableModel dttm = new DocumentTypeTableModel(new ArrayList<>());
+    final CounterTypeTableModel cttm = new CounterTypeTableModel(new ArrayList<>());
     final List<BuildingWindow> bw = new ArrayList<>();
     private JTabbedPane tabbedPane1;
     private JPanel mainPanel;
@@ -46,6 +50,9 @@ public class MainWindow extends JFrame {
     private JButton btnAddDocumentType;
     private JButton btnDeleteDocumentType;
     private JTable tblDocumentTypes;
+    private JButton btnAddCounterType;
+    private JButton btnDeleteCounterType;
+    private JTable tblCounterTypes;
     private JMenuItem menuImportFile;
     private JMenuItem menuExportFile;
 
@@ -55,6 +62,7 @@ public class MainWindow extends JFrame {
         buildingsTable.setModel(btm);
         tblSettingsCategories.setModel(ctm);
         tblDocumentTypes.setModel(dttm);
+        tblCounterTypes.setModel(cttm);
         this.contactsPane.setUI();
         this.accountsPane.setUI();
         setListeners();
@@ -80,7 +88,9 @@ public class MainWindow extends JFrame {
         addButton.addActionListener(e -> this.onAddNewBuilding());
         btnAddCategory.addActionListener(e -> this.onAddNewCategory());
         btnAddDocumentType.addActionListener(e -> this.onAddNewDocumentType());
+        btnAddCounterType.addActionListener(e -> this.onAddNewCounterType());
         btnDeleteDocumentType.addActionListener(e -> this.onDeleteDocumentType());
+        btnDeleteCounterType.addActionListener(e -> this.onDeleteCounterType());
         deleteButton.addActionListener(e -> this.onDeleteBuilding());
         btnDeleteCategory.addActionListener(e -> this.onDeleteCategory());
         buildingsTable.addMouseListener(new MouseAdapter() {
@@ -116,6 +126,18 @@ public class MainWindow extends JFrame {
                 }
             }
         });
+
+        tblCounterTypes.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                JTable table = (JTable) mouseEvent.getSource();
+                int selectedRow = table.getSelectedRow();
+                if (mouseEvent.getClickCount() == 2 && selectedRow != -1) {
+                    int selectedModelRow = tblCounterTypes.convertRowIndexToModel(selectedRow);
+                    CounterType selectedCounterType = ((CounterTypeTableModel) tblCounterTypes.getModel()).getDocumentTypeById(selectedModelRow);
+                    new CounterTypeModal(self, selectedCounterType);
+                }
+            }
+        });
         tabbedPane1.addChangeListener(e -> {
             int selectedIndex = tabbedPane1.getSelectedIndex();
             switch (selectedIndex) {
@@ -125,6 +147,7 @@ public class MainWindow extends JFrame {
                 case 2:
                     loadExpenseCategories();
                     loadDocumentTypes();
+                    loadCounterTypes();
                     break;
                 case 3:
                     loadOverviewData();
@@ -145,6 +168,7 @@ public class MainWindow extends JFrame {
         new DocumentTypeModal(this);
     }
     public void onAddNewCategory() { new CategoryModal(this); }
+    public void onAddNewCounterType() { new CounterTypeModal(this); }
 
     public void onDeleteBuilding() {
         if (buildingsTable.getSelectedRow() == -1)
@@ -167,6 +191,15 @@ public class MainWindow extends JFrame {
             DocumentTypeService.deleteDocumentType(documentType);
         }
         loadDocumentTypes();
+    }
+
+    public void onDeleteCounterType() {
+        int[] selectedRows = tblCounterTypes.getSelectedRows();
+        for (int i : selectedRows) {
+            CounterType counterType = cttm.getDocumentTypeById(tblCounterTypes.convertRowIndexToModel(i));
+            CounterTypeService.deleteCounterType(counterType);
+        }
+        loadCounterTypes();
     }
 
     public void onDeleteCategory() {
@@ -198,9 +231,19 @@ public class MainWindow extends JFrame {
         loadDocumentTypes();
     }
 
+    public void eventAddNewCounterType(CounterType ct) {
+        CounterTypeService.addCounterType(ct);
+        loadCounterTypes();
+    }
+
     public void eventEditDocumentType(DocumentType dt) {
         DocumentTypeService.updateDocumentType(dt);
         loadDocumentTypes();
+    }
+
+    public void eventEditCounterType(CounterType ct) {
+        CounterTypeService.updateCounterType(ct);
+        loadCounterTypes();
     }
 
     public void loadBuildings() {
@@ -216,6 +259,11 @@ public class MainWindow extends JFrame {
     public void loadDocumentTypes() {
         List<DocumentType> documentTypes = DocumentTypeService.getDocumentTypes();
         dttm.setDocumentTypes(documentTypes);
+    }
+
+    public void loadCounterTypes() {
+        List<CounterType> counterTypes = CounterTypeService.getCounterTypes();
+        cttm.setCounterTypes(counterTypes);
     }
 
     private void createBuildingDetailView(Building b) {
