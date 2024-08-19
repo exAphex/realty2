@@ -8,25 +8,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added counter types">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/CounterRecordService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/CounterRecord.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/ui/cmb/CounterTypeComboBoxModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/ui/table/CounterRecordTableModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/counters/CounterModal.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/counters/CounterModal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/counters/CounterPane.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/counters/CounterPane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/DatabaseConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/DocumentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/DocumentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/transport/ExportModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/transport/ExportModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/processor/export/ExportProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/processor/export/ExportProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingWindow.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/documents/DocumentPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/documents/DocumentPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/i18n.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/i18n.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/i18n_de.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/i18n_de.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/BuildingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/BuildingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/CounterRecordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/CounterRecordService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/CounterTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/CounterTypeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/UnitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/UnitService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +67,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.org.exaphex.realty.Main.executor": "Debug",
+    "Application.org.exaphex.realty.Main.executor": "Run",
     "I18N_FIX_LAST_USED_CONTEXT": "realty",
     "LAST_USED_PROPERTIES_FILE": "/Users/aydintekin/git/jdev/realty/src/main/resources/i18n.properties",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -601,7 +587,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/CounterRecordService.java</url>
-          <line>88</line>
+          <line>85</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

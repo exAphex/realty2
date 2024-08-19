@@ -133,5 +133,6 @@ public class BuildingService {
         TransactionService.deleteTransactions(building);
         deleteBuildingInternal(building);
         DocumentService.deleteDocument(building);
+        CounterRecordService.deleteCounterRecord(building);
     }
 }
