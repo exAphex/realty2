@@ -30,6 +30,7 @@ public class ExportProcessor {
         retEM.setDocumentTypes(DocumentTypeService.getDocumentTypes());
         retEM.setDocuments(DocumentService.getDocumentsWithJSON());
         retEM.setCounterTypes(CounterTypeService.getCounterTypes());
+        retEM.setCounterRecords(CounterRecordService.getCounterRecords());
         return retEM;
     }
 
@@ -52,6 +53,7 @@ public class ExportProcessor {
         DocumentTypeService.addDocumentTypes(em.getDocumentTypes());
         DocumentService.addDocuments(em.getDocuments());
         CounterTypeService.addCounterTypes(em.getCounterTypes());
+        CounterRecordService.addCounterRecords(em.getCounterRecords());
     }
 
     public static void exportToFile(File f) {

@@ -18,6 +18,7 @@ public class ExportModel {
     private List<DocumentType> documentTypes;
     private List<Document> documents;
     private List<CounterType> counterTypes;
+    private List<CounterRecord> counterRecords;
 
     public ExportModel() {
     }
@@ -124,5 +125,13 @@ public class ExportModel {
 
     public void setCounterTypes(List<CounterType> counterTypes) {
         this.counterTypes = counterTypes;
+    }
+
+    public List<CounterRecord> getCounterRecords() {
+        return counterRecords;
+    }
+
+    public void setCounterRecords(List<CounterRecord> counterRecords) {
+        this.counterRecords = counterRecords;
     }
 }

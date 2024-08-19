@@ -4,15 +4,12 @@ import org.exaphex.realty.db.service.DocumentService;
 import org.exaphex.realty.db.service.DocumentTypeService;
 import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.ui.table.DocumentTableModel;
-import org.exaphex.realty.ui.units.TransactionModal;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
