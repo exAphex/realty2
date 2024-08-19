@@ -16,6 +16,9 @@ public class ExportModel {
     private List<Contact> contacts;
     private List<Account> accounts;
     private List<DocumentType> documentTypes;
+    private List<Document> documents;
+    private List<CounterType> counterTypes;
+    private List<CounterRecord> counterRecords;
 
     public ExportModel() {
     }
@@ -106,5 +109,29 @@ public class ExportModel {
 
     public void setDocumentTypes(List<DocumentType> documentTypes) {
         this.documentTypes = documentTypes;
+    }
+
+    public List<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
+    }
+
+    public List<CounterType> getCounterTypes() {
+        return counterTypes;
+    }
+
+    public void setCounterTypes(List<CounterType> counterTypes) {
+        this.counterTypes = counterTypes;
+    }
+
+    public List<CounterRecord> getCounterRecords() {
+        return counterRecords;
+    }
+
+    public void setCounterRecords(List<CounterRecord> counterRecords) {
+        this.counterRecords = counterRecords;
     }
 }

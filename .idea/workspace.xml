@@ -7,11 +7,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added documenttypes to export/import">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/DocumentService.java" afterDir="false" />
+    <list default="true" id="e39fe8bc-d9b0-47c5-9eb1-aa88436459b4" name="Changes" comment="added counter types">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/CounterRecordService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/CounterRecord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/ui/cmb/CounterTypeComboBoxModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/ui/table/CounterRecordTableModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/counters/CounterModal.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/counters/CounterModal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/counters/CounterPane.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/counters/CounterPane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/Document.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/DatabaseConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/DocumentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/DocumentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/transport/ExportModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/model/transport/ExportModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/processor/export/ExportProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/processor/export/ExportProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/buildings/BuildingWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/documents/DocumentPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/documents/DocumentPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/units/UnitWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/i18n.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/i18n.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/i18n_de.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/i18n_de.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,29 +81,27 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.org.exaphex.realty.Main.executor": "Run",
+    "Application.org.exaphex.realty.Main.executor": "Debug",
     "I18N_FIX_LAST_USED_CONTEXT": "realty",
     "LAST_USED_PROPERTIES_FILE": "/Users/aydintekin/git/jdev/realty/src/main/resources/i18n.properties",
-    "Maven.realty [clean].executor": "Run",
-    "Maven.realty [compile].executor": "Run",
-    "Maven.realty [package].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "248",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "139",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "346",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/aydin/IdeaProjects/realty2/src/main/resources",
+    "last_opened_file_path": "C:/Users/aydin/IdeaProjects/realty2/src/main/java/org/exaphex/realty/ui/settings",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "project.propGUI"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\aydin\IdeaProjects\realty2\src\main\java\org\exaphex\realty\ui\settings" />
       <recent name="C:\Users\aydin\IdeaProjects\realty2\src\main\resources" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
@@ -132,8 +145,6 @@
       <list>
         <item itemvalue="Application.org.exaphex.realty.Main" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.org.exaphex.realty.Main" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -145,22 +156,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1698144344837</updated>
-    </task>
-    <task id="LOCAL-00015" summary="expanded transaction capabilities">
-      <option name="closed" value="true" />
-      <created>1699322373836</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1699322373836</updated>
-    </task>
-    <task id="LOCAL-00016" summary="added credit functionality">
-      <option name="closed" value="true" />
-      <created>1699487268662</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1699487268662</updated>
     </task>
     <task id="LOCAL-00017" summary="added credit modal">
       <option name="closed" value="true" />
@@ -530,15 +525,31 @@
       <option name="project" value="LOCAL" />
       <updated>1718235996840</updated>
     </task>
-    <task id="LOCAL-00063" summary="added documenttypes to export/import">
+    <task id="LOCAL-00063" summary="added document ui">
       <option name="closed" value="true" />
-      <created>1718236152030</created>
+      <created>1721134589713</created>
       <option name="number" value="00063" />
       <option name="presentableId" value="LOCAL-00063" />
       <option name="project" value="LOCAL" />
-      <updated>1718236152031</updated>
+      <updated>1721134589713</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="added document management">
+      <option name="closed" value="true" />
+      <created>1722872645841</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1722872645841</updated>
+    </task>
+    <task id="LOCAL-00065" summary="added counter types">
+      <option name="closed" value="true" />
+      <created>1723117329201</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1723117329201</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -553,8 +564,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added total area for buildings" />
-    <MESSAGE value="outsourced unitwindow and added area functionality to buildings and units" />
     <MESSAGE value="code cleanup" />
     <MESSAGE value="added contact functionality" />
     <MESSAGE value="added contacts to export/import" />
@@ -577,7 +586,30 @@
     <MESSAGE value="added better overview tab" />
     <MESSAGE value="added overview of account" />
     <MESSAGE value="added initial functionality for documents" />
-    <MESSAGE value="added documenttypes to export/import" />
-    <option name="LAST_COMMIT_MESSAGE" value="added documenttypes to export/import" />
+    <MESSAGE value="added document ui" />
+    <MESSAGE value="added document management" />
+    <MESSAGE value="added counter types" />
+    <option name="LAST_COMMIT_MESSAGE" value="added counter types" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/documents/DocumentPane.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/exaphex/realty/db/service/CounterRecordService.java</url>
+          <line>88</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/exaphex/realty/ui/counters/CounterModal.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

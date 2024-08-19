@@ -28,6 +28,9 @@ public class ExportProcessor {
         retEM.setUnits(UnitService.getUnits(null));
         retEM.setValuations(ValuationService.getValuations(null));
         retEM.setDocumentTypes(DocumentTypeService.getDocumentTypes());
+        retEM.setDocuments(DocumentService.getDocumentsWithJSON());
+        retEM.setCounterTypes(CounterTypeService.getCounterTypes());
+        retEM.setCounterRecords(CounterRecordService.getCounterRecords());
         return retEM;
     }
 
@@ -48,6 +51,9 @@ public class ExportProcessor {
         UnitService.addUnits(em.getUnits());
         ValuationService.addValuations(em.getValuations());
         DocumentTypeService.addDocumentTypes(em.getDocumentTypes());
+        DocumentService.addDocuments(em.getDocuments());
+        CounterTypeService.addCounterTypes(em.getCounterTypes());
+        CounterRecordService.addCounterRecords(em.getCounterRecords());
     }
 
     public static void exportToFile(File f) {

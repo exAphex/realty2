@@ -8,7 +8,9 @@ import org.exaphex.realty.model.*;
 import org.exaphex.realty.model.transport.ValuationTransportModel;
 import org.exaphex.realty.model.ui.cmb.UnitComboBoxModel;
 import org.exaphex.realty.model.ui.table.*;
+import org.exaphex.realty.ui.counters.CounterPane;
 import org.exaphex.realty.ui.credit.CreditPane;
+import org.exaphex.realty.ui.documents.DocumentPane;
 import org.exaphex.realty.ui.overview.OverviewPane;
 import org.exaphex.realty.ui.transactions.TransactionPane;
 
@@ -68,6 +70,10 @@ public class UnitWindow {
     private CreditPane creditPane;
     private TransactionPane transactionPane;
     private JPanel paneTransaction;
+    private DocumentPane documentPane;
+    private JPanel paneDocument;
+    private JPanel paneCounterRecord;
+    private CounterPane counterPane;
 
     public void setUI(Building b) {
         this.building = b;
@@ -75,6 +81,8 @@ public class UnitWindow {
         setListeners();
         this.creditPane.init();
         this.transactionPane.init();
+        this.documentPane.init();
+        this.counterPane.init();
         loadUnits(this.building);
     }
 
@@ -177,6 +185,10 @@ public class UnitWindow {
             creditPane.setUI(this.selectedUnit);
         } else if (selectedComponent.equals(paneTransaction)) {
             transactionPane.setUI(this.selectedUnit);
+        } else if (selectedComponent.equals(paneDocument)) {
+            documentPane.setUI(this.selectedUnit);
+        } else if (selectedComponent.equals(paneCounterRecord)) {
+            counterPane.setUI(this.selectedUnit);
         }
     }
 

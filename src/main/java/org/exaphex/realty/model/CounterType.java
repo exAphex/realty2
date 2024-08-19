@@ -3,16 +3,16 @@ package org.exaphex.realty.model;
 import java.util.Objects;
 import java.util.UUID;
 
-public class DocumentType {
+public class CounterType {
     private final String id;
     private final String name;
 
-    public DocumentType(String id, String name) {
+    public CounterType(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public DocumentType(String name) {
+    public CounterType(String name) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
     }
@@ -29,8 +29,8 @@ public class DocumentType {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DocumentType dct = (DocumentType) o;
-        return Objects.equals(id, dct.id);
+        CounterType counterType = (CounterType) o;
+        return Objects.equals(id, counterType.id);
     }
 
     @Override
