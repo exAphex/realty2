@@ -1,6 +1,5 @@
 package org.exaphex.realty.model.ui.cmb;
 
-import org.exaphex.realty.model.Credit;
 import org.exaphex.realty.model.DocumentType;
 
 import javax.swing.*;

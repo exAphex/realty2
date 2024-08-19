@@ -38,10 +38,6 @@ public class AccountTransactionTableModel extends AbstractTableModel {
         }
     }
 
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-
     @Override
     public int getRowCount() {
         return transactions.size();
@@ -89,9 +85,5 @@ public class AccountTransactionTableModel extends AbstractTableModel {
             default:
                 yield "??";
         };
-    }
-
-    public Transaction getTransactionAt(int row) {
-        return transactions.get(row);
     }
 }

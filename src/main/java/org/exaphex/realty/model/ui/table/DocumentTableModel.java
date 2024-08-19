@@ -1,9 +1,7 @@
 package org.exaphex.realty.model.ui.table;
 
-import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.Document;
 import org.exaphex.realty.model.DocumentType;
-import org.exaphex.realty.model.Unit;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -84,9 +82,5 @@ public class DocumentTableModel extends AbstractTableModel {
 
     public Document getDocumentAt(int row) {
         return documents.get(row);
-    }
-
-    public List<Document> getDocuments() {
-        return documents;
     }
 }

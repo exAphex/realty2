@@ -25,7 +25,7 @@ public class AccountOverview extends JFrame {
     private JTextField txtIBAN;
     private JTextField txtBIC;
     private JButton btnSave;
-    private AccountPane ap;
+    private final AccountPane ap;
     private final Account account;
     private final AccountTransactionTableModel atm = new AccountTransactionTableModel(new ArrayList<>());
 

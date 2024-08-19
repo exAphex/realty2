@@ -3,12 +3,12 @@ package org.exaphex.realty.model;
 import java.util.UUID;
 
 public class CounterRecord {
-    private String id;
-    private String counterTypeId;
-    private String objectId;
-    private String date;
-    private String value;
-    private String description;
+    private final String id;
+    private final String counterTypeId;
+    private final String objectId;
+    private final String date;
+    private final String value;
+    private final String description;
 
     public CounterRecord(String id, String counterType, String objectId, String date, String value, String description) {
         this.id = id;
@@ -20,7 +20,7 @@ public class CounterRecord {
     }
 
     public CounterRecord(String counterType, String objectId, String date, String value, String description) {
-        this.id = UUID.randomUUID().toString();;
+        this.id = UUID.randomUUID().toString();
         this.counterTypeId = counterType;
         this.objectId = objectId;
         this.date = date;

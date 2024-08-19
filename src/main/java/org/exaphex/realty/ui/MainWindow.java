@@ -15,7 +15,6 @@ import org.exaphex.realty.ui.overview.OverviewPane;
 import org.exaphex.realty.ui.settings.CategoryModal;
 import org.exaphex.realty.ui.settings.CounterTypeModal;
 import org.exaphex.realty.ui.settings.DocumentTypeModal;
-import org.w3c.dom.css.Counter;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
