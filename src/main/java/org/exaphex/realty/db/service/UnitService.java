@@ -111,8 +111,9 @@ public class UnitService {
         ValuationService.deleteValuation(unit);
         TransactionService.deleteTransactions(unit);
         CreditService.deleteCredit(unit);
-        deleteUnitInternal(unit);
         DocumentService.deleteDocument(unit);
+        CounterRecordService.deleteCounterRecord(unit);
+        deleteUnitInternal(unit);
     }
 
     private static void deleteUnitInternal(Unit unit) {
