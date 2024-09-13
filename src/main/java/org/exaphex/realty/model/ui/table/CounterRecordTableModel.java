@@ -2,7 +2,6 @@ package org.exaphex.realty.model.ui.table;
 
 import org.exaphex.realty.model.CounterRecord;
 import org.exaphex.realty.model.CounterType;
-import org.exaphex.realty.model.DocumentType;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;

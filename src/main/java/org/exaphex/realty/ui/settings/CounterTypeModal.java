@@ -1,7 +1,6 @@
 package org.exaphex.realty.ui.settings;
 
 import org.exaphex.realty.model.CounterType;
-import org.exaphex.realty.model.DocumentType;
 import org.exaphex.realty.ui.MainWindow;
 
 import javax.swing.*;

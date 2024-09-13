@@ -281,10 +281,6 @@ public class UnitWindow {
         new PaymentCheckWindow(this.creditPane, this.selectedUnit, rent);
     }
 
-    public Building getBuilding() {
-        return this.building;
-    }
-
     private void onAddNewUnit() {
         new UnitModal(this, this.building);
     }
@@ -346,15 +342,6 @@ public class UnitWindow {
         loadValuations(this.selectedUnit);
     }
 
-    private void onDeleteTransaction() {
-        int[] selectedRows = tblAccount.getSelectedRows();
-        for (int i : selectedRows) {
-            Transaction transaction = ttm.getTransactionAt(tblAccount.convertRowIndexToModel(i));
-            TransactionService.deleteTransaction(transaction);
-        }
-        loadTransactions(this.selectedUnit);
-    }
-
     private void onDeleteRent() {
         if (tblRents.getSelectedRow() == -1)
             return;
@@ -404,15 +391,5 @@ public class UnitWindow {
     public void eventEditRent(Rent r) {
         RentService.updateRent(r);
         loadRents(this.selectedUnit);
-    }
-
-    public void eventAddNewTransaction(Transaction t) {
-        TransactionService.addTransaction(t);
-        loadTransactions(this.selectedUnit);
-    }
-
-    public void eventEditTransaction(Transaction t) {
-        TransactionService.updateTransaction(t);
-        loadTransactions(this.selectedUnit);
     }
 }

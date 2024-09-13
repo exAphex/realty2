@@ -2,10 +2,8 @@ package org.exaphex.realty.ui.accounts;
 
 import org.exaphex.realty.db.service.AccountService;
 import org.exaphex.realty.model.Account;
-import org.exaphex.realty.model.Building;
 import org.exaphex.realty.model.ui.table.AccountTableModel;
 import org.exaphex.realty.processor.AccountProcessor;
-import org.exaphex.realty.ui.buildings.BuildingWindow;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -33,7 +31,6 @@ public class AccountPane {
     }
 
     public void setupListeners() {
-        AccountPane self = this;
         btnAdd.addActionListener(e -> this.onAddNewAccount());
         btnDelete.addActionListener(e -> this.onDeleteAccount());
         tblAccounts.addMouseListener(new MouseAdapter() {
@@ -42,8 +39,6 @@ public class AccountPane {
                 int selectedRow = table.getSelectedRow();
                 if (mouseEvent.getClickCount() == 2 && selectedRow != -1) {
                     Account account = atm.getAccountAt(tblAccounts.convertRowIndexToModel(selectedRow));
-                    //new AccountModal(self, account);
-                    //new AccountOverview(self, account);
                     createAccountOverview(account);
                 }
             }

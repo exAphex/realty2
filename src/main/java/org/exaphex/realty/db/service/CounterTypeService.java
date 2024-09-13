@@ -79,7 +79,7 @@ public class CounterTypeService {
         }
     }
 
-    public static void deleteCounterType(CounterType counterTypes) {
+    private static void _deleteCounterType(CounterType counterTypes) {
         Connection conn = null;
         PreparedStatement statement = null;
         try {
@@ -93,5 +93,10 @@ public class CounterTypeService {
             DatabaseConnector.closeStatement(statement);
             DatabaseConnector.closeDatabase(conn);
         }
+    }
+
+    public static void deleteCounterType(CounterType counterType) {
+        CounterRecordService.deleteCounterRecord(counterType);
+        _deleteCounterType(counterType);
     }
 }

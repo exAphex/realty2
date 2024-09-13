@@ -23,10 +23,6 @@ public class TransactionTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-
     @Override
     public int getRowCount() {
         return transactions.size();

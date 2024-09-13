@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class CounterPane {
-    private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private final CounterRecordTableModel crtm = new CounterRecordTableModel(new ArrayList<>());
     private JButton btnAdd;
     private JButton btnDelete;

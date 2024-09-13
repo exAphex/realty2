@@ -3,17 +3,17 @@ package org.exaphex.realty.model;
 import java.util.UUID;
 
 public class Document {
-    private String id;
-    private String name;
-    private String date;
-    private String description;
-    private String fileName;
-    private String createdOn;
-    private String lastModified;
-    private long totalSize;
-    private boolean isMarkdown;
-    private String objectId;
-    private String documentTypeId;
+    private final String id;
+    private final String name;
+    private final String date;
+    private final String description;
+    private final String fileName;
+    private final String createdOn;
+    private final String lastModified;
+    private final long totalSize;
+    private final boolean isMarkdown;
+    private final String objectId;
+    private final String documentTypeId;
     private String documentJSON;
 
     public Document(String id, String name, String date, String description, String fileName, String createdOn, String lastModified, long totalSize, boolean isMarkdown, String objectId, String documentTypeId) {

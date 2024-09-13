@@ -4,10 +4,7 @@ package org.exaphex.realty.db.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.exaphex.realty.db.DatabaseConnector;
-import org.exaphex.realty.model.Building;
-import org.exaphex.realty.model.CounterRecord;
-import org.exaphex.realty.model.Rent;
-import org.exaphex.realty.model.Unit;
+import org.exaphex.realty.model.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -131,6 +128,22 @@ public class CounterRecordService {
             conn = DatabaseConnector.getConnection();
             statement = conn.prepareStatement("DELETE FROM counterrecords WHERE objectid = ?");
             statement.setString(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            DatabaseConnector.closeStatement(statement);
+            DatabaseConnector.closeDatabase(conn);
+        }
+    }
+
+    public static void deleteCounterRecord(CounterType counterType) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        try {
+            conn = DatabaseConnector.getConnection();
+            statement = conn.prepareStatement("DELETE FROM counterrecords WHERE countertypeid = ?");
+            statement.setString(1, counterType.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);

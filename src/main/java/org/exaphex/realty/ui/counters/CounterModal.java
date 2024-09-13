@@ -13,9 +13,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static org.exaphex.realty.model.Transaction.formatTransactionType;
-
-
 public class CounterModal {
     private final ResourceBundle res = ResourceBundle.getBundle("i18n");
     private final CounterTypeComboBoxModel ctcm = new CounterTypeComboBoxModel(new ArrayList<>());

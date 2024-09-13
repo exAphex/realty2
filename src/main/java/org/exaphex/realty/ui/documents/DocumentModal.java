@@ -35,7 +35,7 @@ public class DocumentModal {
     private Building building;
     private Unit unit;
 
-    private DocumentPane dp;
+    private final DocumentPane dp;
     private JDialog dialog;
 
     public DocumentModal(DocumentPane dp, Unit u) {

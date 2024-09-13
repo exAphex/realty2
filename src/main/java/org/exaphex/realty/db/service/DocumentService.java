@@ -56,10 +56,6 @@ public class DocumentService {
         return retDocuments;
     }
 
-    public static List<Document> getDocument() {
-        return _getDocument(null,false);
-    }
-
     public static List<Document> getDocument(Building building) {
         return _getDocument(building.getId(),false);
     }
